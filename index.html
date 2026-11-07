@@ -1,672 +1,781 @@
-<!doctype html>
-<html lang="bn">
+<!DOCTYPE html>
+<html lang="bn" class="scroll-smooth">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>প্রিয় মুহূর্ত</title>
-<meta name="description" content="প্রিয় মুহূর্ত (priyomuhurto): গিফট, সারপ্রাইজ আর আনন্দের মুহূর্তের উপহার। সারা দেশে হোম ডেলিভারি।">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Tiro+Bangla:ital@0;1&display=swap">
-<link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>প্রিয় মুহূর্ত | Priyo Muhurto - অনলাইন কাস্টমাইজড গিফট ও ফটো শপ</title>
+  
+  <!-- গুগল ফন্ট: Hind Siliguri এবং Poppins -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@1,600&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- ফন্ট অসাম আইকন -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            bangla: ['"Hind Siliguri"', 'sans-serif'],
+            poppins: ['"Poppins"', 'sans-serif'],
+            script: ['"Playfair Display"', 'serif'],
+          },
+          colors: {
+            brand: {
+              50: '#fff1f2',
+              100: '#ffe4e6',
+              200: '#fecdd3',
+              500: '#f43f5e',
+              600: '#e11d48',
+              700: '#be123c',
+              800: '#9f1239',
+              900: '#881337',
+              navy: '#0d1322',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      font-family: 'Hind Siliguri', sans-serif;
+      background-color: #fdfbf7;
+    }
+    /* লাক্সারি গোল্ডেন ও ওয়ার্ম গ্লো ফ্রেম */
+    .brand-logo-frame {
+      background: linear-gradient(135deg, #fff9f0 0%, #fff 100%);
+      border: 1.5px solid #f6d28b;
+      box-shadow: 0 4px 20px rgba(230, 81, 0, 0.08), 0 0 15px rgba(245, 158, 11, 0.15);
+      border-radius: 16px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 3px 6px;
+      overflow: hidden;
+    }
+    .brand-logo-img {
+      max-height: 52px;
+      width: auto;
+      object-fit: contain;
+      border-radius: 12px;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 5px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #f43f5e;
+      border-radius: 10px;
+    }
+  </style>
 </head>
-<body>
+<body class="text-slate-800 flex flex-col min-h-screen">
 
-<header class="top">
-  <div class="wrap">
-    <a class="brand" href="index.html" aria-label="প্রিয় মুহূর্ত, প্রথম পাতা" style="text-decoration:none"><b>প্রিয় মুহূর্ত</b><small>priyomuhurto</small></a>
-    <nav class="nav" aria-label="মেনু">
-      <button class="btn" id="mine-open" type="button">আমার অর্ডার</button>
-      <a class="btn" href="leaderboard.html">লিডারবোর্ড</a>
-      <button class="btn primary" id="cart-open" type="button">কার্ট <span class="badge num" id="cart-count">০</span></button>
-    </nav>
-  </div>
-</header>
-
-<main>
-  <section class="wrap hero">
-    <div>
-      <h1>প্রিয় মানুষের জন্য, <span>প্রিয় মুহূর্ত</span></h1>
-      <p>জন্মদিন, বার্ষিকী বা শুধু একটা সাধারণ দিনকে বিশেষ করার উপহার। প্রতিটি জিনিস বেছে নেওয়া, মুড়িয়ে পাঠানো আপনার ঠিকানায়।</p>
-      <ul class="perks">
-        <li>সারা দেশে হোম ডেলিভারি</li>
-        <li>ক্যাশ অন ডেলিভারি</li>
-        <li>বিকাশে পেমেন্ট</li>
-      </ul>
+  <!-- টপ নোটিফিকেশন ও যোগাযোগ বার -->
+  <div class="bg-gradient-to-r from-[#1c0f08] via-[#2d120a] to-[#1c0f08] text-amber-100 text-xs sm:text-sm py-2 px-4 border-b border-amber-900/40">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 text-center sm:text-left">
+      <span class="tracking-wide font-medium flex items-center gap-1.5 justify-center sm:justify-start">
+        ✨ প্রিয় মুহূর্ত স্পেশাল অফার! প্রিমিয়াম কাস্টমাইজড গিফট ও ফটোফ্রেম ৪০০-৫০০ টাকায় ✨
+      </span>
+      <div class="flex items-center gap-4 text-xs font-semibold">
+        <a href="tel:+8801707483913" class="hover:text-white flex items-center gap-1.5 transition">
+          <i class="fa-solid fa-phone text-amber-400"></i> +8801707483913
+        </a>
+        <span class="text-amber-800/60 hidden sm:inline">|</span>
+        <a href="https://wa.me/8801707483913" target="_blank" rel="noopener noreferrer" class="hover:text-emerald-300 flex items-center gap-1 text-emerald-400 transition">
+          <i class="fa-brands fa-whatsapp text-sm"></i> WhatsApp
+        </a>
+        <span class="text-amber-800/60 hidden sm:inline">|</span>
+        <a href="mailto:priyomuhurto@gmail.com" class="hover:text-white hidden md:flex items-center gap-1.5 transition">
+          <i class="fa-regular fa-envelope text-amber-400"></i> priyomuhurto@gmail.com
+        </a>
+      </div>
     </div>
-    <div class="logo-panel"><img src="logo.jpg" width="960" height="548" alt="প্রিয় মুহূর্ত, priyomuhurto. Gift, Surprise, Happy Moments"></div>
+  </div>
+
+  <!-- নেভিগেশন বার -->
+  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-amber-100 shadow-sm transition-all">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20">
+        
+        <!-- নতুন 3D আর্টওয়ার্ক লোগো -->
+        <a href="#" class="flex items-center group py-1" title="প্রিয় মুহূর্ত - priyomuhurto">
+          <div class="brand-logo-frame transition-all duration-300 group-hover:scale-105 group-hover:border-amber-400">
+            <img src="logo.jpg" alt="প্রিয় মুহূর্ত লোগো" class="brand-logo-img" onerror="this.onerror=null; this.src='6301036393165166230_2.jpg';" />
+          </div>
+        </a>
+
+        <!-- ডেক্সটপ মেনু -->
+        <nav class="hidden md:flex items-center gap-6 font-medium text-slate-700">
+          <a href="#" class="hover:text-amber-600 transition-colors">হোম</a>
+          <a href="#products-section" class="hover:text-amber-600 transition-colors">কাস্টমাইজড গিফট কালেকশন</a>
+          <a href="#contact-section" class="hover:text-amber-600 transition-colors">যোগাযোগ ও হেল্পলাইন</a>
+        </nav>
+
+        <!-- ডানদিকের অ্যাকশন বাটন -->
+        <div class="flex items-center gap-3">
+          <!-- কার্ট আইকন -->
+          <button onclick="toggleCartDrawer(true)" class="relative p-2.5 sm:p-3 rounded-2xl bg-white hover:bg-amber-50 text-slate-700 hover:text-amber-600 transition-colors border border-gray-200 shadow-sm" aria-label="Cart">
+            <i class="fa-solid fa-bag-shopping text-xl"></i>
+            <span id="cartBadge" class="hidden absolute -top-1.5 -right-1.5 bg-rose-600 text-white font-bold text-xs w-5 h-5 rounded-full flex items-center justify-center border-2 border-white animate-pulse">০</span>
+          </button>
+
+          <!-- মোবাইল মেনু বাটন -->
+          <button onclick="toggleMobileMenu(true)" class="md:hidden p-2 rounded-xl text-slate-700 hover:bg-gray-100" aria-label="Menu">
+            <i class="fa-solid fa-bars text-xl"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- মোবাইল স্লাইড মেনু -->
+  <div id="mobileMenuDrawer" class="fixed inset-0 z-50 pointer-events-none transition-all duration-300">
+    <div id="mobileMenuBackdrop" onclick="toggleMobileMenu(false)" class="absolute inset-0 bg-black/50 opacity-0 transition-opacity duration-300 backdrop-blur-sm"></div>
+    <div id="mobileMenuPanel" class="absolute top-0 left-0 w-3/4 max-w-xs h-full bg-white shadow-2xl -translate-x-full transition-transform duration-300 p-6 flex flex-col justify-between overflow-y-auto">
+      <div>
+        <div class="flex items-center justify-between pb-4 border-b border-gray-100">
+          <span class="font-bold text-lg text-slate-800">মেনু</span>
+          <button onclick="toggleMobileMenu(false)" class="p-2 text-slate-400 hover:text-rose-600">
+            <i class="fa-solid fa-xmark text-xl"></i>
+          </button>
+        </div>
+        <div class="py-4 flex flex-col gap-3">
+          <a href="#" onclick="toggleMobileMenu(false)" class="px-3 py-2 rounded-xl hover:bg-rose-50 font-medium">হোম</a>
+          <a href="#products-section" onclick="toggleMobileMenu(false)" class="px-3 py-2 rounded-xl hover:bg-rose-50 font-medium">গিফট কালেকশন</a>
+          <a href="#contact-section" onclick="toggleMobileMenu(false)" class="px-3 py-2 rounded-xl hover:bg-rose-50 font-medium">যোগাযোগ ও হেল্পলাইন</a>
+        </div>
+      </div>
+      <div class="pt-4 border-t border-gray-100 text-xs text-slate-500">
+        <p class="font-bold text-slate-700">সহায়তার জন্য কল করুন:</p>
+        <p class="mt-1 font-semibold text-brand-600"><i class="fa-solid fa-phone mr-1"></i> +8801707483913</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- নোটিশ ব্যানার বাটন -->
+  <div class="py-4 text-center bg-white border-b border-rose-100">
+    <a href="#products-section" class="inline-block px-8 py-2.5 rounded-xl bg-[#ff5500] hover:bg-[#e04b00] text-white font-bold text-sm shadow-md transition-all">
+      অর্ডার করতে চাই
+    </a>
+  </div>
+
+  <!-- হিরো ব্যানার সেকশন -->
+  <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-2">
+    <div class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-[#21120a] via-[#351a10] to-[#1c0f08] border border-amber-900/40 shadow-xl p-6 sm:p-10 flex flex-col md:flex-row items-center justify-between gap-8 text-white">
+      <div class="space-y-4 text-center md:text-left max-w-xl">
+        <span class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30 font-bold text-xs">
+          <i class="fa-solid fa-wand-magic-sparkles"></i> Gift • Surprise • Happy Moments
+        </span>
+        <h1 class="text-2xl sm:text-4xl font-extrabold text-white leading-tight">
+          বিশেষ মুহূর্তকে স্মৃতিময় করে তুলুন <span class="text-amber-400">প্রিয় মুহূর্ত</span>-এর সাথে
+        </h1>
+        <p class="text-amber-100/80 text-sm leading-relaxed">
+          ছবিযুক্ত কাস্টমাইজড চকলেট গিফট বক্স, উডেন টেবিল ফটোফ্রেম ও ক্রিস্টাল ফটো কি-রিং। নিজের বা প্রিয়জনের ছবি দিয়ে সাজিয়ে নিন মাত্র ৪০০-৫০০ টাকায়!
+        </p>
+        <div class="pt-2 flex flex-wrap gap-3 justify-center md:justify-start">
+          <a href="#products-section" class="px-6 py-3 bg-[#ff5500] hover:bg-[#e04b00] text-white text-sm font-bold rounded-xl shadow-md transition">
+            কালেকশন দেখুন
+          </a>
+          <a href="https://wa.me/8801707483913" target="_blank" rel="noopener noreferrer" class="px-6 py-3 bg-white/10 text-emerald-300 hover:bg-white/20 border border-emerald-500/40 text-sm font-bold rounded-xl shadow-sm transition flex items-center gap-2">
+            <i class="fa-brands fa-whatsapp text-lg"></i> সরাসরি WhatsApp করুন
+          </a>
+        </div>
+      </div>
+      <div class="w-full md:w-auto flex justify-center">
+        <div class="p-2 rounded-2xl bg-gradient-to-b from-amber-400/20 to-rose-600/20 border border-amber-400/40 shadow-2xl backdrop-blur-sm">
+          <img src="logo.jpg" alt="Priyo Muhurto Official 3D Logo" class="w-64 sm:w-80 h-auto rounded-xl object-contain shadow-lg" onerror="this.onerror=null; this.src='6301036393165166230_2.jpg';" />
+        </div>
+      </div>
+    </div>
   </section>
 
-  <section class="wrap" aria-label="প্রোডাক্ট খুঁজুন">
-    <div id="setup-note"></div>
-    <div class="bar">
-      <div class="chips" id="chips" role="group" aria-label="ক্যাটাগরি"></div>
-      <input class="field" id="q" type="search" placeholder="উপহার খুঁজুন" aria-label="প্রোডাক্ট খুঁজুন">
-      <select class="field" id="sort" aria-label="সাজান">
-        <option value="new">নতুন আগে</option>
-        <option value="low">দাম কম থেকে বেশি</option>
-        <option value="high">দাম বেশি থেকে কম</option>
-      </select>
-    </div>
-    <div class="count num" id="count" aria-live="polite"></div>
-    <div class="grid" id="grid"></div>
-  </section>
-</main>
-
-<footer>
-  <div class="wrap">
-    <section class="contact" id="contact" hidden aria-label="যোগাযোগ">
-      <h2>যোগাযোগ</h2>
-      <ul id="contact-list"></ul>
-    </section>
-    <div><b>প্রিয় মুহূর্ত</b> · priyomuhurto</div>
-  </div>
-</footer>
-
-<div class="veil" id="veil" hidden>
-  <aside class="panel" id="cart" role="dialog" aria-modal="true" aria-labelledby="cart-title">
-    <header><h2 id="cart-title">আপনার কার্ট</h2><button class="btn sm" id="cart-close" type="button">বন্ধ করুন</button></header>
-    <div id="cart-body"></div>
-  </aside>
-</div>
-<div class="toast" id="toast" role="status" hidden></div>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
-<script src="config.js"></script>
-<script src="common.js"></script>
-<script src="shop.js"></script>
-</body>
-</html>
-<!doctype html>
-<html lang="bn">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="robots" content="noindex, nofollow">
-<title>প্রিয় মুহূর্ত ম্যানেজ</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Tiro+Bangla:ital@0;1&display=swap">
-<link rel="stylesheet" href="styles.css">
-</head>
-<body>
-
-<header class="top">
-  <div class="wrap">
-    <div class="brand"><b>প্রিয় মুহূর্ত</b><small style="letter-spacing:0;text-transform:none">ম্যানেজ প্যানেল</small></div>
-    <a class="btn" href="index.html" target="_blank" rel="noopener">দোকান দেখুন</a>
-    <button class="btn" id="logout" type="button" hidden>লগআউট</button>
-  </div>
-</header>
-
-<div class="wrap" id="setup-wrap"></div>
-
-<main class="wrap login" id="login-view" hidden>
-  <div class="box">
-    <h2>ম্যানেজারের লগইন</h2>
-    <form id="login-form">
-      <label>ইমেইল<input class="field" id="l-email" type="email" autocomplete="username" required></label>
-      <label>পাসওয়ার্ড<input class="field" id="l-pass" type="password" autocomplete="current-password" required></label>
-      <div class="err" id="l-err" role="alert"></div>
-      <button class="btn primary" id="l-btn" type="submit">ঢুকুন</button>
-    </form>
-  </div>
-</main>
-
-<main id="panel-view" hidden>
-  <div class="wrap">
-    <div class="tabs" role="tablist">
-      <button class="tab" role="tab" data-tab="products" aria-selected="true" type="button">প্রোডাক্ট</button>
-      <button class="tab" role="tab" data-tab="orders" aria-selected="false" type="button">অর্ডার <span class="badge num" id="new-orders" hidden>০</span></button>
-      <button class="tab" role="tab" data-tab="info" aria-selected="false" type="button">দোকানের তথ্য</button>
+  <!-- প্রোডাক্ট সেকশন -->
+  <main id="products-section" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 flex-1">
+    
+    <div class="text-center mb-8">
+      <h2 class="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">আপনার পছন্দের কাস্টমাইজড গিফট বেছে নিন</h2>
+      <p class="text-xs sm:text-sm text-slate-500 mt-1">ছবি বা মেসেজ দিয়ে কাস্টমাইজ করার জন্য অর্ডার কনফার্মের পর WhatsApp-এ পাঠান।</p>
     </div>
 
-    <div id="tab-products">
-      <form class="box" id="pform" autocomplete="off">
-        <h2 id="pform-title">নতুন প্রোডাক্ট যোগ করুন</h2>
-        <div class="cols">
-          <label class="wide">প্রোডাক্টের নাম
-            <input class="field" id="p-name" required maxlength="120" placeholder="যেমন: ব্যক্তিগত ছবির মগ">
-          </label>
-          <label>বিক্রয় মূল্য (টাকা)
-            <input class="field num" id="p-price" type="number" min="1" step="1" inputmode="numeric" required>
-          </label>
-          <label>আগের দাম (ছাড় দেখাতে, ঐচ্ছিক)
-            <input class="field num" id="p-old" type="number" min="0" step="1" inputmode="numeric">
-          </label>
-          <label>ক্যাটাগরি
-            <input class="field" id="p-cat" list="cat-list" maxlength="40" placeholder="যেমন: কাস্টম উপহার">
-            <datalist id="cat-list"></datalist>
-          </label>
-          <label>স্টকে আছে (টি)
-            <input class="field num" id="p-stock" type="number" min="0" step="1" inputmode="numeric" value="10">
-          </label>
-          <label class="wide">বিবরণ
-            <textarea class="field" id="p-desc" maxlength="600" placeholder="সাইজ, উপাদান, কতদিনে পৌঁছাবে"></textarea>
-          </label>
-          <div class="wide">
-            <label>ছবি
-              <input class="field" id="p-image" type="file" accept="image/*">
-            </label>
-            <div class="thumbbox" id="img-preview" hidden>
-              <div class="photo thumb" id="img-thumb"></div>
-              <button class="btn sm" id="img-remove" type="button">ছবি সরান</button>
+    <!-- প্রোডাক্ট গ্রিড -->
+    <div id="productsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- ডাইনামিক প্রোডাক্ট লিস্ট লোড হবে -->
+    </div>
+
+    <!-- হেল্পলাইন ও কন্টাক্ট সেকশন -->
+    <div id="contact-section" class="mt-16 bg-gradient-to-br from-slate-950 via-[#181124] to-slate-900 rounded-3xl p-6 sm:p-10 border border-rose-900/40 text-white shadow-xl relative overflow-hidden">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
+        <div class="lg:col-span-6 space-y-3">
+          <span class="inline-block px-3 py-1 bg-rose-500/20 text-rose-300 border border-rose-500/30 rounded-full text-xs font-semibold">
+            ২৪/৭ কাস্টমার হেল্পডেস্ক
+          </span>
+          <h3 class="text-2xl sm:text-3xl font-bold tracking-tight">অর্ডার করতে বা ছবি পাঠাতে যোগাযোগ করুন</h3>
+          <p class="text-slate-300 text-sm leading-relaxed">
+            কাস্টমাইজড চকলেট বক্স বা ফটোফ্রেমের জন্য আপনার ছবি ও নাম পাঠাতে নির্দ্বিধায় কল বা মেসেজ দিন।
+          </p>
+        </div>
+
+        <div class="lg:col-span-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <a href="tel:+8801707483913" class="flex items-center gap-3.5 p-4 rounded-2xl bg-slate-900/90 border border-rose-500/20 hover:border-brand-500 transition group shadow-sm">
+            <div class="w-12 h-12 rounded-xl bg-rose-500/20 text-rose-400 flex items-center justify-center text-xl group-hover:scale-110 transition-transform">
+              <i class="fa-solid fa-phone"></i>
             </div>
-            <small class="mini" id="img-note">ছবি ছোট করে সংরক্ষণ করা হয়। চৌকো ছবি সবচেয়ে ভালো দেখায়।</small>
+            <div>
+              <p class="text-xs text-slate-400">সরাসরি কল করুন</p>
+              <p class="text-sm font-bold text-white group-hover:text-rose-300">+8801707483913</p>
+            </div>
+          </a>
+
+          <a href="https://wa.me/8801707483913" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3.5 p-4 rounded-2xl bg-slate-900/90 border border-emerald-500/30 hover:border-emerald-500 transition group shadow-sm">
+            <div class="w-12 h-12 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-xl group-hover:scale-110 transition-transform">
+              <i class="fa-brands fa-whatsapp"></i>
+            </div>
+            <div>
+              <p class="text-xs text-slate-400">WhatsApp চ্যাট</p>
+              <p class="text-sm font-bold text-white group-hover:text-emerald-300">+8801707483913</p>
+            </div>
+          </a>
+
+          <a href="mailto:priyomuhurto@gmail.com" class="flex items-center gap-3.5 p-4 rounded-2xl bg-slate-900/90 border border-blue-500/20 hover:border-blue-400 transition group shadow-sm">
+            <div class="w-12 h-12 rounded-xl bg-blue-500/20 text-blue-400 flex items-center justify-center text-xl group-hover:scale-110 transition-transform">
+              <i class="fa-solid fa-envelope"></i>
+            </div>
+            <div class="overflow-hidden">
+              <p class="text-xs text-slate-400">অফিসিয়াল ইমেইল</p>
+              <p class="text-xs font-bold text-white truncate group-hover:text-blue-300">priyomuhurto@gmail.com</p>
+            </div>
+          </a>
+
+          <div class="flex items-center gap-3.5 p-4 rounded-2xl bg-slate-900/90 border border-slate-800">
+            <div class="w-12 h-12 rounded-xl bg-rose-500/10 text-rose-400 flex items-center justify-center text-xl">
+              <i class="fa-solid fa-location-dot"></i>
+            </div>
+            <div>
+              <p class="text-xs text-slate-400">অফিস ঠিকানা</p>
+              <p class="text-sm font-bold text-white">ঢাকা, বাংলাদেশ</p>
+            </div>
           </div>
         </div>
-        <div class="err" id="p-err" role="alert"></div>
-        <div class="actions">
-          <button class="btn primary" id="p-save" type="submit">সংরক্ষণ করুন</button>
-          <button class="btn" id="p-reset" type="button">নতুন করে শুরু</button>
-        </div>
-      </form>
-      <div class="box">
-        <h2>আপনার প্রোডাক্ট <span class="num" id="p-total"></span></h2>
-        <div class="rows" id="plist"></div>
       </div>
     </div>
+  </main>
 
-    <div id="tab-orders" hidden>
-      <div class="bar">
-        <input class="field" id="o-q" type="search" placeholder="নাম, ফোন বা অর্ডার নম্বর দিয়ে খুঁজুন" aria-label="অর্ডার খুঁজুন">
-        <select class="field" id="o-st" aria-label="অবস্থা অনুযায়ী ছাঁকনি">
-          <option value="">সব অবস্থা</option>
-          <option value="new">নতুন</option><option value="confirmed">নিশ্চিত</option><option value="shipped">পাঠানো হয়েছে</option><option value="done">পৌঁছেছে</option><option value="cancelled">বাতিল</option>
-        </select>
-        <button class="btn sm" id="orders-refresh" type="button">রিফ্রেশ করুন</button>
-      </div>
-      <div class="count" id="o-count" aria-live="polite"></div>
-      <p class="mini" style="margin:0 0 14px">লিডারবোর্ডে শুধু "নিশ্চিত", "পাঠানো হয়েছে" ও "পৌঁছেছে" অবস্থার অর্ডার গোনা হয়। "নতুন" বা "বাতিল" অর্ডার গোনা হয় না।</p>
-      <div id="olist"></div>
-    </div>
-
-    <div id="tab-info" hidden>
-      <form class="box" id="sform" autocomplete="off">
-        <h2>দোকানের তথ্য</h2>
-        <div class="cols">
-          <label>ফোন নম্বর
-            <input class="field" id="s-phone" inputmode="tel" maxlength="20" placeholder="01XXXXXXXXX">
-          </label>
-          <label>হোয়াটসঅ্যাপ নম্বর
-            <input class="field" id="s-wa" inputmode="tel" maxlength="20" placeholder="01XXXXXXXXX">
-          </label>
-          <label>বিকাশ নম্বর (পার্সোনাল)
-            <input class="field" id="s-bkash" inputmode="tel" maxlength="20" placeholder="01XXXXXXXXX">
-          </label>
-          <label>ইমেইল
-            <input class="field" id="s-email" type="text" inputmode="email" maxlength="80" placeholder="name@example.com">
-          </label>
-          <label class="wide">দোকানের ঠিকানা
-            <input class="field" id="s-addr" maxlength="160" placeholder="এলাকা, শহর">
-          </label>
-          <label>ফেসবুক পেজ
-            <input class="field" id="s-fb" maxlength="160" placeholder="লিংক অথবা পেজের ইউজারনেম">
-          </label>
-          <label>টিকটক আইডি
-            <input class="field" id="s-tt" maxlength="160" placeholder="লিংক অথবা @ইউজারনেম">
-          </label>
-          <label>ইউটিউব চ্যানেল
-            <input class="field" id="s-yt" maxlength="160" placeholder="লিংক অথবা @চ্যানেলের নাম">
-          </label>
-          <label>ইনস্টাগ্রাম আইডি
-            <input class="field" id="s-ig" maxlength="160" placeholder="লিংক অথবা @ইউজারনেম">
-          </label>
-          <small class="mini wide">যেটা খালি রাখবেন সেটা ওয়েবসাইটে দেখাবে না। যা লিখবেন তা পাতার নিচে "যোগাযোগ" অংশে আসবে।</small>
-          <label>ডেলিভারি চার্জ, ঢাকার ভেতরে (টাকা)
-            <input class="field num" id="s-in" type="number" min="0" step="1" inputmode="numeric">
-          </label>
-          <label>ডেলিভারি চার্জ, ঢাকার বাইরে (টাকা)
-            <input class="field num" id="s-out" type="number" min="0" step="1" inputmode="numeric">
-          </label>
+  <!-- ফুটার সেকশন -->
+  <footer class="bg-slate-950 text-slate-300 border-t border-slate-900 mt-16 pt-12 pb-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-8 mb-8">
+        
+        <!-- ফুটার লোগো ও ব্র্যান্ড বিবরণ -->
+        <div class="md:col-span-7 space-y-4">
+          <div class="inline-block brand-logo-frame">
+            <img src="logo.jpg" alt="প্রিয় মুহূর্ত" class="brand-logo-img" onerror="this.onerror=null; this.src='6301036393165166230_2.jpg';" />
+          </div>
+          <p class="text-xs text-slate-400 leading-relaxed pr-6 max-w-md">
+            বিশেষ মানুষের বিশেষ মুহূর্তগুলোকে স্মরণীয় করে রাখতে কাস্টমাইজড চকলেট বক্স, ফটো ফ্রেম ও গিফট আইটেম। সারা বাংলাদেশে হোম ডেলিভারি সুবিধা।
+          </p>
         </div>
-        <div class="actions" style="margin-top:14px"><button class="btn primary" type="submit">সংরক্ষণ করুন</button></div>
-      </form>
-      <div class="box">
-        <h2>আইকন ছবি (ঐচ্ছিক)</h2>
-        <p style="margin-top:0;color:var(--muted)">প্রতিটির আসল লোগোর ছবি (PNG, JPG বা WebP) এখানে দিলে "যোগাযোগ" অংশে সেটাই দেখাবে। না দিলে সাধারণ আইকন থাকবে। ছবি বেছে নিলেই সংরক্ষণ হয়ে যায়।</p>
-        <div id="icorows"></div>
+
+        <div class="md:col-span-5">
+          <h5 class="text-white font-semibold mb-3">হেল্পলাইন ও কন্টাক্ট</h5>
+          <p class="text-sm text-slate-400 mb-2">
+            <a href="tel:+8801707483913" class="hover:text-amber-300 flex items-center transition">
+              <i class="fa-solid fa-phone text-amber-500 mr-2"></i> +8801707483913
+            </a>
+          </p>
+          <p class="text-sm text-slate-400 mb-2">
+            <a href="https://wa.me/8801707483913" target="_blank" rel="noopener noreferrer" class="hover:text-emerald-400 flex items-center transition">
+              <i class="fa-brands fa-whatsapp text-emerald-500 mr-2 text-base"></i> +8801707483913 (WhatsApp)
+            </a>
+          </p>
+          <p class="text-sm text-slate-400 mb-2">
+            <a href="mailto:priyomuhurto@gmail.com" class="hover:text-amber-300 flex items-center transition">
+              <i class="fa-solid fa-envelope text-amber-500 mr-2"></i> priyomuhurto@gmail.com
+            </a>
+          </p>
+          <p class="text-sm text-slate-400 flex items-center">
+            <i class="fa-solid fa-location-dot text-amber-500 mr-2"></i> ঢাকা, বাংলাদেশ
+          </p>
+        </div>
+      </div>
+
+      <div class="pt-8 border-t border-slate-900 text-center text-xs text-slate-500">
+        <p>© 2026 প্রিয় মুহূর্ত (Priyo Muhurto)। সর্বস্বত্ব সংরক্ষিত।</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- কার্ট স্লাইড-ইন ড্রয়ার -->
+  <div id="cartDrawer" class="fixed inset-0 z-50 pointer-events-none transition-all duration-300">
+    <div id="cartBackdrop" onclick="toggleCartDrawer(false)" class="absolute inset-0 bg-black/60 opacity-0 transition-opacity duration-300 backdrop-blur-sm"></div>
+    <div id="cartPanel" class="absolute top-0 right-0 w-full sm:w-96 h-full bg-white shadow-2xl translate-x-full transition-transform duration-300 flex flex-col justify-between">
+      
+      <!-- কার্ট হেডার -->
+      <div class="p-4 border-b border-gray-100 flex items-center justify-between bg-rose-50/50">
+        <div class="flex items-center gap-2">
+          <i class="fa-solid fa-bag-shopping text-brand-600"></i>
+          <h3 class="font-bold text-slate-800">আপনার শপিং ব্যাগ</h3>
+        </div>
+        <button onclick="toggleCartDrawer(false)" class="p-2 text-slate-400 hover:text-slate-600 rounded-full hover:bg-rose-100/50 transition">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
+
+      <!-- কার্ট আইটেম লিস্ট -->
+      <div id="cartItemsList" class="flex-1 overflow-y-auto p-4 space-y-3 custom-scrollbar">
+        <!-- আইটেম আসবে -->
+      </div>
+
+      <!-- কার্ট ফুটার -->
+      <div id="cartFooter" class="p-4 border-t border-gray-100 bg-gray-50/80 space-y-3">
+        <div class="space-y-1.5 text-xs text-slate-600">
+          <div class="flex justify-between">
+            <span>সাবটোটাল</span>
+            <span id="cartSubtotal" class="font-semibold text-slate-800">৳ ০</span>
+          </div>
+          <div class="flex justify-between">
+            <span>ডেলিভারি চার্জ</span>
+            <span id="cartDelivery" class="font-semibold text-emerald-600">ফ্রি (সীমিত অফার)</span>
+          </div>
+          <div class="flex justify-between text-sm font-bold text-slate-900 pt-2 border-t border-gray-200">
+            <span>সর্বমোট</span>
+            <span id="cartGrandTotal" class="text-brand-600 font-extrabold text-base">৳ ০</span>
+          </div>
+        </div>
+
+        <button onclick="openCheckoutModal()" class="w-full py-3 bg-brand-600 hover:bg-brand-700 text-white font-semibold rounded-xl shadow-lg shadow-brand-600/30 transition-all flex items-center justify-center gap-2 text-sm">
+          অর্ডারে এগিয়ে যান <i class="fa-solid fa-arrow-right"></i>
+        </button>
       </div>
     </div>
   </div>
-</main>
 
-<div class="toast" id="toast" role="status" hidden></div>
+  <!-- চেকআউট মডাল -->
+  <div id="checkoutModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl relative max-h-[90vh] overflow-y-auto custom-scrollbar">
+      <div class="flex items-center justify-between pb-3 border-b border-gray-100 mb-4">
+        <h3 class="text-lg font-bold text-gray-900 flex items-center gap-2">
+          <i class="fa-solid fa-truck-fast text-brand-600"></i> ডেলিভারি ও অর্ডার তথ্য
+        </h3>
+        <button onclick="closeCheckoutModal()" class="text-gray-400 hover:text-gray-600 p-1">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
-<script src="config.js"></script>
-<script src="common.js"></script>
-<script src="admin.js"></script>
-</body>
-</html>
-<!doctype html>
-<html lang="bn">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>প্রিয় মুহূর্ত লিডারবোর্ড</title>
-<meta name="description" content="প্রিয় মুহূর্তে সবচেয়ে বেশি কেনাকাটা করা সেরা ১০০ গ্রাহক।">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Tiro+Bangla:ital@0;1&display=swap">
-<link rel="stylesheet" href="styles.css">
-</head>
-<body>
+      <form id="checkoutForm" class="space-y-4">
+        <div>
+          <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">আপনার পূর্ণ নাম *</label>
+          <input type="text" id="customerName" required placeholder="যেমন: মো: রাশেদুল ইসলাম" class="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 focus:ring-2 focus:ring-brand-500 focus:outline-none text-xs">
+        </div>
 
-<header class="top">
-  <div class="wrap">
-    <a class="brand" href="index.html" aria-label="প্রিয় মুহূর্ত, প্রথম পাতা" style="text-decoration:none"><b>প্রিয় মুহূর্ত</b><small>priyomuhurto</small></a>
-    <nav class="nav" aria-label="মেনু">
-      <a class="btn primary" href="index.html">দোকানে ফিরুন</a>
-    </nav>
+        <div>
+          <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">সচল মোবাইল নম্বর *</label>
+          <input type="tel" id="customerPhone" required placeholder="যেমন: 01700000000" class="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 focus:ring-2 focus:ring-brand-500 focus:outline-none text-xs">
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">সম্পূর্ণ ডেলিভারি ঠিকানা *</label>
+          <textarea id="customerAddress" required rows="2" placeholder="বাড়ি নম্বর, রোড নম্বর, এলাকা, থানা ও জেলা..." class="w-full px-3.5 py-2 rounded-xl border border-gray-200 focus:ring-2 focus:ring-brand-500 focus:outline-none text-xs"></textarea>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">মূল্য পরিশোধের পদ্ধতি *</label>
+          <div class="grid grid-cols-2 gap-3">
+            <label class="flex items-center gap-2 p-3 rounded-xl border border-gray-200 cursor-pointer hover:border-brand-500 bg-white">
+              <input type="radio" name="paymentMethod" value="Cash On Delivery" checked class="text-brand-600 focus:ring-brand-500">
+              <span class="text-xs font-medium text-gray-800">ক্যাশ অন ডেলিভারি</span>
+            </label>
+            <label class="flex items-center gap-2 p-3 rounded-xl border border-gray-200 cursor-pointer hover:border-brand-500 bg-white">
+              <input type="radio" name="paymentMethod" value="bKash / Nagad" class="text-brand-600 focus:ring-brand-500">
+              <span class="text-xs font-medium text-gray-800">বিকাশ / নগদ</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="text-[11px] text-slate-500 bg-rose-50/60 p-3 rounded-xl border border-rose-100">
+          💡 অর্ডার সাবমিট করার পর ছবি বা চকলেট বক্সে লেখার টেক্সট <strong>হোয়াটসঅ্যাপে (+8801707483913)</strong> পাঠিয়ে কনফার্ম করুন।
+        </div>
+
+        <div class="bg-slate-50 p-3 rounded-xl border border-gray-200 flex justify-between items-center text-xs">
+          <span class="text-gray-700 font-medium">সর্বমোট প্রদেয় বিল:</span>
+          <span id="checkoutOrderTotal" class="text-base font-black text-brand-600">৳ ০</span>
+        </div>
+
+        <button type="submit" class="w-full py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl shadow-lg shadow-emerald-600/30 transition-all text-center text-xs flex items-center justify-center gap-2">
+          <i class="fa-brands fa-whatsapp text-base"></i> অর্ডার কনফার্ম করুন (হোয়াটসঅ্যাপে পাঠান)
+        </button>
+      </form>
+    </div>
   </div>
-</header>
 
-<main class="wrap">
-  <section class="lb-head">
-    <h1>সেরা ১০০ গ্রাহক</h1>
-    <p>যাঁরা প্রিয় মুহূর্ত থেকে সবচেয়ে বেশি টাকার উপহার কিনেছেন। নিশ্চিত হওয়া অর্ডারের মোট দাম ধরে তালিকা সাজানো হয়। গ্রাহকের গোপনীয়তার জন্য শুধু নামের প্রথম অংশ আর মোবাইল নম্বরের কিছু অংশ দেখানো হয়।</p>
-  </section>
-  <div id="setup-note"></div>
-  <div id="lb-status" class="count" aria-live="polite"></div>
-  <ol class="lb" id="lb"></ol>
-</main>
+  <!-- অর্ডার সাকসেস মডাল -->
+  <div id="successModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-sm w-full p-8 text-center shadow-2xl relative">
+      <div class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-4 text-3xl animate-bounce">
+        <i class="fa-solid fa-check"></i>
+      </div>
+      <h3 class="text-2xl font-bold text-gray-900 mb-2">অর্ডার পাঠানো হয়েছে!</h3>
+      <p class="text-xs text-gray-600 mb-4 leading-relaxed" id="successMessage">
+        ধন্যবাদ! আপনার অর্ডার বিবরণী সফলভাবে রেকর্ড হয়েছে এবং হোয়াটসঅ্যাপে পাঠানো হয়েছে।
+      </p>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
-<script src="config.js"></script>
-<script src="common.js"></script>
-<script src="leaderboard.js"></script>
-</body>
-</html>
-// Supabase প্রজেক্টের তথ্য এখানে বসান (README.md-এর ধাপ ৪ দেখুন)।
-// এই "anon" কী জনসাধারণের জন্য, এটা প্রকাশ্যে থাকলে সমস্যা নেই।
-// কখনও "service_role" কী এখানে দেবেন না।
-window.PM_CONFIG = {
-  SUPABASE_URL: 'https://YOUR-PROJECT.supabase.co',
-  SUPABASE_ANON_KEY: 'YOUR-ANON-KEY'
-};
-/* দোকান ও অ্যাডমিন, দুই পাতার সাধারণ কোড */
-(function () {
-  const C = window.PM_CONFIG || {};
-  const ready = !!(C.SUPABASE_URL && C.SUPABASE_ANON_KEY && !/YOUR-/.test(C.SUPABASE_URL) && !/YOUR-/.test(C.SUPABASE_ANON_KEY));
-  const sb = (ready && window.supabase) ? window.supabase.createClient(C.SUPABASE_URL, C.SUPABASE_ANON_KEY) : null;
-  const BUCKET = 'product-images';
+      <div class="p-3 bg-rose-50 rounded-2xl border border-rose-100 text-xs text-slate-600 mb-5 space-y-1 text-left">
+        <p class="font-bold text-slate-800">ছবি/মেসেজ পাঠাতে কল করুন:</p>
+        <p><i class="fa-solid fa-phone text-brand-600 mr-1.5"></i> <a href="tel:+8801707483913" class="hover:underline font-bold">+8801707483913</a></p>
+      </div>
 
-  const $ = (s, r = document) => r.querySelector(s);
-  const $$ = (s, r = document) => [...r.querySelectorAll(s)];
-  const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
-  const nf = new Intl.NumberFormat('bn-BD');
-  const bn = n => nf.format(n);
-  const tk = n => '৳' + nf.format(Math.round(Number(n) || 0));
-  const toLatin = s => String(s || '').replace(/[০-৯]/g, d => '০১২৩৪৫৬৭৮৯'.indexOf(d));
-  const hash = s => { let h = 0; for (const c of String(s)) h = (h * 31 + c.codePointAt(0)) >>> 0; return h; };
-  const when = ts => new Date(ts).toLocaleString('bn-BD', { dateStyle: 'medium', timeStyle: 'short' });
-  const imgUrl = path => path ? `${C.SUPABASE_URL}/storage/v1/object/public/${BUCKET}/${String(path).split('/').map(encodeURIComponent).join('/')}` : '';
-  const intl = n => { const d = toLatin(n).replace(/\D/g, ''); return d.startsWith('880') ? d : d.startsWith('0') ? '88' + d : d; };
+      <button onclick="closeSuccessModal()" class="w-full py-3 bg-brand-600 hover:bg-brand-700 text-white font-medium rounded-xl transition text-xs">
+        আরও কেনাকাটা করুন
+      </button>
+    </div>
+  </div>
 
-  const STATUS = { new: 'নতুন', confirmed: 'নিশ্চিত', shipped: 'পাঠানো হয়েছে', done: 'পৌঁছেছে', cancelled: 'বাতিল' };
+  <!-- নোটিফিকেশন টোস্ট -->
+  <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-24 opacity-0 transition-all duration-300 pointer-events-none">
+    <div class="bg-slate-900 text-white px-5 py-3 rounded-2xl shadow-2xl flex items-center gap-3 border border-slate-700">
+      <i id="toastIcon" class="fa-solid fa-circle-check text-emerald-400"></i>
+      <span id="toastMsg" class="text-sm font-medium">অ্যাকশন সফল হয়েছে</span>
+    </div>
+  </div>
 
-  const DEFAULTS = {
-    phone: '', whatsapp: '', email: '', address: '', facebook: '', tiktok: '', youtube: '', instagram: '',
-    bkash: '', delivery_inside: 60, delivery_outside: 120, icons: {}
-  };
+  <script>
+    // ৪০০ থেকে ৫০০ টাকার মধ্যে ৫টি কাস্টমাইজড গিফট ও ফটোফ্রেম প্রোডাক্ট
+    const products = [
+      {
+        id: 1,
+        title: "কাস্টমাইজড ফটো চকলেট বক্স | ৪৫০ টাকা",
+        price: 450,
+        image: "https://images.unsplash.com/photo-1549007994-cb92caebd54b?w=800&auto=format&fit=crop&q=80",
+        description: "প্রিয়জনের ছবি এবং বিশেষ শুভেচ্ছা বার্তা সহ ডেইরি মিল্ক/কিটক্যাট কাস্টমাইজড চকলেট গিফট বক্স।"
+      },
+      {
+        id: 2,
+        title: "মিনি উডেন টেবিল ফটো ফ্রেম | ৪০০ টাকা",
+        price: 400,
+        image: "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?w=800&auto=format&fit=crop&q=80",
+        description: "৪x৬ ইঞ্চি প্রিমিয়াম ম্যাট ফিনিশ কাঠের টেবিল ফটো ফ্রেম। এইচডি কোয়ালিটি ছবি প্রিন্ট অন্তর্ভুক্ত।"
+      },
+      {
+        id: 3,
+        title: "হার্ট শেপ চকলেট কম্বো প্যাকেজ | ৫০০ টাকা",
+        price: 500,
+        image: "https://images.unsplash.com/photo-1582293041079-7814c2f12063?w=800&auto=format&fit=crop&q=80",
+        description: "হার্ট শেপ বক্সে প্রিমিয়াম চকলেট, লাল গোলাপের পাপড়ি ও কাস্টমাইজড লাভ কার্ড সংবলিত সারপ্রাইজ বক্স।"
+      },
+      {
+        id: 4,
+        title: "পোলারয়েড ফটো ফ্রেম কম্বো (৬ পিস) | ৪২০ টাকা",
+        price: 420,
+        image: "https://images.unsplash.com/photo-1526047932273-341f2a7631f9?w=800&auto=format&fit=crop&q=80",
+        description: "৬টি ভিনটেজ পোলারয়েড স্টাইল ছবি প্রিন্ট এবং সাথে কাঠের মিনি ক্লিপ ও জুটের দড়ি ফ্রি।"
+      },
+      {
+        id: 5,
+        title: "কাস্টমাইজড এক্রিলিক ফটো কি-রিং | ৪০০ টাকা",
+        price: 400,
+        image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&auto=format&fit=crop&q=80",
+        description: "উভয় পাশে ছবিযুক্ত প্রিমিয়াম ওয়াটারপ্রুফ ক্রিস্টাল এক্রিলিক কি-রিং এবং মিনি গিফট পাউচ।"
+      }
+    ];
 
-  function toast(msg) {
-    const t = $('#toast'); if (!t) return;
-    t.textContent = msg; t.hidden = false;
-    clearTimeout(toast.t); toast.t = setTimeout(() => { t.hidden = true; }, 2600);
-  }
+    let cart = JSON.parse(localStorage.getItem('priyo_cart')) || [];
 
-  function photoHTML(p, extra = '') {
-    const h = hash(p.name || '') % 360;
-    const inner = p.image_path
-      ? `<img src="${esc(imgUrl(p.image_path))}" alt="${esc(p.name)}" loading="lazy">`
-      : `<span class="initial" aria-hidden="true">${esc([...(p.name || '?')][0])}</span>`;
-    return `<div class="photo ${extra}" style="--h:${h}">${inner}</div>`;
-  }
-
-  function socialUrl(kind, raw) {
-    const v = String(raw || '').trim();
-    if (/^https?:\/\//i.test(v)) return v;
-    const h = v.replace(/^(https?:\/\/)?(www\.)?(facebook|fb|tiktok|instagram|youtube)\.com\//i, '').replace(/^@/, '');
-    if (!/^[A-Za-z0-9._\-\/?=&]+$/.test(h)) return '';
-    if (kind === 'facebook') return 'https://www.facebook.com/' + h;
-    if (kind === 'tiktok') return 'https://www.tiktok.com/@' + h;
-    if (kind === 'youtube') return 'https://www.youtube.com/@' + h;
-    return 'https://www.instagram.com/' + h;
-  }
-
-  const ICONS = {
-    phone: '<path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A15 15 0 0 1 3 6a2 2 0 0 1 2-2z"/>',
-    chat: '<path d="M4 5h16v11H9l-5 4z"/><path d="M8 9h8M8 12h5"/>',
-    wallet: '<rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18M16 14h2"/>',
-    mail: '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/>',
-    pin: '<path d="M12 21s7-6.2 7-11a7 7 0 0 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/>',
-    people: '<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><circle cx="17.5" cy="9" r="2.5"/><path d="M17 14.5a5 5 0 0 1 4.5 5"/>',
-    note: '<path d="M9 18V5l10-2v13"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="16.5" cy="16" r="2.5"/>',
-    video: '<rect x="3" y="6" width="13" height="12" rx="2"/><path d="m16 10 5-3v10l-5-3z"/>',
-    photo: '<rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.5"/><path d="m4 18 5-5 4 4 3-3 4 4"/>'
-  };
-
-  async function shrink(file, max, type, quality) {
-    const bmp = await createImageBitmap(file);
-    const r = Math.min(1, max / Math.max(bmp.width, bmp.height));
-    const c = document.createElement('canvas');
-    c.width = Math.max(1, Math.round(bmp.width * r)); c.height = Math.max(1, Math.round(bmp.height * r));
-    c.getContext('2d').drawImage(bmp, 0, 0, c.width, c.height);
-    return new Promise((res, rej) => c.toBlob(b => b ? res(b) : rej(new Error('ছবি পড়া যায়নি')), type, quality));
-  }
-  const uid = () => (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : Date.now().toString(36) + Math.random().toString(36).slice(2);
-
-  window.PM = { STATUS, $, $$, esc, bn, tk, toLatin, hash, when, sb, ready, imgUrl, intl, toast, photoHTML, socialUrl, ICONS, DEFAULTS, BUCKET, shrink, uid };
-})();
-/* ম্যানেজ প্যানেল: লগইন, প্রোডাক্ট, অর্ডার, দোকানের তথ্য */
-(() => {
-  const { $, $$, esc, bn, tk, when, sb, ready, imgUrl, toast, photoHTML, DEFAULTS, BUCKET, shrink, uid } = PM;
-  const S = { products: [], orders: [], settings: { ...DEFAULTS }, editing: null, imagePath: '', timer: null };
-  const STATUS = { new: 'নতুন', confirmed: 'নিশ্চিত', shipped: 'পাঠানো হয়েছে', done: 'পৌঁছেছে', cancelled: 'বাতিল' };
-  const ICO = [['wa', 'হোয়াটসঅ্যাপ'], ['fb', 'ফেসবুক'], ['tt', 'টিকটক'], ['yt', 'ইউটিউব'], ['ig', 'ইনস্টাগ্রাম']];
-  const byId = id => S.products.find(p => p.id === id);
-  const storage = () => sb.storage.from(BUCKET);
-
-  /* ---------- দৃশ্য ---------- */
-  function show(view) {
-    $('#login-view').hidden = view !== 'login';
-    $('#panel-view').hidden = view !== 'panel';
-    $('#logout').hidden = view !== 'panel';
-    if (view !== 'panel') { clearInterval(S.timer); S.timer = null; }
-  }
-  function showLogin(msg) { show('login'); $('#l-err').textContent = msg || ''; $('#l-btn').disabled = false; $('#l-btn').textContent = 'ঢুকুন'; }
-  function setTab(t) {
-    $$('.tab').forEach(b => b.setAttribute('aria-selected', String(b.dataset.tab === t)));
-    ['products', 'orders', 'info'].forEach(n => { $('#tab-' + n).hidden = n !== t; });
-  }
-
-  async function enter() {
-    const { data, error } = await sb.rpc('is_admin');
-    if (error || data !== true) {
-      await sb.auth.signOut();
-      showLogin('এই অ্যাকাউন্টের ম্যানেজ করার অনুমতি নেই। setup.sql-এ নিজের ইমেইল বসানো হয়েছে কিনা দেখুন।');
-      return;
+    function toBanglaNum(num) {
+      const bnDigits = ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'];
+      return String(num).replace(/[0-9]/g, d => bnDigits[d]);
     }
-    show('panel'); setTab('products'); resetForm(); renderIcoRows();
-    await Promise.all([loadProducts(), loadOrders(), loadSettings()]);
-    clearInterval(S.timer);
-    S.timer = setInterval(() => { if (!document.hidden) loadOrders(); }, 30000);
-  }
 
-  /* ---------- ডেটা লোড ---------- */
-  async function loadProducts() {
-    const { data, error } = await sb.from('products').select('*').order('created_at', { ascending: false });
-    if (error) { toast('প্রোডাক্ট লোড হয়নি'); return; }
-    S.products = data || []; renderPList();
-  }
-  async function loadOrders() {
-    const { data, error } = await sb.from('orders').select('*').order('created_at', { ascending: false }).limit(300);
-    if (error) { return; }
-    S.orders = data || []; renderOrders();
-  }
-  async function loadSettings() {
-    const { data } = await sb.from('settings').select('*').eq('id', 1).maybeSingle();
-    if (data) S.settings = { ...DEFAULTS, ...data, icons: data.icons || {} };
-    fillSettings(); showIcons();
-  }
-
-  /* ---------- প্রোডাক্ট ---------- */
-  function renderPList() {
-    const list = $('#plist');
-    $('#cat-list').innerHTML = [...new Set(S.products.map(p => p.category).filter(Boolean))].map(c => `<option value="${esc(c)}">`).join('');
-    $('#p-total').textContent = S.products.length ? `(${bn(S.products.length)})` : '';
-    if (!S.products.length) { list.innerHTML = `<p style="color:var(--muted)">এখনো কোনো প্রোডাক্ট নেই। উপরের ফর্ম দিয়ে প্রথমটি যোগ করুন।</p>`; return; }
-    list.innerHTML = S.products.map(p => `<div class="row" data-id="${esc(p.id)}">
-      ${photoHTML(p)}
-      <div class="nm"><b>${esc(p.name)}</b><small>${esc(p.category || 'ক্যাটাগরি নেই')}</small></div>
-      <label class="fld"><span class="mini">দাম (৳)</span><input class="field num" type="number" min="1" step="1" value="${esc(p.price)}" data-field="price" aria-label="${esc(p.name)} এর দাম"></label>
-      <label class="fld"><span class="mini">স্টক</span><input class="field num" type="number" min="0" step="1" value="${esc(p.stock ?? 0)}" data-field="stock" aria-label="${esc(p.name)} এর স্টক"></label>
-      <div class="acts actions"><button class="btn sm" type="button" data-edit="${esc(p.id)}">এডিট</button><button class="btn sm danger" type="button" data-rm="${esc(p.id)}">মুছুন</button></div>
-    </div>`).join('');
-  }
-  function resetForm() {
-    S.editing = null; S.imagePath = '';
-    $('#pform').reset(); $('#p-stock').value = 10;
-    $('#pform-title').textContent = 'নতুন প্রোডাক্ট যোগ করুন';
-    $('#p-err').textContent = ''; showImage();
-  }
-  function showImage() {
-    const has = !!S.imagePath;
-    $('#img-preview').hidden = !has;
-    if (has) $('#img-thumb').innerHTML = `<img src="${esc(imgUrl(S.imagePath))}" alt="">`;
-  }
-  async function saveProduct(ev) {
-    ev.preventDefault();
-    const err = $('#p-err'); err.textContent = '';
-    const name = $('#p-name').value.trim(), price = Math.round(Number($('#p-price').value));
-    if (!name) { err.textContent = 'প্রোডাক্টের নাম লিখুন।'; return; }
-    if (!(price > 0)) { err.textContent = 'বিক্রয় মূল্য ০ এর বেশি হতে হবে।'; return; }
-    const old = Math.round(Number($('#p-old').value) || 0);
-    const prev = S.editing ? byId(S.editing) : null;
-    const data = {
-      name, price, old_price: old > price ? old : 0, category: $('#p-cat').value.trim(),
-      stock: Math.max(0, Math.round(Number($('#p-stock').value) || 0)), description: $('#p-desc').value.trim(),
-      image_path: S.imagePath || ''
-    };
-    const btn = $('#p-save'); btn.disabled = true;
-    const res = S.editing ? await sb.from('products').update(data).eq('id', S.editing) : await sb.from('products').insert(data);
-    btn.disabled = false;
-    if (res.error) { err.textContent = 'সংরক্ষণ হয়নি: ' + res.error.message; return; }
-    if (prev && prev.image_path && prev.image_path !== data.image_path) storage().remove([prev.image_path]);
-    toast(S.editing ? 'প্রোডাক্ট আপডেট হয়েছে' : 'প্রোডাক্ট যোগ হয়েছে');
-    resetForm(); await loadProducts();
-  }
-  async function uploadProductImage(file) {
-    const note = $('#img-note'); note.textContent = 'ছবি আপলোড হচ্ছে…';
-    try {
-      const blob = await shrink(file, 900, 'image/jpeg', 0.82);
-      const path = `products/${uid()}.jpg`;
-      const { error } = await storage().upload(path, blob, { contentType: 'image/jpeg' });
-      if (error) throw error;
-      S.imagePath = path; showImage();
-      note.textContent = 'ছবি যোগ হয়েছে। এবার "সংরক্ষণ করুন" চাপুন।';
-    } catch (e) { note.textContent = 'ছবি আপলোড হয়নি, অন্য ছবি দিয়ে চেষ্টা করুন।'; }
-  }
-
-  /* ---------- অর্ডার ---------- */
-  function renderOrders() {
-    const box = $('#olist');
-    if (box.contains(document.activeElement) && document.activeElement.tagName === 'SELECT') return;
-    const n = S.orders.filter(o => o.status === 'new').length;
-    $('#new-orders').hidden = !n; $('#new-orders').textContent = bn(n);
-    const q = ($('#o-q').value || '').trim().toLowerCase(), st = $('#o-st').value;
-    const shown = S.orders.filter(o => (!st || o.status === st) &&
-      (!q || `${o.id} ${o.customer_name} ${o.customer_phone}`.toLowerCase().includes(q)));
-    $('#o-count').textContent = S.orders.length ? `${bn(shown.length)}টি অর্ডার দেখানো হচ্ছে (মোট ${bn(S.orders.length)}টি)` : '';
-    if (S.orders.length && !shown.length) { box.innerHTML = `<div class="box"><h2>কিছু পাওয়া যায়নি</h2><p style="color:var(--muted);margin:0">অন্য নাম, নম্বর বা অবস্থা দিয়ে খুঁজুন।</p></div>`; return; }
-    if (!S.orders.length) { box.innerHTML = `<div class="box"><h2>এখনো কোনো অর্ডার আসেনি</h2><p style="color:var(--muted);margin:0">ক্রেতা অর্ডার করলে এখানে দেখা যাবে। এই পাতা প্রতি ৩০ সেকেন্ডে নিজে থেকে নতুন অর্ডার খোঁজে।</p></div>`; return; }
-    box.innerHTML = shown.map(o => `<article class="order" data-oid="${esc(o.id)}">
-      <header><b>${esc(o.id)} <span class="pill ${o.status === 'new' ? 'new' : ''}">${esc(STATUS[o.status] || o.status)}</span></b><span class="num" style="color:var(--muted)">${when(o.created_at)}</span></header>
-      <div><b>${esc(o.customer_name)}</b> · <span class="num">${esc(o.customer_phone)}</span><br>${esc(o.customer_address)}</div>
-      <ul>${(o.items || []).map(i => `<li>${esc(i.name)} × <span class="num">${bn(i.qty)}</span> = <span class="num">${tk(i.price * i.qty)}</span></li>`).join('')}</ul>
-      <div class="num">ডেলিভারি ${tk(o.delivery)} (${o.area === 'outside' ? 'ঢাকার বাইরে' : 'ঢাকার ভেতরে'}) · <b>মোট ${tk(o.total)}</b> · ${o.payment === 'bkash' ? 'বিকাশ, TrxID: ' + esc(o.trx) : 'ক্যাশ অন ডেলিভারি'}</div>
-      ${o.note ? `<div class="note">${esc(o.note)}</div>` : ''}
-      <div class="actions"><select class="field" style="width:auto" data-status aria-label="অর্ডারের অবস্থা">${Object.entries(STATUS).map(([k, v]) => `<option value="${k}" ${k === o.status ? 'selected' : ''}>${v}</option>`).join('')}</select>
-      <button class="btn sm danger" type="button" data-orm>মুছুন</button></div>
-    </article>`).join('');
-  }
-
-  /* ---------- দোকানের তথ্য ---------- */
-  function fillSettings() {
-    if (document.activeElement && document.activeElement.closest && document.activeElement.closest('#sform')) return;
-    const s = S.settings;
-    $('#s-phone').value = s.phone || ''; $('#s-wa').value = s.whatsapp || ''; $('#s-bkash').value = s.bkash || '';
-    $('#s-email').value = s.email || ''; $('#s-addr').value = s.address || '';
-    $('#s-fb').value = s.facebook || ''; $('#s-tt').value = s.tiktok || ''; $('#s-yt').value = s.youtube || ''; $('#s-ig').value = s.instagram || '';
-    $('#s-in').value = s.delivery_inside; $('#s-out').value = s.delivery_outside;
-  }
-  function renderIcoRows() {
-    $('#icorows').innerHTML = ICO.map(([k, n]) => `<div class="icorow"><span>${n}</span>
-      <input type="file" accept="image/png,image/jpeg,image/webp" data-ico="${k}" aria-label="${n} এর আইকন ছবি">
-      <img id="ico-prev-${k}" alt="" hidden><button class="btn sm" type="button" data-icorm="${k}" id="ico-rm-${k}" hidden>সরান</button></div>`).join('');
-    showIcons();
-  }
-  function showIcons() {
-    const m = S.settings.icons || {};
-    for (const [k] of ICO) {
-      const img = $('#ico-prev-' + k), rm = $('#ico-rm-' + k); if (!img) continue;
-      if (m[k]) img.src = imgUrl(m[k]);
-      img.hidden = !m[k]; rm.hidden = !m[k];
+    function saveCart() {
+      localStorage.setItem('priyo_cart', JSON.stringify(cart));
+      updateCartBadge();
     }
-  }
-  async function setIcon(key, file) {
-    try {
-      const old = (S.settings.icons || {})[key];
-      let icons = { ...(S.settings.icons || {}) };
-      if (file) {
-        const blob = await shrink(file, 128, 'image/png');
-        const path = `icons/${key}-${Date.now()}.png`;
-        const up = await storage().upload(path, blob, { contentType: 'image/png' });
-        if (up.error) throw up.error;
-        icons[key] = path;
-      } else delete icons[key];
-      const { error } = await sb.from('settings').update({ icons }).eq('id', 1);
-      if (error) throw error;
-      S.settings.icons = icons; showIcons();
-      if (old) storage().remove([old]);
-      toast(file ? 'আইকন যোগ হয়েছে' : 'আইকন সরানো হয়েছে');
-    } catch (e) { toast('আইকন সংরক্ষণ করা যায়নি, অন্য ছবি দিয়ে চেষ্টা করুন'); }
-  }
 
-  /* ---------- ইভেন্ট ---------- */
-  document.addEventListener('click', async ev => {
-    const t = ev.target.closest('button'); if (!t) return;
-    const d = t.dataset;
-    if (t.id === 'logout') { await sb.auth.signOut(); showLogin(''); return; }
-    if (t.classList.contains('tab')) { setTab(d.tab); return; }
-    if (t.id === 'orders-refresh') { await loadOrders(); toast('অর্ডার হালনাগাদ হয়েছে'); return; }
-    if (t.id === 'p-reset') { resetForm(); return; }
-    if (t.id === 'img-remove') { S.imagePath = ''; showImage(); return; }
-    if (d.icorm) { await setIcon(d.icorm, null); return; }
-    if (d.edit) {
-      const p = byId(d.edit); if (!p) return;
-      S.editing = p.id; S.imagePath = p.image_path || '';
-      $('#p-name').value = p.name; $('#p-price').value = p.price; $('#p-old').value = p.old_price || '';
-      $('#p-cat').value = p.category || ''; $('#p-stock').value = p.stock ?? 0; $('#p-desc').value = p.description || '';
-      $('#pform-title').textContent = 'প্রোডাক্ট এডিট করুন'; showImage();
-      $('#pform').scrollIntoView({ behavior: 'smooth', block: 'start' }); $('#p-name').focus(); return;
+    function showToast(message, isSuccess = true) {
+      const toast = document.getElementById('toast');
+      const msg = document.getElementById('toastMsg');
+      const icon = document.getElementById('toastIcon');
+      if (!toast || !msg || !icon) return;
+
+      msg.innerText = message;
+      icon.className = isSuccess ? 'fa-solid fa-circle-check text-emerald-400' : 'fa-solid fa-circle-exclamation text-rose-400';
+
+      toast.classList.remove('translate-y-24', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+
+      setTimeout(() => {
+        toast.classList.remove('translate-y-0', 'opacity-100');
+        toast.classList.add('translate-y-24', 'opacity-0');
+      }, 3000);
     }
-    if (d.rm || 'orm' in d) {
-      if (!t.dataset.armed) {
-        t.dataset.armed = '1'; t.textContent = 'নিশ্চিত?';
-        setTimeout(() => { if (t.isConnected) { delete t.dataset.armed; t.textContent = 'মুছুন'; } }, 3000);
+
+    function toggleCartDrawer(open) {
+      const drawer = document.getElementById('cartDrawer');
+      const backdrop = document.getElementById('cartBackdrop');
+      const panel = document.getElementById('cartPanel');
+      if (!drawer || !backdrop || !panel) return;
+
+      if (open) {
+        renderCartItems();
+        drawer.classList.remove('pointer-events-none');
+        backdrop.classList.remove('opacity-0');
+        backdrop.classList.add('opacity-100');
+        panel.classList.remove('translate-x-full');
+        panel.classList.add('translate-x-0');
+      } else {
+        backdrop.classList.remove('opacity-100');
+        backdrop.classList.add('opacity-0');
+        panel.classList.remove('translate-x-0');
+        panel.classList.add('translate-x-full');
+        setTimeout(() => drawer.classList.add('pointer-events-none'), 300);
+      }
+    }
+
+    function toggleMobileMenu(open) {
+      const drawer = document.getElementById('mobileMenuDrawer');
+      const backdrop = document.getElementById('mobileMenuBackdrop');
+      const panel = document.getElementById('mobileMenuPanel');
+      if (!drawer || !backdrop || !panel) return;
+
+      if (open) {
+        drawer.classList.remove('pointer-events-none');
+        backdrop.classList.remove('opacity-0');
+        backdrop.classList.add('opacity-100');
+        panel.classList.remove('-translate-x-full');
+        panel.classList.add('translate-x-0');
+      } else {
+        backdrop.classList.remove('opacity-100');
+        backdrop.classList.add('opacity-0');
+        panel.classList.remove('translate-x-0');
+        panel.classList.add('-translate-x-full');
+        setTimeout(() => drawer.classList.add('pointer-events-none'), 300);
+      }
+    }
+
+    function updateCartBadge() {
+      const badge = document.getElementById('cartBadge');
+      const totalCount = cart.reduce((acc, item) => acc + item.quantity, 0);
+      if (!badge) return;
+      if (totalCount > 0) {
+        badge.classList.remove('hidden');
+        badge.innerText = toBanglaNum(totalCount);
+      } else {
+        badge.classList.add('hidden');
+      }
+    }
+
+    function directOrder(productId) {
+      const prod = products.find(p => p.id === productId);
+      if (!prod) return;
+
+      cart = [{ ...prod, quantity: 1 }];
+      saveCart();
+      openCheckoutModal();
+    }
+
+    function changeCartQty(productId, delta) {
+      const item = cart.find(i => i.id === productId);
+      if (!item) return;
+
+      item.quantity += delta;
+      if (item.quantity <= 0) {
+        cart = cart.filter(i => i.id !== productId);
+      }
+      saveCart();
+      renderCartItems();
+    }
+
+    function removeCartItem(productId) {
+      cart = cart.filter(i => i.id !== productId);
+      saveCart();
+      renderCartItems();
+      showToast("আইটেমটি কার্ট থেকে বাদ দেওয়া হয়েছে");
+    }
+
+    function renderCartItems() {
+      const listEl = document.getElementById('cartItemsList');
+      const footerEl = document.getElementById('cartFooter');
+      const subtotalEl = document.getElementById('cartSubtotal');
+      const grandTotalEl = document.getElementById('cartGrandTotal');
+      if (!listEl) return;
+
+      if (cart.length === 0) {
+        listEl.innerHTML = `
+          <div class="h-full flex flex-col items-center justify-center text-center p-8 text-slate-400">
+            <div class="w-16 h-16 bg-rose-50 rounded-full flex items-center justify-center text-rose-300 text-3xl mb-3">
+              <i class="fa-solid fa-basket-shopping"></i>
+            </div>
+            <h4 class="text-sm font-bold text-slate-700 mb-1">আপনার কার্ট খালি!</h4>
+            <p class="text-xs text-slate-400 mb-4">পছন্দের গিফট বা ফ্রেমটি নির্বাচন করে অর্ডার করুন।</p>
+          </div>
+        `;
+        if (footerEl) footerEl.classList.add('hidden');
         return;
       }
-      if (d.rm) {
-        const p = byId(d.rm);
-        const { error } = await sb.from('products').delete().eq('id', d.rm);
-        if (error) { toast('মোছা যায়নি'); return; }
-        if (p && p.image_path) storage().remove([p.image_path]);
-        toast('প্রোডাক্ট মুছে গেছে'); if (S.editing === d.rm) resetForm(); await loadProducts();
-      } else {
-        const id = t.closest('.order').dataset.oid;
-        const { error } = await sb.from('orders').delete().eq('id', id);
-        if (error) { toast('মোছা যায়নি'); return; }
-        toast('অর্ডার মুছে গেছে'); await loadOrders();
+
+      if (footerEl) footerEl.classList.remove('hidden');
+
+      const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+      const grandTotal = subtotal;
+
+      if (subtotalEl) subtotalEl.innerText = `৳ ${toBanglaNum(subtotal)}`;
+      if (grandTotalEl) grandTotalEl.innerText = `৳ ${toBanglaNum(grandTotal)}`;
+
+      listEl.innerHTML = cart.map(item => `
+        <div class="flex items-center gap-3 p-2.5 bg-white rounded-2xl border border-gray-100 shadow-sm">
+          <img src="${item.image}" alt="${item.title}" class="w-14 h-14 rounded-xl object-cover bg-rose-50 border border-gray-100 flex-shrink-0" onerror="this.src='https://placehold.co/100x100/1e172a/f43f5e?text=Gift'"/>
+          <div class="flex-1 min-w-0">
+            <h4 class="text-xs font-bold text-slate-800 truncate">${item.title}</h4>
+            <p class="text-xs text-brand-600 font-bold">৳ ${toBanglaNum(item.price)}</p>
+            <div class="flex items-center gap-2 mt-1">
+              <div class="flex items-center border border-gray-200 rounded-lg bg-gray-50 overflow-hidden">
+                <button onclick="changeCartQty(${item.id}, -1)" class="w-5 h-5 flex items-center justify-center text-slate-600 hover:bg-rose-100 text-[10px] transition">
+                  <i class="fa-solid fa-minus"></i>
+                </button>
+                <span class="px-2 text-xs font-bold text-slate-800">${toBanglaNum(item.quantity)}</span>
+                <button onclick="changeCartQty(${item.id}, 1)" class="w-5 h-5 flex items-center justify-center text-slate-600 hover:bg-rose-100 text-[10px] transition">
+                  <i class="fa-solid fa-plus"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+          <button onclick="removeCartItem(${item.id})" class="p-1.5 text-slate-400 hover:text-rose-500 rounded-lg transition" title="মুছে ফেলুন">
+            <i class="fa-regular fa-trash-can text-xs"></i>
+          </button>
+        </div>
+      `).join('');
+    }
+
+    function openCheckoutModal() {
+      if (cart.length === 0) {
+        showToast("আপনার কার্ট খালি!", false);
+        return;
       }
-    }
-  });
-  document.addEventListener('change', async ev => {
-    const t = ev.target;
-    if (t.dataset.field) {
-      const id = t.closest('.row').dataset.id, v = Math.round(Number(t.value));
-      if (t.dataset.field === 'price' && !(v > 0)) { toast('দাম ০ এর বেশি হতে হবে'); renderPList(); return; }
-      const { error } = await sb.from('products').update({ [t.dataset.field]: Math.max(0, v || 0) }).eq('id', id);
-      toast(error ? 'সংরক্ষণ হয়নি' : 'সংরক্ষিত'); if (error) await loadProducts();
-      return;
-    }
-    if (t.id === 'o-st') { renderOrders(); return; }
-    if (t.dataset.status !== undefined) {
-      const id = t.closest('.order').dataset.oid;
-      const { error } = await sb.from('orders').update({ status: t.value }).eq('id', id);
-      toast(error ? 'বদলানো যায়নি' : 'অবস্থা বদলেছে'); await loadOrders(); return;
-    }
-    if (t.id === 'p-image' && t.files[0]) { await uploadProductImage(t.files[0]); t.value = ''; return; }
-    if (t.dataset.ico && t.files[0]) { await setIcon(t.dataset.ico, t.files[0]); t.value = ''; }
-  });
-  document.addEventListener('input', ev => { if (ev.target.id === 'o-q') renderOrders(); });
-  document.addEventListener('submit', async ev => {
-    const f = ev.target;
-    if (f.id === 'login-form') {
-      ev.preventDefault();
-      $('#l-err').textContent = ''; $('#l-btn').disabled = true; $('#l-btn').textContent = 'দেখা হচ্ছে…';
-      const { error } = await sb.auth.signInWithPassword({ email: $('#l-email').value.trim(), password: $('#l-pass').value });
-      if (error) { showLogin('ইমেইল বা পাসওয়ার্ড ঠিক নয়।'); return; }
-      $('#l-pass').value = ''; await enter(); return;
-    }
-    if (f.id === 'pform') return saveProduct(ev);
-    if (f.id === 'sform') {
-      ev.preventDefault();
-      const data = {
-        phone: $('#s-phone').value.trim(), whatsapp: $('#s-wa').value.trim(), bkash: $('#s-bkash').value.trim(),
-        email: $('#s-email').value.trim(), address: $('#s-addr').value.trim(),
-        facebook: $('#s-fb').value.trim(), tiktok: $('#s-tt').value.trim(), youtube: $('#s-yt').value.trim(), instagram: $('#s-ig').value.trim(),
-        delivery_inside: Math.max(0, Math.round(Number($('#s-in').value) || 0)), delivery_outside: Math.max(0, Math.round(Number($('#s-out').value) || 0))
-      };
-      const { error } = await sb.from('settings').update(data).eq('id', 1);
-      if (error) { toast('সংরক্ষণ হয়নি'); return; }
-      S.settings = { ...S.settings, ...data }; toast('তথ্য সংরক্ষিত');
-    }
-  });
+      toggleCartDrawer(false);
 
-  /* ---------- শুরু ---------- */
-  (async function start() {
-    if (!ready || !sb) {
-      $('#setup-wrap').innerHTML = `<div class="note setup-note"><b>সাইটটি এখনও ডেটাবেজের সাথে যুক্ত নয়।</b> <code>config.js</code> ফাইলে Supabase এর URL ও anon কী বসান। ধাপগুলো README.md-তে আছে।</div>`;
-      return;
+      const modal = document.getElementById('checkoutModal');
+      const totalEl = document.getElementById('checkoutOrderTotal');
+      if (modal) modal.classList.remove('hidden');
+
+      const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+      if (totalEl) totalEl.innerText = `৳ ${toBanglaNum(subtotal)}`;
     }
-    const { data } = await sb.auth.getSession();
-    if (data && data.session) await enter(); else showLogin('');
-  })();
-})();
-/* লিডারবোর্ড: সর্বোচ্চ ১০০ জন গ্রাহক */
-(() => {
-  const { $, esc, bn, tk, sb, ready } = PM;
-  const list = $('#lb'), status = $('#lb-status');
 
-  function render(rows) {
-    if (!rows.length) {
-      status.textContent = '';
-      list.innerHTML = `<li style="display:block;text-align:center;color:var(--muted)"><h2 style="font-size:1.4rem;color:var(--ink);margin-bottom:6px">তালিকা এখনো ফাঁকা</h2>প্রথম নিশ্চিত অর্ডারের পরেই এখানে নাম আসবে।</li>`;
-      return;
+    function closeCheckoutModal() {
+      const modal = document.getElementById('checkoutModal');
+      if (modal) modal.classList.add('hidden');
     }
-    status.textContent = `${bn(rows.length)} জন`;
-    list.innerHTML = rows.map(r => {
-      const cls = r.pos <= 3 ? (r.pos === 1 ? 'top3 first' : 'top3') : '';
-      return `<li class="${cls}">
-        <span class="rk num" aria-label="অবস্থান ${bn(r.pos)}">${bn(r.pos)}</span>
-        <div class="who"><b>${esc(r.display_name)}</b>${r.masked_phone ? `<small class="num">${esc(r.masked_phone)}</small>` : ''}</div>
-        <div class="amt num"><b>${tk(r.total_amount)}</b><small>${bn(r.orders_count)}টি অর্ডার</small></div>
-      </li>`;
-    }).join('');
-  }
 
-  async function load() {
-    status.textContent = 'লোড হচ্ছে…';
-    const { data, error } = await sb.rpc('leaderboard');
-    if (error) { status.textContent = ''; list.innerHTML = `<li style="display:block;text-align:center;color:var(--muted)">তালিকা এখন দেখা যাচ্ছে না। পাতাটি রিফ্রেশ করে আবার চেষ্টা করুন।</li>`; return; }
-    render((data || []).slice(0, 100));
-  }
+    function closeSuccessModal() {
+      const modal = document.getElementById('successModal');
+      if (modal) modal.classList.add('hidden');
+    }
 
-  if (!ready || !sb) {
-    status.textContent = '';
-    $('#setup-note').innerHTML = `<div class="note setup-note"><b>সাইটটি এখনও ডেটাবেজের সাথে যুক্ত নয়।</b> <code>config.js</code> ফাইলে Supabase এর URL ও anon কী বসান। ধাপগুলো README.md-তে আছে।</div>`;
-  } else load();
-})();
--- ঐচ্ছিক: দোকান ফাঁকা না দেখিয়ে কয়েকটি নমুনা প্রোডাক্ট বসাতে চাইলে setup.sql চালানোর পরে এটা চালান।
--- পরে ম্যানেজ প্যানেল থেকে এগুলো এডিট বা মুছে দিতে পারবেন।
+    // প্রোডাক্ট রেন্ডারিং
+    function renderProducts() {
+      const grid = document.getElementById('productsGrid');
+      if (!grid) return;
 
-insert into public.products (name, price, old_price, category, stock, description) values
-('ব্যক্তিগত ছবির সিরামিক মগ', 450, 550, 'কাস্টম উপহার', 12, 'আপনার পছন্দের ছবি ও দুই লাইন লেখা দিয়ে তৈরি মগ। তৈরি হতে ৩ থেকে ৪ দিন লাগে।'),
-('কাঠের ফটো ফ্রেম (৮×১০ ইঞ্চি)', 850, 1050, 'ঘর সাজানো', 6, 'হাতে পালিশ করা কাঠের ফ্রেম, দেয়ালে ঝোলানো বা টেবিলে রাখা যায়।'),
-('হাতে লেখা চিঠির সেট', 350, 0, 'কাস্টম উপহার', 20, 'পাঁচটি খাম, পাঁচটি কাগজ আর একটি শুকনো ফুলের বুকমার্ক।'),
-('চকলেট ও কার্ডের গিফট বক্স', 1200, 0, 'গিফট বক্স', 3, 'আমদানি করা চকলেট, হাতে লেখা কার্ড আর মোড়ানো বক্স। জন্মদিনের জন্য সবচেয়ে বেশি কেনা হয়।'),
-('নকশিকাঁথা কুশন কভার', 650, 780, 'ঘর সাজানো', 8, 'জামালপুরের কারিগরদের হাতে সেলাই করা, ১৬ ইঞ্চি কুশনের মাপ।'),
-('সুগন্ধি সয়া ক্যান্ডেল', 520, 0, 'গিফট বক্স', 0, 'ল্যাভেন্ডার সুবাসের সয়া মোম, প্রায় ৩৫ ঘণ্টা জ্বলে।');
+      grid.innerHTML = products.map(prod => `
+        <div class="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden flex flex-col p-3 hover:shadow-md transition">
+          
+          <!-- ছবি -->
+          <div class="relative w-full h-64 sm:h-72 rounded-xl overflow-hidden bg-slate-50 mb-3">
+            <img src="${prod.image}" alt="${prod.title}" class="w-full h-full object-cover transition-transform duration-300 hover:scale-105" onerror="this.src='https://placehold.co/500x500/1e172a/f43f5e?text=Gift'"/>
+          </div>
+
+          <!-- নীল টাইটেল ও দাম বার -->
+          <div class="bg-[#0073aa] text-white font-bold text-xs sm:text-sm py-2.5 px-3 rounded-lg text-center tracking-wide mb-2">
+            ${prod.title}
+          </div>
+
+          <!-- বিবরণ -->
+          <p class="text-[12px] text-slate-500 line-clamp-2 mb-3 px-1 text-center">
+            ${prod.description}
+          </p>
+
+          <!-- কমলা অর্ডার বাটন -->
+          <button onclick="directOrder(${prod.id})" class="mt-auto w-full py-3 rounded-lg bg-[#ff5500] hover:bg-[#e04b00] text-white text-sm font-bold shadow transition-all active:scale-95 text-center">
+            অর্ডার করতে চাই
+          </button>
+        </div>
+      `).join('');
+    }
+
+    // উইন্ডো অবজেক্টে ফাংশন এক্সপোজ
+    window.toBanglaNum = toBanglaNum;
+    window.toggleCartDrawer = toggleCartDrawer;
+    window.toggleMobileMenu = toggleMobileMenu;
+    window.updateCartBadge = updateCartBadge;
+    window.directOrder = directOrder;
+    window.changeCartQty = changeCartQty;
+    window.removeCartItem = removeCartItem;
+    window.renderCartItems = renderCartItems;
+    window.openCheckoutModal = openCheckoutModal;
+    window.closeCheckoutModal = closeCheckoutModal;
+    window.closeSuccessModal = closeSuccessModal;
+    window.renderProducts = renderProducts;
+
+    document.addEventListener('DOMContentLoaded', () => {
+      renderProducts();
+      updateCartBadge();
+
+      // চেকআউট ফর্ম সাবমিট ও হোয়াটসঅ্যাপ বার্তা তৈরি
+      const checkoutForm = document.getElementById('checkoutForm');
+      if (checkoutForm) {
+        checkoutForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const name = document.getElementById('customerName').value.trim();
+          const phone = document.getElementById('customerPhone').value.trim();
+          const address = document.getElementById('customerAddress').value.trim();
+          const payment = document.querySelector('input[name="paymentMethod"]:checked').value;
+
+          if (!name || !phone || !address) {
+            showToast("সবগুলো তথ্য সঠিকভাবে পূরণ করুন", false);
+            return;
+          }
+
+          const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+          const orderId = 'PM-' + Date.now().toString().slice(-6);
+
+          let orderItemsText = cart.map(i => `• ${i.title} (x${i.quantity}) - ৳${i.price * i.quantity}`).join('\n');
+          let whatsappMessage = `*নতুন কাস্টমাইজড গিফট অর্ডার (প্রিয় মুহূর্ত)*%0A` +
+            `-----------------------------------%0A` +
+            `*অর্ডার আইডি:* ${orderId}%0A` +
+            `*গ্রাহকের নাম:* ${encodeURIComponent(name)}%0A` +
+            `*মোবাইল নম্বর:* ${encodeURIComponent(phone)}%0A` +
+            `*ঠিকানা:* ${encodeURIComponent(address)}%0A` +
+            `*পেমেন্ট পদ্ধতি:* ${encodeURIComponent(payment)}%0A%0A` +
+            `*অর্ডারকৃত পণ্য:*%0A${encodeURIComponent(orderItemsText)}%0A%0A` +
+            `*ডেলিভারি চার্জ:* ফ্রী অফার%0A` +
+            `*সর্বমোট বিল:* ৳${total}%0A` +
+            `-----------------------------------%0A` +
+            `দয়া করে আমার পছন্দের ছবি ও মেসেজ যুক্ত করে অর্ডার কনফার্ম করুন।`;
+
+          const adminWhatsAppNumber = "8801707483913";
+          const whatsappURL = `https://wa.me/${adminWhatsAppNumber}?text=${whatsappMessage}`;
+
+          closeCheckoutModal();
+          cart = [];
+          saveCart();
+
+          const successMsg = document.getElementById('successMessage');
+          if (successMsg) {
+            successMsg.innerText = `ধন্যবাদ ${name}! আপনার অর্ডারটি সফল হয়েছে। অনুগ্রহ করে হোয়াটসঅ্যাপে আপনার ফ্রেম বা চকলেটের ছবি/লেখা পাঠান।`;
+          }
+          const successModal = document.getElementById('successModal');
+          if (successModal) successModal.classList.remove('hidden');
+
+          setTimeout(() => {
+            window.open(whatsappURL, '_blank');
+          }, 1000);
+        });
+      }
+    });
+  </script>
+</body>
+</html>
