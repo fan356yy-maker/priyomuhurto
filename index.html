@@ -163,81 +163,139 @@
             0%, 100% { opacity: 1; }
             50% { opacity: 0.7; }
         }
+
+        /* Smooth Scroll Reveal Animations */
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(36px) scale(0.96);
+            transition: opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+                        transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+            will-change: opacity, transform;
+        }
+
+        .scroll-reveal.reveal-left {
+            transform: translateX(-32px) translateY(15px);
+        }
+
+        .scroll-reveal.reveal-right {
+            transform: translateX(32px) translateY(15px);
+        }
+
+        .scroll-reveal.reveal-zoom {
+            transform: scale(0.88) translateY(20px);
+        }
+
+        .scroll-reveal.active {
+            opacity: 1;
+            transform: translateX(0) translateY(0) scale(1);
+        }
+
+        /* Floating pulse animation for main CTA buttons */
+        @keyframes gentleFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-4px); }
+        }
+
+        .btn-float {
+            animation: gentleFloat 2.6s ease-in-out infinite;
+        }
     </style>
 </head>
 <body>
 
 <div class="app-wrapper">
-    <!-- Top Bar with Circular Logo, Image Setup & User Auth Buttons -->
+    <!-- Top Bar with Circular Logo, User Auth Buttons & 3-Dot Admin Menu -->
     <header class="sticky top-0 z-40 bg-white/95 backdrop-blur border-b border-gray-200 px-3 py-2.5 flex items-center justify-between gap-1">
-        <div class="flex items-center gap-2">
-            <div class="w-11 h-11 rounded-full bg-gradient-to-br from-green-600 to-green-500 text-white flex flex-col items-center justify-center shadow-md border-2 border-green-100 leading-none shrink-0">
-                <span class="text-[10px] font-bold">প্রিয়</span>
-                <span class="text-[9px] font-semibold">মুহূর্ত</span>
+        <div class="flex items-center gap-2.5">
+            <!-- Top-left Circular Round Logo Image from https://ibb.co.com/s9Wp7Gyg -->
+            <div class="w-12 h-12 rounded-full overflow-hidden shadow-md border-2 border-[#4caf27] ring-2 ring-green-100 shrink-0 bg-green-700 flex items-center justify-center">
+                <img id="siteLogoImg"
+                     src=""
+                     alt="প্রিয় মুহূর্ত লোগো"
+                     class="w-full h-full rounded-full object-cover block">
             </div>
-        <!-- Action Buttons: Direct Image Fixer + Admin Panel + User Auth -->
-        <div class="flex items-center gap-1.5 flex-wrap justify-end">
-            <button onclick="openAdminModal()" class="relative px-2.5 py-1.5 text-[11px] font-bold text-white bg-gradient-to-r from-emerald-700 to-green-600 rounded-full shadow-sm hover:from-emerald-800 hover:to-green-700 transition flex items-center gap-1" title="কাস্টমারদের সব অর্ডার দেখুন (অ্যাডমিন প্যানেল)">
-                <i class="fas fa-box-open text-yellow-300"></i>
-                <span>অর্ডার লিস্ট</span>
-                <span id="adminOrderBadge" class="ml-0.5 px-1.5 py-0.2 bg-red-600 text-white text-[10px] rounded-full font-extrabold">0</span>
-            </button>
+            <div class="text-left leading-tight">
+                <div class="font-extrabold text-sm text-[#2e7d12]">প্রিয় মুহূর্ত</div>
+                <div class="text-[10px] text-gray-500 font-semibold">Priyo Muhurto</div>
+            </div>
+        </div>
 
-            <button onclick="openImageManagerModal()" class="px-2.5 py-1.5 text-[11px] font-bold text-amber-800 bg-amber-100 border border-amber-300 rounded-full hover:bg-amber-200 transition flex items-center gap-1" title="গ্যালারি বা লিংক থেকে ছবি পরিবর্তন করুন">
-                <i class="fas fa-camera text-amber-600"></i>
-                <span>ছবি</span>
-            </button>
-
+        <!-- Action Buttons: User Auth + Three-Dot (⋮) Admin Control Menu -->
+        <div class="flex items-center gap-1.5 flex-wrap justify-end relative">
             <div id="authHeaderArea" class="flex items-center gap-1">
-                <button onclick="openAuthModal('login')" class="px-2.5 py-1.5 text-[11px] font-bold text-green-700 border border-green-600 rounded-full hover:bg-green-50 transition">
+                <button onclick="openAuthModal('login')" class="px-3 py-1.5 text-xs font-bold text-green-700 border border-green-600 rounded-full hover:bg-green-50 transition">
                     লগইন
                 </button>
-                <button onclick="openAuthModal('signup')" class="px-2.5 py-1.5 text-[11px] font-bold text-white bg-[#4caf27] rounded-full shadow-sm hover:bg-green-700 transition">
-                    অ্যাকাউন্ট
+                <button onclick="openAuthModal('signup')" class="px-3 py-1.5 text-xs font-bold text-white bg-[#4caf27] rounded-full shadow-sm hover:bg-green-700 transition">
+                    অ্যাকাউন্ট খুলুন
                 </button>
+            </div>
+
+            <!-- Three-Dot (⋮) Menu Button -->
+            <div class="relative">
+                <button id="threeDotMenuBtn" onclick="toggleThreeDotMenu(event)"
+                        class="w-9 h-9 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 flex items-center justify-center transition relative border border-gray-200"
+                        title="মেনু">
+                    <i class="fas fa-ellipsis-v text-sm"></i>
+                    <span id="adminOrderBadge" class="hidden absolute -top-1 -right-1 px-1.5 py-0.2 bg-red-600 text-white text-[9px] rounded-full font-extrabold">0</span>
+                </button>
+
+                <!-- Three-Dot Dropdown Menu (Strictly ONLY Admin Panel Option Outside) -->
+                <div id="threeDotDropdown" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-xl border border-gray-200 py-1.5 z-50 text-left">
+                    <button type="button" onclick="openAdminModal()"
+                            class="w-full px-3.5 py-2.5 text-xs font-bold text-gray-800 hover:bg-green-50 flex items-center justify-between transition">
+                        <span class="flex items-center gap-2">
+                            <i class="fas fa-lock text-[#4caf27] text-sm"></i>
+                            <span>🔒 অ্যাডমিন প্যানেল</span>
+                        </span>
+                        <span id="dropdownOrderBadge" class="px-1.5 py-0.5 bg-red-100 text-red-700 text-[10px] rounded-full font-extrabold">0</span>
+                    </button>
+                </div>
             </div>
         </div>
     </header>
 
     <!-- Main Container -->
-    <main class="p-3.5 text-center">
+    <main class="p-3.5 text-center overflow-x-hidden">
+
+        <!-- Centered Round Website Logo Showcase at Top of Landing Page -->
+        <div class="flex justify-center mb-3 scroll-reveal reveal-zoom">
+            <div class="w-[72px] h-[72px] rounded-full overflow-hidden shadow-lg border-2 border-[#4caf27] ring-4 ring-green-50 bg-white flex items-center justify-center">
+                <img id="topCenterLogoImg"
+                     src=""
+                     alt="প্রিয় মুহূর্ত রাউন্ড লোগো"
+                     class="w-full h-full rounded-full object-cover block">
+            </div>
+        </div>
 
         <!-- Promo Banner -->
-        <div class="promo-banner mb-3.5">
+        <div class="promo-banner mb-3.5 scroll-reveal">
             💥 সীমিত সময়ের জন্য পাচ্ছেন একদম ফ্রি হোম ডেলিভারি 💥
         </div>
 
         <!-- Instruction Text -->
-        <p class="text-[15.5px] font-bold text-gray-800 leading-relaxed mb-4 px-2">
+        <p class="text-[15.5px] font-bold text-gray-800 leading-relaxed mb-4 px-2 scroll-reveal">
             “আপনার পছন্দের পণ্যটি নির্বাচন করুন। অর্ডার কনফার্ম করার পর অনুগ্রহ করে পণ্যের ছবি ও অর্ডার নম্বর WhatsApp-এ পাঠান।”
         </p>
 
         <!-- Top Order CTA -->
-        <div class="mb-4">
-            <a href="#checkout" class="btn-orange">অর্ডার করতে চাই</a>
+        <div class="mb-4 scroll-reveal reveal-zoom">
+            <a href="#checkout" class="btn-orange btn-float">অর্ডার করতে চাই</a>
         </div>
 
-        <!-- Website Main Image Banner (User Provided: https://ibb.co.com/s9Wp7Gyg) -->
-        <div class="relative rounded-2xl overflow-hidden shadow-lg border-2 border-green-100 mb-4 bg-gray-900 group">
-            <img id="mainBannerImg"
+        <!-- Website Main Image Banner (Public Clean View - No Camera Buttons) -->
+        <div class="relative rounded-2xl overflow-hidden shadow-lg border-2 border-green-100 mb-4 bg-gray-900 scroll-reveal reveal-zoom">
+            <img id="heroBannerImg"
                  src=""
                  alt="প্রিয় মুহূর্ত ব্যানার"
                  class="w-full h-auto min-h-[230px] max-h-[420px] object-cover mx-auto block bg-gray-800">
-            <div class="bg-gradient-to-t from-black/85 via-black/35 to-transparent absolute bottom-0 inset-x-0 p-3 flex items-center justify-between text-white">
-                <span class="text-sm font-bold"><i class="fas fa-gift text-yellow-400 mr-1"></i> প্রিয় মানুষকে দিন সেরা উপহার</span>
-                <div class="flex items-center gap-1.5">
-                    <button type="button" onclick="openImageManagerModal()" class="text-[11px] bg-amber-500 hover:bg-amber-600 text-white px-2.5 py-1 rounded-full font-bold shadow">
-                        <i class="fas fa-camera mr-1"></i>গ্যালারি থেকে দিন
-                    </button>
-                    <a href="https://ibb.co.com/s9Wp7Gyg" target="_blank" rel="noopener noreferrer" class="text-[11px] bg-white/20 hover:bg-white/30 px-2.5 py-1 rounded-full backdrop-blur" title="মূল ছবি দেখুন">
-                        <i class="fas fa-external-link-alt"></i>
-                    </a>
-                </div>
+            <div class="bg-gradient-to-t from-black/80 via-black/30 to-transparent absolute bottom-0 inset-x-0 p-3 flex items-center justify-center text-white">
+                <span class="text-sm font-bold"><i class="fas fa-gift text-yellow-400 mr-1.5"></i> প্রিয় মানুষকে দিন সেরা উপহার - প্রিয় মুহূর্ত</span>
             </div>
         </div>
 
         <!-- WhatsApp Pill Button -->
-        <div class="my-3">
+        <div class="my-3 scroll-reveal">
             <a href="https://wa.me/8801707483913" target="_blank" rel="noopener noreferrer"
                class="inline-flex items-center gap-2 bg-[#25d366] text-white font-bold text-base px-6 py-2 rounded-full shadow-md hover:opacity-95 transition">
                 <i class="fab fa-whatsapp text-xl"></i>
@@ -246,19 +304,13 @@
         </div>
 
         <!-- Brand Name Green Banner -->
-        <div class="brand-banner mb-3.5 uppercase">
+        <div class="brand-banner mb-3.5 uppercase scroll-reveal reveal-zoom">
             প্রিয় মুহূর্ত - PRIYO MUHURTO
         </div>
 
         <!-- Second Order CTA -->
-        <div class="mb-4">
-            <a href="#checkout" class="btn-orange">অর্ডার করতে চাই</a>
-        </div>
-
-        <!-- Status bar for automatic ImgBB loading -->
-        <div id="imgStatusNotice" class="mb-3 px-3 py-2 rounded-xl bg-green-50 border border-green-200 text-xs text-green-800 flex items-center justify-between">
-            <span id="imgStatusText"><i class="fas fa-sync fa-spin mr-1.5 text-[#4caf27]"></i>৪টি প্রোডাক্ট ও ব্যানারের ছবি লোড হচ্ছে...</span>
-            <button type="button" onclick="openImageManagerModal()" class="underline font-bold text-[#2e7d12] ml-2 shrink-0">গ্যালারি থেকে দিন</button>
+        <div class="mb-5 scroll-reveal">
+            <a href="#checkout" class="btn-orange btn-float">অর্ডার করতে চাই</a>
         </div>
 
         <!-- 2-Column Product Showcase Grid -->
@@ -267,27 +319,27 @@
         </div>
 
         <!-- Why Buy From Us Section (Exact match to video) -->
-        <section class="my-8 bg-[#fdfaf3] border border-[#f0e4cc] rounded-2xl p-4 text-center shadow-sm">
+        <section class="my-8 bg-[#fdfaf3] border border-[#f0e4cc] rounded-2xl p-4 text-center shadow-sm scroll-reveal">
             <h2 class="text-xl font-bold text-gray-900">আমাদের থেকে কেন কিনবেন ??</h2>
             <div class="zigzag-divider"></div>
 
             <div class="space-y-3 text-left text-[15px] text-gray-800 font-medium leading-relaxed">
-                <div class="flex items-start gap-2.5">
+                <div class="flex items-start gap-2.5 scroll-reveal reveal-left">
                     <i class="fas fa-check-circle text-[#4caf27] text-lg mt-1 shrink-0"></i>
                     <p>“আমরা সরাসরি চায়না থেকে আমদানি করা উচ্চমানের অরিজিনাল ম্যাজিক মিরর আপনাদের প্রদান করছি। প্রতিটি পণ্য টেকসই, প্রিমিয়াম ফিনিশিং এবং গিফট দেওয়ার জন্য একদম পারফেক্ট।”</p>
                 </div>
-                <div class="flex items-start gap-2.5">
+                <div class="flex items-start gap-2.5 scroll-reveal reveal-right">
                     <i class="fas fa-check-circle text-[#4caf27] text-lg mt-1 shrink-0"></i>
                     <p>সুইচ অন করলেই সাধারণ আয়নাটি মুহূর্তেই আপনার প্রিয়জনের ছবিসহ চমৎকার LED ফটো ফ্রেমে রূপান্তরিত হবে।</p>
                 </div>
-                <div class="flex items-start gap-2.5">
+                <div class="flex items-start gap-2.5 scroll-reveal reveal-left">
                     <i class="fas fa-check-circle text-[#4caf27] text-lg mt-1 shrink-0"></i>
                     <p>সারাদেশে সম্পূর্ণ <strong>ফ্রি হোম ডেলিভারি</strong> এবং পণ্য হাতে পেয়ে ডেলিভারি ম্যানকে টাকা পরিশোধ করার সুবিধা (Cash on Delivery)।</p>
                 </div>
             </div>
 
             <!-- FAQ Accordion from video -->
-            <div class="mt-5 text-left border border-gray-200 rounded-xl bg-white overflow-hidden">
+            <div class="mt-5 text-left border border-gray-200 rounded-xl bg-white overflow-hidden scroll-reveal">
                 <button type="button" onclick="toggleFaq()" class="w-full px-4 py-3 flex items-center justify-between font-bold text-green-800 text-sm">
                     <span><i class="fas fa-plus-circle mr-2 text-[#4caf27]"></i>টাকা কিভাবে পে করবো ?</span>
                     <i id="faqIcon" class="fas fa-chevron-down text-xs transition-transform"></i>
@@ -299,7 +351,7 @@
         </section>
 
         <!-- Phone / WhatsApp CTA Section -->
-        <section class="my-6">
+        <section class="my-6 scroll-reveal reveal-zoom">
             <h3 class="text-lg font-bold text-[#2e7d12] mb-3">
                 ফোনে অর্ডার করুন অথবা প্রয়োজনে কল করুন
             </h3>
@@ -312,7 +364,7 @@
         </section>
 
         <!-- Checkout Section -->
-        <section id="checkout" class="pt-3 text-left">
+        <section id="checkout" class="pt-3 text-left scroll-reveal">
             <h2 class="text-center text-[#2e7d12] text-xl font-bold mb-3 leading-snug">
                 অর্ডার করতে সঠিক তথ্য দিয়ে নিচের ফর্ম টি পূরণ করুন
             </h2>
@@ -425,118 +477,210 @@
         </section>
 
         <!-- Footer -->
-        <footer class="mt-7 pb-8 text-center">
+        <footer class="mt-7 pb-8 text-center scroll-reveal">
             <div class="promo-banner text-sm mb-3">
                 বিস্তারিত জানতে আমাদের ফেসবুক পেজ ফলো করুন
             </div>
             <a href="#checkout" class="inline-flex w-11 h-11 rounded-full bg-[#4caf27] text-white items-center justify-center text-xl shadow hover:bg-green-700 transition">
                 <i class="fab fa-facebook-f"></i>
             </a>
-            <div class="mt-4">
-                <button onclick="openAdminModal()" class="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs font-bold border border-gray-300 transition">
-                    <i class="fas fa-user-shield text-[#4caf27]"></i> অ্যাডমিন ড্যাশবোর্ড (অর্ডার দেখুন)
-                </button>
-            </div>
-            <p class="text-xs text-gray-500 mt-3 font-medium">
+            <p class="text-xs text-gray-500 mt-4 font-medium">
                 © ২০২৬ <strong>প্রিয় মুহূর্ত (Priyo Muhurto)</strong> | সর্বস্বত্ব সংরক্ষিত
             </p>
         </footer>
     </main>
 </div>
 
-<!-- Admin Order Management Dashboard Modal -->
+<!-- Password-Protected Admin Control Panel Modal (Orders + Image Setup Inside Only) -->
 <div id="adminModal" class="fixed inset-0 bg-black/70 z-50 hidden items-center justify-center p-2.5 sm:p-4 backdrop-blur-sm">
     <div class="bg-white w-full max-w-2xl rounded-2xl p-4 sm:p-5 relative shadow-2xl max-h-[92vh] flex flex-col">
-        <button onclick="closeAdminModal()" class="absolute top-3.5 right-4 text-gray-400 hover:text-gray-700 text-xl">
+        <button onclick="closeAdminModal()" class="absolute top-3.5 right-4 text-gray-400 hover:text-gray-700 text-xl" title="বন্ধ করুন">
             <i class="fas fa-times"></i>
         </button>
 
         <!-- Header -->
-        <div class="flex items-center gap-2.5 mb-3 pb-2.5 border-b border-gray-200">
-            <div class="w-10 h-10 rounded-full bg-green-100 text-[#2e7d12] flex items-center justify-center text-lg font-bold shrink-0">
-                <i class="fas fa-boxes"></i>
+        <div class="flex items-center justify-between gap-2.5 mb-3 pb-2.5 border-b border-gray-200 pr-7">
+            <div class="flex items-center gap-2.5">
+                <div class="w-10 h-10 rounded-full bg-green-100 text-[#2e7d12] flex items-center justify-center text-lg font-bold shrink-0">
+                    <i class="fas fa-user-shield"></i>
+                </div>
+                <div>
+                    <h3 class="font-bold text-gray-900 text-base sm:text-lg flex items-center gap-2">
+                        <span>প্রিয় মুহূর্ত - অ্যাডমিন প্যানেল</span>
+                        <span id="cloudSyncBadge" class="text-[10px] px-2 py-0.5 rounded-full bg-green-100 text-green-800 font-semibold">
+                            <i class="fas fa-circle text-[7px] text-green-600 mr-1"></i>লাইভ সিঙ্ক
+                        </span>
+                    </h3>
+                    <p class="text-xs text-gray-500">সুরক্ষিত অ্যাডমিন কন্ট্রোল ড্যাশবোর্ড</p>
+                </div>
             </div>
-            <div>
-                <h3 class="font-bold text-gray-900 text-base sm:text-lg flex items-center gap-2">
-                    <span>প্রিয় মুহূর্ত - অ্যাডমিন অর্ডার প্যানেল</span>
-                    <span id="cloudSyncBadge" class="text-[10px] px-2 py-0.5 rounded-full bg-green-100 text-green-800 font-semibold">
-                        <i class="fas fa-circle text-[7px] text-green-600 mr-1"></i>লাইভ সিঙ্ক
-                    </span>
-                </h3>
-                <p class="text-xs text-gray-500">কাস্টমারদের সকল অর্ডার এখান থেকে সরাসরি দেখুন ও পরিচালনা করুন</p>
-            </div>
+
+            <!-- Logout / Lock button when unlocked -->
+            <button id="adminLockBtn" onclick="lockAndCloseAdmin()" class="hidden px-3 py-1.5 rounded-lg bg-red-50 hover:bg-red-100 text-red-600 text-xs font-bold border border-red-200 transition shrink-0">
+                <i class="fas fa-sign-out-alt mr-1"></i>লগআউট / বন্ধ করুন
+            </button>
         </div>
 
-        <!-- PIN Lock Screen -->
-        <div id="adminPinScreen" class="py-6 px-3 text-center">
+        <!-- PIN / Password Lock Screen (Strictly Required Every Time Admin Panel Opens) -->
+        <div id="adminPinScreen" class="py-7 px-3 text-center">
             <div class="w-14 h-14 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center text-2xl mx-auto mb-3">
                 <i class="fas fa-lock"></i>
             </div>
-            <h4 class="font-bold text-gray-800 text-base mb-1">অ্যাডমিন পিন (PIN) দিন</h4>
-            <p class="text-xs text-gray-500 mb-4">শুধুমাত্র পেইজ অ্যাডমিনের জন্য সংরক্ষিত। আপনার গোপন পিন নম্বরটি দিন।</p>
+            <h4 class="font-bold text-gray-800 text-base mb-1">অ্যাডমিন প্যানেল লগইন</h4>
+            <p class="text-xs text-gray-500 mb-4">অ্যাডমিন প্যানেলে প্রবেশ করতে আপনার গোপন পাসওয়ার্ড দিন।</p>
 
             <form onsubmit="verifyAdminPin(event)" class="max-w-xs mx-auto space-y-3">
-                <input type="password" id="adminPinInput" placeholder="অ্যাডমিন পিন লিখুন" required
+                <input type="password" id="adminPinInput" placeholder="পাসওয়ার্ড লিখুন" required autocomplete="off"
                        class="w-full px-4 py-2.5 text-center tracking-widest font-bold text-lg border-2 border-gray-300 rounded-xl focus:outline-none focus:border-[#4caf27]">
-                <div id="adminPinError" class="hidden text-xs text-red-600 font-bold">ভুল পিন দিয়েছেন! সঠিক অ্যাডমিন পিন দিন।</div>
+                <div id="adminPinError" class="hidden text-xs text-red-600 font-bold">ভুল পাসওয়ার্ড! সঠিক অ্যাডমিন পাসওয়ার্ড দিন।</div>
                 <button type="submit" class="w-full bg-[#4caf27] hover:bg-green-700 text-white font-bold py-2.5 rounded-xl text-sm shadow transition">
-                    <i class="fas fa-unlock-alt mr-1"></i> অ্যাক্সেস করুন
+                    <i class="fas fa-unlock-alt mr-1"></i> লগইন করুন
                 </button>
             </form>
         </div>
 
-        <!-- Admin Dashboard Content (Visible after PIN) -->
-        <div id="adminDashboardContent" class="hidden flex-1 overflow-y-auto space-y-4 pr-1">
-            <!-- Stats Cards -->
-            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
-                <div class="bg-blue-50 border border-blue-200 rounded-xl p-2.5 text-center">
-                    <div class="text-[11px] font-bold text-blue-700">মোট অর্ডার</div>
-                    <div id="statTotalOrders" class="text-xl font-extrabold text-blue-900">0</div>
-                </div>
-                <div class="bg-amber-50 border border-amber-200 rounded-xl p-2.5 text-center">
-                    <div class="text-[11px] font-bold text-amber-700">পেন্ডিং অর্ডার</div>
-                    <div id="statPendingOrders" class="text-xl font-extrabold text-amber-900">0</div>
-                </div>
-                <div class="bg-green-50 border border-green-200 rounded-xl p-2.5 text-center">
-                    <div class="text-[11px] font-bold text-green-700">কনফার্ম / ডেলিভারড</div>
-                    <div id="statConfirmedOrders" class="text-xl font-extrabold text-green-900">0</div>
-                </div>
-                <div class="bg-purple-50 border border-purple-200 rounded-xl p-2.5 text-center">
-                    <div class="text-[11px] font-bold text-purple-700">মোট বিক্রি (৳)</div>
-                    <div id="statTotalRevenue" class="text-lg font-extrabold text-purple-900">0৳</div>
-                </div>
-            </div>
-
-            <!-- Action Toolbar -->
-            <div class="flex flex-wrap items-center justify-between gap-2 bg-gray-50 p-2.5 rounded-xl border border-gray-200">
-                <div class="flex items-center gap-1.5">
-                    <select id="adminFilterStatus" onchange="renderAdminOrders()" class="text-xs font-bold border border-gray-300 rounded-lg px-2.5 py-1.5 bg-white">
-                        <option value="ALL">সব অর্ডার (All)</option>
-                        <option value="Pending">পেন্ডিং (Pending)</option>
-                        <option value="Confirmed">কনফার্মড (Confirmed)</option>
-                        <option value="Delivered">ডেলিভারড (Delivered)</option>
-                        <option value="Cancelled">বাতিল (Cancelled)</option>
-                    </select>
-                    <button type="button" onclick="createDemoTestOrder()" class="px-2.5 py-1.5 bg-amber-500 hover:bg-amber-600 text-white text-xs font-bold rounded-lg transition flex items-center gap-1">
-                        <i class="fas fa-plus-circle"></i> + টেস্ট অর্ডার
+        <!-- Admin Dashboard Content (Visible ONLY after entering password) -->
+        <div id="adminDashboardContent" class="hidden flex-1 overflow-y-auto flex flex-col pr-1">
+            <!-- Admin Navigation Tabs + Inner 3-Dot Control Menu -->
+            <div class="flex items-center justify-between border-b border-gray-200 mb-3 pb-2 gap-2">
+                <div class="flex items-center gap-1.5 flex-wrap">
+                    <button type="button" id="adminTabOrdersBtn" onclick="switchAdminSection('orders')"
+                            class="px-3.5 py-2 rounded-xl text-xs font-bold bg-[#4caf27] text-white shadow-sm flex items-center gap-1.5 transition">
+                        <i class="fas fa-boxes"></i>
+                        <span>📦 অর্ডার লিস্ট</span>
+                    </button>
+                    <button type="button" id="adminTabImagesBtn" onclick="switchAdminSection('images')"
+                            class="px-3.5 py-2 rounded-xl text-xs font-bold bg-gray-100 text-gray-700 hover:bg-gray-200 flex items-center gap-1.5 transition">
+                        <i class="fas fa-images"></i>
+                        <span>🖼️ ছবি পরিবর্তন ও সেটআপ</span>
                     </button>
                 </div>
 
-                <div class="flex items-center gap-1.5">
-                    <button type="button" onclick="exportOrdersCsv()" class="px-2.5 py-1.5 bg-green-700 hover:bg-green-800 text-white text-xs font-bold rounded-lg transition flex items-center gap-1">
-                        <i class="fas fa-file-csv"></i> এক্সেল/CSV ডাউনলোড
+                <!-- Inner 3-dot quick menu inside Admin Panel -->
+                <div class="relative">
+                    <button type="button" onclick="toggleInnerAdminMenu(event)"
+                            class="w-8 h-8 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-700 flex items-center justify-center border border-gray-200"
+                            title="অ্যাডমিন অপশন">
+                        <i class="fas fa-ellipsis-v text-xs"></i>
                     </button>
+                    <div id="innerAdminDropdown" class="hidden absolute right-0 mt-1.5 w-52 bg-white rounded-xl shadow-lg border border-gray-200 py-1 z-50 text-left">
+                        <button type="button" onclick="switchAdminSection('orders'); hideInnerAdminMenu();"
+                                class="w-full px-3 py-2 text-xs font-bold text-gray-700 hover:bg-green-50 flex items-center gap-2">
+                            <i class="fas fa-box-open text-[#4caf27]"></i> 📦 অর্ডার লিস্ট
+                        </button>
+                        <button type="button" onclick="switchAdminSection('images'); hideInnerAdminMenu();"
+                                class="w-full px-3 py-2 text-xs font-bold text-gray-700 hover:bg-green-50 flex items-center gap-2 border-t border-gray-100">
+                            <i class="fas fa-camera text-amber-600"></i> 🖼️ ছবি পরিবর্তন ও সেটআপ
+                        </button>
+                        <button type="button" onclick="lockAndCloseAdmin(); hideInnerAdminMenu();"
+                                class="w-full px-3 py-2 text-xs font-bold text-red-600 hover:bg-red-50 flex items-center gap-2 border-t border-gray-100">
+                            <i class="fas fa-sign-out-alt"></i> লগআউট / বন্ধ করুন
+                        </button>
+                    </div>
                 </div>
             </div>
 
-            <!-- Copy Toast Alert -->
-            <div id="adminCopyToast" class="hidden bg-green-800 text-white text-xs font-bold px-3 py-2 rounded-lg text-center">
-                কুরিয়ার বুকিংয়ের জন্য অর্ডারের তথ্য কপি হয়েছে!
+            <!-- SECTION 1: ORDERS MANAGEMENT -->
+            <div id="adminOrdersSection" class="space-y-4">
+                <!-- Stats Cards -->
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+                    <div class="bg-blue-50 border border-blue-200 rounded-xl p-2.5 text-center">
+                        <div class="text-[11px] font-bold text-blue-700">মোট অর্ডার</div>
+                        <div id="statTotalOrders" class="text-xl font-extrabold text-blue-900">0</div>
+                    </div>
+                    <div class="bg-amber-50 border border-amber-200 rounded-xl p-2.5 text-center">
+                        <div class="text-[11px] font-bold text-amber-700">পেন্ডিং অর্ডার</div>
+                        <div id="statPendingOrders" class="text-xl font-extrabold text-amber-900">0</div>
+                    </div>
+                    <div class="bg-green-50 border border-green-200 rounded-xl p-2.5 text-center">
+                        <div class="text-[11px] font-bold text-green-700">কনফার্ম / ডেলিভারড</div>
+                        <div id="statConfirmedOrders" class="text-xl font-extrabold text-green-900">0</div>
+                    </div>
+                    <div class="bg-purple-50 border border-purple-200 rounded-xl p-2.5 text-center">
+                        <div class="text-[11px] font-bold text-purple-700">মোট বিক্রি (৳)</div>
+                        <div id="statTotalRevenue" class="text-lg font-extrabold text-purple-900">0৳</div>
+                    </div>
+                </div>
+
+                <!-- Action Toolbar -->
+                <div class="flex flex-wrap items-center justify-between gap-2 bg-gray-50 p-2.5 rounded-xl border border-gray-200">
+                    <div class="flex items-center gap-1.5">
+                        <select id="adminFilterStatus" onchange="renderAdminOrders()" class="text-xs font-bold border border-gray-300 rounded-lg px-2.5 py-1.5 bg-white">
+                            <option value="ALL">সব অর্ডার (All)</option>
+                            <option value="Pending">পেন্ডিং (Pending)</option>
+                            <option value="Confirmed">কনফার্মড (Confirmed)</option>
+                            <option value="Delivered">ডেলিভারড (Delivered)</option>
+                            <option value="Cancelled">বাতিল (Cancelled)</option>
+                        </select>
+                        <button type="button" onclick="createDemoTestOrder()" class="px-2.5 py-1.5 bg-amber-500 hover:bg-amber-600 text-white text-xs font-bold rounded-lg transition flex items-center gap-1">
+                            <i class="fas fa-plus-circle"></i> + টেস্ট অর্ডার
+                        </button>
+                    </div>
+
+                    <div class="flex items-center gap-1.5">
+                        <button type="button" onclick="exportOrdersCsv()" class="px-2.5 py-1.5 bg-green-700 hover:bg-green-800 text-white text-xs font-bold rounded-lg transition flex items-center gap-1">
+                            <i class="fas fa-file-csv"></i> এক্সেল/CSV ডাউনলোড
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Copy Toast Alert -->
+                <div id="adminCopyToast" class="hidden bg-green-800 text-white text-xs font-bold px-3 py-2 rounded-lg text-center">
+                    কুরিয়ার বুকিংয়ের জন্য অর্ডারের তথ্য কপি হয়েছে!
+                </div>
+
+                <!-- Orders List -->
+                <div id="adminOrdersContainer" class="space-y-3">
+                    <p class="text-xs text-gray-500 text-center py-6">এখনো কোনো অর্ডার আসেনি।</p>
+                </div>
             </div>
 
-            <!-- Orders List -->
-            <div id="adminOrdersContainer" class="space-y-3">
-                <p class="text-xs text-gray-500 text-center py-6">এখনো কোনো অর্ডার আসেনি।</p>
+            <!-- SECTION 2: PROTECTED IMAGE SETUP / GALLERY UPLOADER (Only Inside Admin Panel) -->
+            <div id="adminImagesSection" class="hidden space-y-3">
+                <div class="bg-green-50 border border-green-200 rounded-xl p-3 text-xs text-green-900 leading-relaxed flex items-center justify-between gap-2">
+                    <div>
+                        <i class="fas fa-shield-alt text-[#4caf27] mr-1"></i>
+                        <strong>শুধুমাত্র অ্যাডমিন কন্ট্রোল:</strong> এখান থেকে আপনি গোল লোগো, ব্যানার বা প্রোডাক্টের ছবি পরিবর্তন করলে তা ক্লাউডে সেভ হবে এবং সব কাস্টমার দেখতে পাবে।
+                    </div>
+                    <span id="imgSaveToast" class="hidden px-2.5 py-1 bg-[#4caf27] text-white rounded-lg font-bold shrink-0">সেভ হয়েছে!</span>
+                </div>
+
+                <!-- 1. Circular Website Logo & Main Banner Image Uploader -->
+                <div class="border border-gray-200 rounded-xl p-3 bg-gray-50">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="font-bold text-xs text-gray-800">১. ওয়েবসাইটের গোল লোগো ও মূল ব্যানার ছবি</span>
+                        <div class="flex items-center gap-2">
+                            <a href="https://ibb.co.com/s9Wp7Gyg" target="_blank" class="text-[11px] text-blue-600 underline">মূল লিংক (s9Wp7Gyg)</a>
+                            <button type="button" onclick="resetSingleImage('banner')" class="text-[11px] text-red-600 hover:underline font-semibold">রিসেট</button>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <img id="previewBannerUpload" src="" class="w-16 h-16 rounded-full object-cover border-2 border-[#4caf27] bg-white shrink-0 shadow">
+                        <div class="flex-1 space-y-1.5">
+                            <label class="inline-flex items-center gap-1.5 bg-[#4caf27] text-white text-xs font-bold px-3 py-1.5 rounded-lg cursor-pointer hover:bg-green-700 transition">
+                                <i class="fas fa-upload"></i> গ্যালারি থেকে লোগো / ব্যানার ছবি দিন
+                                <input type="file" accept="image/*" class="hidden" onchange="handleGalleryUpload(event, 'banner')">
+                            </label>
+                            <input type="text" id="inputBannerUrl" placeholder="অথবা https://ibb.co.com/s9Wp7Gyg বা ডাইরেক্ট লিংক পেস্ট করুন"
+                                   onchange="handleDirectUrlChange('banner', this.value)"
+                                   class="w-full px-2.5 py-1.5 text-xs border border-gray-300 rounded-lg bg-white">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. 4 Products Image Uploaders -->
+                <div id="productImageManagerList" class="space-y-2.5">
+                    <!-- Populated by JS -->
+                </div>
+
+                <div class="flex items-center justify-between gap-2 pt-2 border-t border-gray-200">
+                    <button type="button" onclick="retryAllIbbFetch()" class="px-3.5 py-2 text-xs font-bold text-green-700 border border-green-600 rounded-lg hover:bg-green-50">
+                        <i class="fas fa-sync-alt mr-1"></i>লিংক থেকে আবার অটো-লোড করুন
+                    </button>
+                    <button type="button" onclick="switchAdminSection('orders')" class="px-4 py-2 text-xs font-bold text-white bg-[#4caf27] rounded-lg hover:bg-green-700">
+                        অর্ডার লিস্টে ফিরে যান
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -657,63 +801,6 @@
     </div>
 </div>
 
-<!-- Image Setup / Direct Gallery Uploader Modal -->
-<div id="imageManagerModal" class="fixed inset-0 bg-black/60 z-50 hidden items-center justify-center p-3 backdrop-blur-sm">
-    <div class="bg-white w-full max-w-lg rounded-2xl p-5 relative shadow-2xl max-h-[90vh] overflow-y-auto">
-        <button onclick="closeImageManagerModal()" class="absolute top-3.5 right-4 text-gray-400 hover:text-gray-700 text-xl">
-            <i class="fas fa-times"></i>
-        </button>
-
-        <div class="flex items-center gap-2.5 mb-3">
-            <div class="w-10 h-10 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center text-lg shrink-0">
-                <i class="fas fa-images"></i>
-            </div>
-            <div>
-                <h3 class="font-bold text-gray-900 text-base">ওয়েবসাইট ও প্রোডাক্টের ছবি সেটআপ</h3>
-                <p class="text-xs text-gray-500">যে ছবিটি দেখা যাচ্ছে না, সেটি সরাসরি ফোন গ্যালারি থেকে সিলেক্ট করুন অথবা ডাইরেক্ট লিংক দিন</p>
-            </div>
-        </div>
-
-        <div class="bg-amber-50 border border-amber-200 rounded-xl p-2.5 text-xs text-amber-900 mb-4 leading-relaxed">
-            <strong>কেন ৩টি ছবি আসছিল না?</strong> আপনি <code class="bg-white px-1 rounded">ibb.co.com/...</code> এর ওয়েবপেইজ লিংক দিয়েছিলেন। নিচে থেকে <strong>"গ্যালারি থেকে ছবি দিন"</strong> বাটনে চাপ দিয়ে আপনার ফোনের ছবিগুলো সিলেক্ট করে দিলে ৪টি ছবিই ১০০% পরিষ্কার দেখা যাবে!
-        </div>
-
-        <!-- Banner Image Uploader -->
-        <div class="border border-gray-200 rounded-xl p-3 mb-3 bg-gray-50">
-            <div class="flex items-center justify-between mb-2">
-                <span class="font-bold text-xs text-gray-800">১. ওয়েবসাইটের মূল ব্যানার ছবি</span>
-                <a href="https://ibb.co.com/s9Wp7Gyg" target="_blank" class="text-[11px] text-blue-600 underline">আপনার লিংক দেখুন</a>
-            </div>
-            <div class="flex items-center gap-3">
-                <img id="previewBannerUpload" src="" class="w-14 h-14 rounded-lg object-cover border bg-white shrink-0">
-                <div class="flex-1 space-y-1.5">
-                    <label class="inline-flex items-center gap-1.5 bg-[#4caf27] text-white text-xs font-bold px-3 py-1.5 rounded-lg cursor-pointer hover:bg-green-700 transition">
-                        <i class="fas fa-upload"></i> গ্যালারি থেকে ছবি দিন
-                        <input type="file" accept="image/*" class="hidden" onchange="handleGalleryUpload(event, 'banner')">
-                    </label>
-                    <input type="text" id="inputBannerUrl" placeholder="অথবা ছবির Direct Link (https://i.ibb.co/...)"
-                           onchange="handleDirectUrlChange('banner', this.value)"
-                           class="w-full px-2.5 py-1 text-xs border border-gray-300 rounded">
-                </div>
-            </div>
-        </div>
-
-        <!-- 4 Products Image Uploaders -->
-        <div id="productImageManagerList" class="space-y-2.5 mb-4">
-            <!-- Populated by JS -->
-        </div>
-
-        <div class="flex items-center justify-between gap-2 pt-2 border-t border-gray-200">
-            <button type="button" onclick="retryAllIbbFetch()" class="px-3.5 py-2 text-xs font-bold text-green-700 border border-green-600 rounded-lg hover:bg-green-50">
-                <i class="fas fa-sync-alt mr-1"></i>আবার অটো-লোড চেষ্টা করুন
-            </button>
-            <button type="button" onclick="closeImageManagerModal()" class="px-5 py-2 text-xs font-bold text-white bg-[#4caf27] rounded-lg hover:bg-green-700">
-                সম্পন্ন হয়েছে
-            </button>
-        </div>
-    </div>
-</div>
-
 <script>
     // Clear any broken old cache keys from previous versions so broken URLs never stick
     try {
@@ -723,6 +810,26 @@
             }
         });
     } catch (e) {}
+
+    // Circular Round Logo Fallback SVG
+    function createRoundLogoSvgDataUri() {
+        const logoSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+            <defs>
+                <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#166534"/>
+                    <stop offset="50%" stop-color="#4caf27"/>
+                    <stop offset="100%" stop-color="#14532d"/>
+                </linearGradient>
+            </defs>
+            <circle cx="100" cy="100" r="96" fill="url(#logoGrad)" stroke="#fde047" stroke-width="6"/>
+            <path d="M100 142 C100 142 52 106 52 74 C52 54 68 42 84 42 C93 42 98 48 100 54 C102 48 107 42 116 42 C132 42 148 54 148 74 C148 106 100 142 100 142 Z" fill="#111827" stroke="#fef08a" stroke-width="5"/>
+            <circle cx="90" cy="82" r="11" fill="#fda4af"/>
+            <circle cx="110" cy="84" r="10" fill="#93c5fd"/>
+            <text x="100" y="166" text-anchor="middle" font-family="sans-serif" font-size="22" font-weight="bold" fill="#ffffff">প্রিয় মুহূর্ত</text>
+            <text x="100" y="183" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="bold" fill="#fef08a">PRIYO MUHURTO</text>
+        </svg>`;
+        return 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(logoSvg)));
+    }
 
     // Layer 1: High-Detail Realistic Canvas/SVG DataURL Generator (Base64 encoded so it 100% renders in all browsers immediately)
     function createProductSvgDataUri(title, priceText, shapeType) {
@@ -850,8 +957,39 @@
 
     const CACHE_PREFIX = 'priyo_muhurto_img_v5_';
     const bannerRawIbb = "https://ibb.co.com/s9Wp7Gyg";
+    const roundLogoFallbackSvg = createRoundLogoSvgDataUri();
     const bannerFallbackSvg = createProductSvgDataUri("প্রিয় মুহূর্ত - PRIYO MUHURTO", "✨ অরিজিনাল LED ম্যাজিক মিরর ফটো ফ্রেম ✨", "banner");
     let mainBannerImageUrl = localStorage.getItem('pm_custom_banner') || bannerFallbackSvg;
+    let siteRoundLogoUrl = localStorage.getItem('pm_custom_banner') || roundLogoFallbackSvg;
+
+    // Update all logo & hero banner DOM elements synchronously
+    function syncLogoAndBannerDom(imgUrl) {
+        const logoEl = document.getElementById('siteLogoImg');
+        const topCenterLogoEl = document.getElementById('topCenterLogoImg');
+        const bannerEl = document.getElementById('heroBannerImg');
+
+        if (logoEl) {
+            logoEl.src = imgUrl || siteRoundLogoUrl;
+            logoEl.onerror = function() {
+                this.onerror = null;
+                this.src = roundLogoFallbackSvg;
+            };
+        }
+        if (topCenterLogoEl) {
+            topCenterLogoEl.src = imgUrl || siteRoundLogoUrl;
+            topCenterLogoEl.onerror = function() {
+                this.onerror = null;
+                this.src = roundLogoFallbackSvg;
+            };
+        }
+        if (bannerEl) {
+            bannerEl.src = imgUrl || mainBannerImageUrl;
+            bannerEl.onerror = function() {
+                this.onerror = null;
+                this.src = bannerFallbackSvg;
+            };
+        }
+    }
 
     // আপনার দেওয়া ৪টি প্রোডাক্টের সম্পূর্ণ তালিকা
     const products = [
@@ -1067,24 +1205,23 @@
         return null;
     }
 
-    // Load Banner + all 4 product images in parallel and swap only after browser-verified onload
+    // Load Circular Logo + Banner (https://ibb.co.com/s9Wp7Gyg) + all 4 product images in parallel
     async function loadAllUserIbbImages() {
-        const bannerEl = document.getElementById('mainBannerImg');
-        if (bannerEl) {
-            bannerEl.src = mainBannerImageUrl;
-            bannerEl.onerror = function() {
-                this.onerror = null;
-                this.src = bannerFallbackSvg;
-            };
-        }
+        syncLogoAndBannerDom();
 
         const bannerPromise = (async () => {
             if (!localStorage.getItem('pm_custom_banner')) {
                 const verifiedBanner = await resolveAndVerifyIbb(bannerRawIbb);
                 if (verifiedBanner) {
                     mainBannerImageUrl = verifiedBanner;
-                    if (bannerEl) bannerEl.src = verifiedBanner;
+                    siteRoundLogoUrl = verifiedBanner;
+                    syncLogoAndBannerDom(verifiedBanner);
                 }
+            } else {
+                const customSaved = localStorage.getItem('pm_custom_banner');
+                mainBannerImageUrl = customSaved;
+                siteRoundLogoUrl = customSaved;
+                syncLogoAndBannerDom(customSaved);
             }
         })();
 
@@ -1104,431 +1241,243 @@
         });
 
         await Promise.allSettled([bannerPromise, ...productPromises]);
+    }
 
-        const resolvedCount = products.filter(p => p.resolved).length;
-        const statusNotice = document.getElementById('imgStatusNotice');
-        const statusText = document.getElementById('imgStatusText');
-        if (statusNotice && statusText) {
-            if (resolvedCount === products.length) {
-                statusText.innerHTML = `<i class="fas fa-check-circle text-[#4caf27] mr-1"></i>আপনার ৫টি আসল ছবিই সফলভাবে লোড হয়েছে!`;
-            } else {
-                statusText.innerHTML = `<i class="fas fa-images text-[#4caf27] mr-1"></i>সবগুলো প্রোডাক্ট প্রদর্শিত হচ্ছে। নিজের গ্যালারি থেকে ছবি দিতে <strong>"গ্যালারি থেকে দিন"</strong> চাপুন।`;
-            }
-        }
+    const ADMIN_PIN = "01590034786";
+    let isAdminUnlocked = false;
+
+    try {
+        orderHistory = JSON.parse(localStorage.getItem('pm_orders_v1') || '[]');
+        registeredUsers = JSON.parse(localStorage.getItem('pm_users_v1') || '[]');
+        currentUser = JSON.parse(localStorage.getItem('pm_current_user_v1') || 'null');
+    } catch (e) {
+        orderHistory = [];
+        registeredUsers = [];
+        currentUser = null;
     }
 
     function retryAllIbbFetch() {
-        products.forEach(p => {
-            localStorage.removeItem(CACHE_PREFIX + p.ibbPageUrl);
-        });
         localStorage.removeItem(CACHE_PREFIX + bannerRawIbb);
+        products.forEach(p => localStorage.removeItem(CACHE_PREFIX + p.ibbPageUrl));
         loadAllUserIbbImages();
+        showAdminImageSavedToast('লিংক থেকে আবার ছবি লোড হচ্ছে...');
     }
 
-    // প্রোডাক্ট গ্রিড এবং চেকআউট লিস্ট রেন্ডার করা
+    // FAQ Toggle Function
+    function toggleFaq() {
+        const content = document.getElementById('faqContent');
+        const icon = document.getElementById('faqIcon');
+        if (!content) return;
+        content.classList.toggle('hidden');
+        if (icon) {
+            icon.classList.toggle('rotate-180');
+        }
+    }
+
+    // Three-dot menu functions
+    function toggleThreeDotMenu(e) {
+        if (e) e.stopPropagation();
+        const menu = document.getElementById('threeDotDropdown');
+        if (menu) menu.classList.toggle('hidden');
+    }
+
+    function toggleInnerAdminMenu(e) {
+        if (e) e.stopPropagation();
+        const menu = document.getElementById('innerAdminDropdown');
+        if (menu) menu.classList.toggle('hidden');
+    }
+
+    function hideInnerAdminMenu() {
+        const menu = document.getElementById('innerAdminDropdown');
+        if (menu) menu.classList.add('hidden');
+    }
+
+    document.addEventListener('click', () => {
+        const menu = document.getElementById('threeDotDropdown');
+        if (menu) menu.classList.add('hidden');
+        hideInnerAdminMenu();
+    });
+
+    // Render Showcase Grid & Checkout List
     function renderProducts() {
         const grid = document.getElementById('productGrid');
         const checkoutList = document.getElementById('checkoutProductList');
+        if (!grid || !checkoutList) return;
 
-        grid.innerHTML = '';
-        checkoutList.innerHTML = '';
-
-        products.forEach(p => {
-            // ১. উপরের ২-কলামের প্রোডাক্ট শোকেস কার্ড
-            grid.innerHTML += `
-                <div class="product-card">
-                    <div class="w-full aspect-square rounded-xl overflow-hidden bg-white border border-amber-200 relative group">
-                        <img src="${p.img}" alt="${p.name}"
-                             class="w-full h-full object-cover transition duration-300 group-hover:scale-105"
-                             onerror="this.onerror=null; this.src='${p.fallbackImg}';">
-                        <button type="button" onclick="openImageManagerModal()"
-                                title="এই প্রোডাক্টের ছবি পরিবর্তন করুন"
-                                class="absolute top-2 right-2 w-7 h-7 rounded-full bg-black/50 hover:bg-black/75 text-white text-xs flex items-center justify-center opacity-80 hover:opacity-100 transition">
-                            <i class="fas fa-camera"></i>
-                        </button>
-                    </div>
-                    <div class="product-title-bar">${p.label}</div>
-                    <button type="button" class="btn-orange w-full text-sm py-2" onclick="selectAndScroll(${p.id})">
-                        অর্ডার করতে চাই
-                    </button>
+        grid.innerHTML = products.map((p, idx) => `
+            <div class="product-card scroll-reveal ${idx % 2 === 0 ? 'reveal-left' : 'reveal-right'}" style="transition-delay: ${(idx % 2) * 90}ms;">
+                <div class="w-full aspect-square rounded-xl overflow-hidden bg-gray-900 border border-amber-200 mb-1 relative">
+                    <img src="${p.img}" alt="${p.name}"
+                         onerror="this.onerror=null;this.src='${p.fallbackImg}';"
+                         class="w-full h-full object-cover block transition-transform duration-500 hover:scale-105">
                 </div>
-            `;
+                <div class="product-title-bar">${p.label}</div>
+                <button type="button" onclick="selectAndScrollToCheckout(${p.id})" class="btn-orange w-full text-sm py-2">
+                    অর্ডার করতে চাই
+                </button>
+            </div>
+        `).join('');
 
-            // ২. নিচের চেকআউট ফর্মের সিলেক্টেবল প্রোডাক্ট লিস্ট
+        checkoutList.innerHTML = products.map((p, idx) => {
             const isSelected = p.id === selectedProductId;
-            const itemTotal = (p.price * quantities[p.id]).toFixed(2);
-
-            checkoutList.innerHTML += `
-                <div class="checkout-item flex items-center justify-between ${isSelected ? 'selected' : ''}"
-                     onclick="selectProduct(${p.id})">
-                    <div class="flex items-center gap-3 pr-2">
-                        <input type="radio" name="selectedProduct" ${isSelected ? 'checked' : ''}
-                               class="w-4 h-4 accent-[#4caf27] cursor-pointer shrink-0">
-                        <img src="${p.img}" alt="${p.name}"
-                             onerror="this.onerror=null; this.src='${p.fallbackImg}';"
-                             class="w-12 h-12 rounded-lg object-cover border border-gray-200 shrink-0">
-                        <div>
-                            <div class="font-bold text-gray-800 text-sm mb-1">${p.name}</div>
-                            <div class="inline-flex items-center border border-gray-300 rounded bg-white" onclick="event.stopPropagation()">
-                                <button type="button" onclick="changeQty(${p.id}, -1)"
-                                        class="px-2.5 py-0.5 text-gray-700 font-bold hover:bg-gray-100">-</button>
-                                <span class="px-2.5 py-0.5 text-xs font-bold text-gray-900">${quantities[p.id]}</span>
-                                <button type="button" onclick="changeQty(${p.id}, 1)"
-                                        class="px-2.5 py-0.5 text-gray-700 font-bold hover:bg-gray-100">+</button>
+            const qty = quantities[p.id] || 1;
+            const lineTotal = (p.price * qty).toFixed(2);
+            return `
+                <div class="checkout-item scroll-reveal ${isSelected ? 'selected' : ''} flex items-center gap-3" style="transition-delay: ${idx * 60}ms;" onclick="selectProductInCheckout(${p.id})">
+                    <input type="radio" name="selectedProduct" ${isSelected ? 'checked' : ''} class="w-4 h-4 accent-[#4caf27] shrink-0">
+                    <img src="${p.img}" alt="${p.name}"
+                         onerror="this.onerror=null;this.src='${p.fallbackImg}';"
+                         class="w-14 h-14 rounded-lg object-cover border border-gray-200 shrink-0">
+                    <div class="flex-1 min-w-0">
+                        <div class="font-bold text-sm text-gray-800 truncate mb-1.5">${p.name}</div>
+                        <div class="flex items-center justify-between gap-2">
+                            <div class="inline-flex items-center border border-gray-300 rounded-md bg-white overflow-hidden" onclick="event.stopPropagation()">
+                                <button type="button" onclick="changeQuantity(${p.id}, -1)" class="px-2.5 py-0.5 text-sm font-bold text-gray-700 hover:bg-gray-100">−</button>
+                                <span class="px-2.5 py-0.5 text-xs font-bold text-gray-900">${qty}</span>
+                                <button type="button" onclick="changeQuantity(${p.id}, 1)" class="px-2.5 py-0.5 text-sm font-bold text-gray-700 hover:bg-gray-100">+</button>
                             </div>
+                            <span class="font-bold text-sm text-gray-900">${lineTotal}৳</span>
                         </div>
                     </div>
-                    <div class="font-bold text-sm text-gray-800 shrink-0">
-                        ${itemTotal}৳
-                    </div>
                 </div>
             `;
+        }).join('');
+
+        updateOrderSummaryUI();
+        initScrollRevealAnimations();
+    }
+
+    // IntersectionObserver for Smooth Scroll-Down & Scroll-Up Animations
+    let scrollObserver = null;
+    function initScrollRevealAnimations() {
+        const elements = document.querySelectorAll('.scroll-reveal');
+        if (!('IntersectionObserver' in window)) {
+            elements.forEach(el => el.classList.add('active'));
+            return;
+        }
+
+        if (!scrollObserver) {
+            scrollObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    } else if (entry.boundingClientRect.top > 0) {
+                        // Re-animate smoothly when scrolling back down again
+                        entry.target.classList.remove('active');
+                    }
+                });
+            }, {
+                threshold: 0.12,
+                rootMargin: '0px 0px -30px 0px'
+            });
+        }
+
+        elements.forEach(el => {
+            scrollObserver.observe(el);
         });
-
-        updateOrderSummary();
     }
 
-    // প্রোডাক্ট কার্ডের "অর্ডার করতে চাই" বাটনে ক্লিক করলে সরাসরি নিচে চেকআউটে নিয়ে যাবে
-    function selectAndScroll(id) {
+    function selectAndScrollToCheckout(id) {
         selectedProductId = id;
         renderProducts();
-        document.getElementById('checkout').scrollIntoView({ behavior: 'smooth' });
+        const checkoutEl = document.getElementById('checkout');
+        if (checkoutEl) checkoutEl.scrollIntoView({ behavior: 'smooth' });
     }
 
-    // চেকআউট লিস্ট থেকে প্রোডাক্ট পরিবর্তন করা
-    function selectProduct(id) {
+    function selectProductInCheckout(id) {
         selectedProductId = id;
         renderProducts();
     }
 
-    // প্রোডাক্টের সংখ্যা (+ / -) পরিবর্তন করা
-    function changeQty(id, delta) {
-        if (quantities[id] + delta >= 1) {
-            quantities[id] += delta;
+    function changeQuantity(id, delta) {
+        const next = (quantities[id] || 1) + delta;
+        if (next >= 1 && next <= 50) {
+            quantities[id] = next;
             selectedProductId = id;
             renderProducts();
         }
     }
 
-    // অর্ডার সামারি এবং Place Order বাটনের টাকার পরিমাণ আপডেট করা
-    function updateOrderSummary() {
-        const prod = products.find(p => p.id === selectedProductId);
-        const qty = quantities[selectedProductId];
+    function updateOrderSummaryUI() {
+        const prod = products.find(p => p.id === selectedProductId) || products[0];
+        const qty = quantities[prod.id] || 1;
         const total = (prod.price * qty).toFixed(2);
 
-        document.getElementById('summaryThumb').src = prod.img;
-        document.getElementById('summaryProdTitle').innerText = prod.name;
-        document.getElementById('summaryQtyBadge').innerText = `× ${qty}`;
-        document.getElementById('summaryItemPrice').innerText = `${total}৳`;
-        document.getElementById('summarySubtotal').innerText = `${total}৳`;
-        document.getElementById('summaryTotal').innerText = `${total}৳`;
-        document.getElementById('placeOrderBtnText').innerText = `Place Order ${total}৳`;
+        const thumb = document.getElementById('summaryThumb');
+        if (thumb) {
+            thumb.src = prod.img;
+            thumb.onerror = function() {
+                this.onerror = null;
+                this.src = prod.fallbackImg;
+            };
+        }
+        const titleEl = document.getElementById('summaryProdTitle');
+        if (titleEl) titleEl.textContent = prod.name;
+        const qtyBadge = document.getElementById('summaryQtyBadge');
+        if (qtyBadge) qtyBadge.textContent = `× ${qty}`;
+        const itemPrice = document.getElementById('summaryItemPrice');
+        if (itemPrice) itemPrice.textContent = `${total}৳`;
+        const subEl = document.getElementById('summarySubtotal');
+        if (subEl) subEl.textContent = `${total}৳`;
+        const totalEl = document.getElementById('summaryTotal');
+        if (totalEl) totalEl.textContent = `${total}৳`;
+        const btnText = document.getElementById('placeOrderBtnText');
+        if (btnText) btnText.textContent = `Place Order ${total}৳`;
     }
 
-    // অর্ডার সাবমিট হ্যান্ডলার
+    // Submit Order Function
     async function submitOrder(e) {
         e.preventDefault();
-        const prod = products.find(p => p.id === selectedProductId);
-        const qty = quantities[selectedProductId];
-        const totalNum = prod.price * qty;
-        const total = totalNum.toFixed(2);
-
         const name = document.getElementById('custName').value.trim();
         const address = document.getElementById('custAddress').value.trim();
         const phone = document.getElementById('custPhone').value.trim();
 
-        const orderId = 'PM-' + Math.floor(1000 + Math.random() * 9000);
+        if (!name || !address || !phone) return;
+
+        const prod = products.find(p => p.id === selectedProductId) || products[0];
+        const qty = quantities[prod.id] || 1;
+        const total = prod.price * qty;
+        const orderId = 'PM-' + Math.floor(100000 + Math.random() * 900000);
+        const nowStr = new Date().toLocaleString('bn-BD');
+
         const newOrder = {
             orderId,
             productId: prod.id,
             productName: prod.name,
             qty,
             unitPrice: prod.price,
-            totalPrice: totalNum,
-            total,
-            name,
-            address,
-            phone,
+            totalPrice: total,
+            customerName: name,
+            customerAddress: address,
+            customerPhone: phone,
             status: 'Pending',
-            createdAtMs: Date.now(),
-            time: new Date().toLocaleString('bn-BD')
+            createdAt: nowStr,
+            createdAtMs: Date.now()
         };
 
-        // ১. ক্লাউড (Firestore) এবং লোকাল স্টোরেজে অর্ডার সেভ করা
-        await saveOrderToSystem(newOrder);
+        orderHistory.unshift(newOrder);
+        try {
+            localStorage.setItem('pm_orders_v1', JSON.stringify(orderHistory));
+        } catch (err) {}
 
-        // ২. কনফার্মেশন মডালে তথ্য দেখানো
-        document.getElementById('modalOrderId').innerText = `#${orderId}`;
-        document.getElementById('modalOrderProd').innerText = `${prod.name} × ${qty}`;
-        document.getElementById('modalOrderTotal').innerText = `${total}৳`;
-        document.getElementById('modalOrderCustomer').innerText = `${name} (${phone})`;
+        if (typeof window.saveOrderToFirestoreCloud === 'function') {
+            try { await window.saveOrderToFirestoreCloud(newOrder); } catch (err) {}
+        }
 
-        // ৩. WhatsApp মেসেজ লিংক তৈরি (কাস্টমার ক্লিক করলেই আপনার 01707483913 নাম্বারে অর্ডার চলে যাবে)
-        const waMessage = `আসসালামু আলাইকুম প্রিয় মুহূর্ত (Priyo Muhurto),\nআমি একটি অর্ডার কনফার্ম করেছি।\nঅর্ডার নম্বর: #${orderId}\nপণ্য: ${prod.name} (${qty}টি)\nমোট মূল্য: ${total} টাকা\nনাম: ${name}\nফোন: ${phone}\nঠিকানা: ${address}`;
-        document.getElementById('modalWhatsappBtn').href = `https://wa.me/8801707483913?text=${encodeURIComponent(waMessage)}`;
+        updateAdminBadgesAndList();
+
+        // Populate Success Modal
+        document.getElementById('modalOrderId').textContent = '#' + orderId;
+        document.getElementById('modalOrderProd').textContent = `${prod.name} × ${qty}`;
+        document.getElementById('modalOrderTotal').textContent = `${total.toFixed(2)}৳`;
+        document.getElementById('modalOrderCustomer').textContent = `${name} (${phone})`;
+
+        const waMsg = `আসসালামু আলাইকুম প্রিয় মুহূর্ত!\nআমার অর্ডার কনফার্ম করেছি।\nঅর্ডার নম্বর: #${orderId}\nপণ্য: ${prod.name} (${qty}টি)\nমোট মূল্য: ${total} টাকা\nনাম: ${name}\nফোন: ${phone}\nঠিকানা: ${address}`;
+        document.getElementById('modalWhatsappBtn').href = `https://wa.me/8801707483913?text=${encodeURIComponent(waMsg)}`;
 
         const modal = document.getElementById('orderSuccessModal');
         modal.classList.remove('hidden');
         modal.classList.add('flex');
-    }
-
-    // Save order locally and trigger cloud sync if available
-    async function saveOrderToSystem(orderObj) {
-        const exists = orderHistory.some(o => o.orderId === orderObj.orderId);
-        if (!exists) {
-            orderHistory.unshift(orderObj);
-        }
-        renderMyOrders();
-        updateAdminBadgesAndList();
-
-        if (typeof window.saveOrderToFirestoreCloud === 'function') {
-            try {
-                await window.saveOrderToFirestoreCloud(orderObj);
-            } catch (err) {
-                console.error("Cloud order save error:", err);
-            }
-        }
-    }
-
-    // Admin Panel Functions
-    let isAdminUnlocked = false;
-    const ADMIN_PIN = '01590034786';
-
-    function openAdminModal() {
-        const modal = document.getElementById('adminModal');
-        modal.classList.remove('hidden');
-        modal.classList.add('flex');
-        if (isAdminUnlocked) {
-            document.getElementById('adminPinScreen').classList.add('hidden');
-            document.getElementById('adminDashboardContent').classList.remove('hidden');
-            renderAdminOrders();
-        } else {
-            document.getElementById('adminPinScreen').classList.remove('hidden');
-            document.getElementById('adminDashboardContent').classList.add('hidden');
-            setTimeout(() => {
-                const inp = document.getElementById('adminPinInput');
-                if (inp) inp.focus();
-            }, 100);
-        }
-    }
-
-    function closeAdminModal() {
-        const modal = document.getElementById('adminModal');
-        modal.classList.add('hidden');
-        modal.classList.remove('flex');
-    }
-
-    function verifyAdminPin(e) {
-        e.preventDefault();
-        const val = document.getElementById('adminPinInput').value.trim();
-        const errEl = document.getElementById('adminPinError');
-        if (val === ADMIN_PIN) {
-            isAdminUnlocked = true;
-            errEl.classList.add('hidden');
-            document.getElementById('adminPinScreen').classList.add('hidden');
-            document.getElementById('adminDashboardContent').classList.remove('hidden');
-            renderAdminOrders();
-        } else {
-            errEl.classList.remove('hidden');
-        }
-    }
-
-    function updateAdminBadgesAndList() {
-        const badge = document.getElementById('adminOrderBadge');
-        const pendingCount = orderHistory.filter(o => (o.status || 'Pending') === 'Pending').length;
-        const totalCount = orderHistory.length;
-        if (badge) {
-            badge.innerText = pendingCount > 0 ? pendingCount : totalCount;
-        }
-        if (isAdminUnlocked) {
-            renderAdminOrders();
-        }
-    }
-
-    function renderAdminOrders() {
-        const totalOrders = orderHistory.length;
-        const pendingOrders = orderHistory.filter(o => (o.status || 'Pending') === 'Pending').length;
-        const confirmedOrders = orderHistory.filter(o => o.status === 'Confirmed' || o.status === 'Delivered').length;
-        const totalRevenue = orderHistory
-            .filter(o => o.status !== 'Cancelled')
-            .reduce((sum, o) => sum + (Number(o.totalPrice) || Number(o.total) || 0), 0);
-
-        document.getElementById('statTotalOrders').innerText = totalOrders;
-        document.getElementById('statPendingOrders').innerText = pendingOrders;
-        document.getElementById('statConfirmedOrders').innerText = confirmedOrders;
-        document.getElementById('statTotalRevenue').innerText = `${totalRevenue}৳`;
-
-        const filterVal = document.getElementById('adminFilterStatus')?.value || 'ALL';
-        const filtered = filterVal === 'ALL'
-            ? orderHistory
-            : orderHistory.filter(o => (o.status || 'Pending') === filterVal);
-
-        const container = document.getElementById('adminOrdersContainer');
-        if (!container) return;
-
-        if (filtered.length === 0) {
-            container.innerHTML = `
-                <div class="text-center py-8 bg-gray-50 rounded-xl border border-dashed border-gray-300">
-                    <i class="fas fa-inbox text-3xl text-gray-300 mb-2"></i>
-                    <p class="text-xs text-gray-500 font-semibold">এই ক্যাটাগরিতে কোনো অর্ডার নেই। উপরে "+ টেস্ট অর্ডার" বাটনে ক্লিক করে পরীক্ষা করে দেখতে পারেন।</p>
-                </div>
-            `;
-            return;
-        }
-
-        container.innerHTML = filtered.map(o => {
-            const st = o.status || 'Pending';
-            let statusBadgeClass = 'bg-amber-100 text-amber-800 border-amber-300';
-            if (st === 'Confirmed') statusBadgeClass = 'bg-blue-100 text-blue-800 border-blue-300';
-            if (st === 'Delivered') statusBadgeClass = 'bg-green-100 text-green-800 border-green-300';
-            if (st === 'Cancelled') statusBadgeClass = 'bg-red-100 text-red-800 border-red-300';
-
-            const cleanPhone = (o.phone || '').replace(/[^0-9]/g, '');
-            const waPhone = cleanPhone.startsWith('88') ? cleanPhone : '88' + cleanPhone;
-            const waFollowupMsg = `আসসালামু আলাইকুম ${o.name}, প্রিয় মুহূর্ত (Priyo Muhurto) থেকে বলছি। আপনার #${o.orderId} অর্ডারটি (${o.productName} × ${o.qty}, মোট ${o.total}৳) কনফার্ম করা হয়েছে।`;
-
-            return `
-                <div class="border border-gray-200 rounded-xl p-3.5 bg-white shadow-sm hover:border-green-400 transition">
-                    <div class="flex flex-wrap items-center justify-between gap-2 pb-2 mb-2 border-b border-gray-100">
-                        <div class="flex items-center gap-2">
-                            <span class="font-extrabold text-sm text-green-800 bg-green-50 px-2.5 py-0.5 rounded-md border border-green-200">#${o.orderId}</span>
-                            <span class="text-[11px] text-gray-500 font-medium"><i class="far fa-clock mr-1"></i>${o.time || ''}</span>
-                        </div>
-                        <div class="flex items-center gap-1.5">
-                            <select onchange="changeOrderStatus('${o.orderId}', this.value)"
-                                    class="text-xs font-bold px-2.5 py-1 rounded-full border ${statusBadgeClass} cursor-pointer focus:outline-none">
-                                <option value="Pending" ${st === 'Pending' ? 'selected' : ''}>⏳ পেন্ডিং (Pending)</option>
-                                <option value="Confirmed" ${st === 'Confirmed' ? 'selected' : ''}>✅ কনফার্মড (Confirmed)</option>
-                                <option value="Delivered" ${st === 'Delivered' ? 'selected' : ''}>🚚 ডেলিভারড (Delivered)</option>
-                                <option value="Cancelled" ${st === 'Cancelled' ? 'selected' : ''}>❌ বাতিল (Cancelled)</option>
-                            </select>
-                            <button onclick="deleteOrderItem('${o.orderId}')" title="অর্ডার মুছে ফেলুন" class="text-gray-400 hover:text-red-600 px-1.5 py-1 text-xs">
-                                <i class="fas fa-trash-alt"></i>
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs mb-3">
-                        <div class="bg-gray-50 p-2.5 rounded-lg">
-                            <div class="text-gray-500 font-semibold mb-0.5">ক্রেতার তথ্য:</div>
-                            <div class="font-bold text-gray-900 text-sm">${o.name}</div>
-                            <div class="font-bold text-green-700 mt-0.5"><i class="fas fa-phone-alt mr-1"></i>${o.phone}</div>
-                            <div class="text-gray-700 mt-0.5"><i class="fas fa-map-marker-alt text-red-500 mr-1"></i>${o.address}</div>
-                        </div>
-                        <div class="bg-amber-50/60 p-2.5 rounded-lg flex flex-col justify-between">
-                            <div>
-                                <div class="text-gray-500 font-semibold mb-0.5">পণ্যের বিবরণ:</div>
-                                <div class="font-bold text-gray-900 text-sm">${o.productName} <span class="text-[#f26522]">× ${o.qty}টি</span></div>
-                            </div>
-                            <div class="mt-2 pt-1.5 border-t border-amber-200/70 flex items-center justify-between">
-                                <span class="font-semibold text-gray-600">মোট বিল (COD):</span>
-                                <span class="font-extrabold text-base text-[#2e7d12]">${o.total}৳</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="flex flex-wrap items-center justify-between gap-1.5 pt-1">
-                        <div class="flex items-center gap-1.5">
-                            <a href="tel:${o.phone}" class="px-3 py-1.5 rounded-lg bg-green-600 hover:bg-green-700 text-white text-xs font-bold flex items-center gap-1">
-                                <i class="fas fa-phone-alt"></i> কল করুন
-                            </a>
-                            <a href="https://wa.me/${waPhone}?text=${encodeURIComponent(waFollowupMsg)}" target="_blank" rel="noopener noreferrer"
-                               class="px-3 py-1.5 rounded-lg bg-[#25d366] hover:bg-green-600 text-white text-xs font-bold flex items-center gap-1">
-                                <i class="fab fa-whatsapp"></i> মেসেজ দিন
-                            </a>
-                        </div>
-                        <button type="button" onclick="copyOrderForCourier('${o.orderId}')"
-                                class="px-3 py-1.5 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-800 border border-gray-300 text-xs font-bold flex items-center gap-1">
-                            <i class="far fa-copy"></i> কুরিয়ার ইনফো কপি
-                        </button>
-                    </div>
-                </div>
-            `;
-        }).join('');
-    }
-
-    async function changeOrderStatus(orderId, newStatus) {
-        const item = orderHistory.find(o => o.orderId === orderId);
-        if (item) {
-            item.status = newStatus;
-            updateAdminBadgesAndList();
-            if (typeof window.updateOrderInFirestoreCloud === 'function') {
-                await window.updateOrderInFirestoreCloud(orderId, { status: newStatus });
-            }
-        }
-    }
-
-    async function deleteOrderItem(orderId) {
-        orderHistory = orderHistory.filter(o => o.orderId !== orderId);
-        updateAdminBadgesAndList();
-        renderMyOrders();
-        if (typeof window.deleteOrderFromFirestoreCloud === 'function') {
-            await window.deleteOrderFromFirestoreCloud(orderId);
-        }
-    }
-
-    function copyOrderForCourier(orderId) {
-        const o = orderHistory.find(item => item.orderId === orderId);
-        if (!o) return;
-        const text = `Order ID: #${o.orderId}\nName: ${o.name}\nPhone: ${o.phone}\nAddress: ${o.address}\nItem: ${o.productName} (x${o.qty})\nCOD Amount: ${o.total} BDT`;
-        const ta = document.createElement('textarea');
-        ta.value = text;
-        document.body.appendChild(ta);
-        ta.select();
-        document.execCommand('copy');
-        document.body.removeChild(ta);
-
-        const toast = document.getElementById('adminCopyToast');
-        if (toast) {
-            toast.classList.remove('hidden');
-            setTimeout(() => toast.classList.add('hidden'), 2200);
-        }
-    }
-
-    function exportOrdersCsv() {
-        if (orderHistory.length === 0) return;
-        const headers = ['Order ID', 'Time', 'Customer Name', 'Phone', 'Address', 'Product', 'Qty', 'Total BDT', 'Status'];
-        const rows = orderHistory.map(o => [
-            o.orderId,
-            `"${(o.time || '').replace(/"/g, '""')}"`,
-            `"${(o.name || '').replace(/"/g, '""')}"`,
-            `"${(o.phone || '').replace(/"/g, '""')}"`,
-            `"${(o.address || '').replace(/"/g, '""')}"`,
-            `"${(o.productName || '').replace(/"/g, '""')}"`,
-            o.qty,
-            o.totalPrice || o.total,
-            o.status || 'Pending'
-        ]);
-        const csvContent = '\uFEFF' + [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
-        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `priyo_muhurto_orders_${new Date().toISOString().slice(0,10)}.csv`;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-    }
-
-    async function createDemoTestOrder() {
-        const prod = products[0];
-        const orderId = 'PM-' + Math.floor(1000 + Math.random() * 9000);
-        const testOrder = {
-            orderId,
-            productId: prod.id,
-            productName: prod.name,
-            qty: 1,
-            unitPrice: prod.price,
-            totalPrice: prod.price,
-            total: prod.price.toFixed(2),
-            name: 'তানভীর আহমেদ (টেস্ট কাস্টমার)',
-            address: 'মিরপুর ১০, ঢাকা',
-            phone: '01711000000',
-            status: 'Pending',
-            createdAtMs: Date.now(),
-            time: new Date().toLocaleString('bn-BD')
-        };
-        await saveOrderToSystem(testOrder);
     }
 
     function closeOrderModal() {
@@ -1537,16 +1486,8 @@
         modal.classList.remove('flex');
     }
 
-    // FAQ Toggle
-    function toggleFaq() {
-        const content = document.getElementById('faqContent');
-        const icon = document.getElementById('faqIcon');
-        content.classList.toggle('hidden');
-        icon.classList.toggle('rotate-180');
-    }
-
-    // ইউজার লগইন ও ক্রিয়েট অ্যাকাউন্ট ফাংশনালিটি
-    function openAuthModal(tab) {
+    // User Auth Modal Functions
+    function openAuthModal(tab = 'login') {
         const modal = document.getElementById('authModal');
         modal.classList.remove('hidden');
         modal.classList.add('flex');
@@ -1563,19 +1504,20 @@
         const loginForm = document.getElementById('loginForm');
         const signupForm = document.getElementById('signupForm');
         const ordersPanel = document.getElementById('myOrdersPanel');
-
         const btnLogin = document.getElementById('tabBtnLogin');
         const btnSignup = document.getElementById('tabBtnSignup');
         const btnOrders = document.getElementById('tabBtnOrders');
+        const alertBox = document.getElementById('authAlertBox');
+        if (alertBox) alertBox.classList.add('hidden');
 
         [btnLogin, btnSignup, btnOrders].forEach(b => {
+            if (!b) return;
             b.className = 'flex-1 py-2.5 text-gray-500';
         });
 
         loginForm.classList.add('hidden');
         signupForm.classList.add('hidden');
         ordersPanel.classList.add('hidden');
-        document.getElementById('authAlertBox').classList.add('hidden');
 
         if (tab === 'login') {
             loginForm.classList.remove('hidden');
@@ -1590,13 +1532,6 @@
         }
     }
 
-    function showAuthAlert(msg, isSuccess = true) {
-        const box = document.getElementById('authAlertBox');
-        box.innerText = msg;
-        box.className = `mb-3 p-2.5 rounded-lg text-xs font-semibold ${isSuccess ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-700'}`;
-        box.classList.remove('hidden');
-    }
-
     function handleUserAuth(e, type) {
         e.preventDefault();
         if (type === 'signup') {
@@ -1607,186 +1542,448 @@
 
             currentUser = { name, phone, address, pass };
             registeredUsers.push(currentUser);
-
-            // অটোমেটিক নিচের চেকআউট ফর্মে ইউজারের নাম, ঠিকানা ও ফোন বসিয়ে দেওয়া
-            document.getElementById('custName').value = name;
-            document.getElementById('custPhone').value = phone;
-            if (address) document.getElementById('custAddress').value = address;
-
-            updateHeaderForLoggedInUser();
-            showAuthAlert(`স্বাগতম ${name}! আপনার অ্যাকাউন্ট সফলভাবে তৈরি হয়েছে।`, true);
-            setTimeout(() => closeAuthModal(), 900);
+            try {
+                localStorage.setItem('pm_users_v1', JSON.stringify(registeredUsers));
+                localStorage.setItem('pm_current_user_v1', JSON.stringify(currentUser));
+            } catch (err) {}
         } else {
             const phone = document.getElementById('loginPhone').value.trim();
             const found = registeredUsers.find(u => u.phone === phone);
             currentUser = found || { name: phone, phone, address: '' };
-
-            document.getElementById('custPhone').value = currentUser.phone;
-            if (currentUser.name && currentUser.name !== phone) {
-                document.getElementById('custName').value = currentUser.name;
-            }
-            if (currentUser.address) {
-                document.getElementById('custAddress').value = currentUser.address;
-            }
-
-            updateHeaderForLoggedInUser();
-            showAuthAlert(`সফলভাবে লগইন হয়েছে!`, true);
-            setTimeout(() => closeAuthModal(), 800);
+            try {
+                localStorage.setItem('pm_current_user_v1', JSON.stringify(currentUser));
+            } catch (err) {}
         }
+
+        applyUserToHeaderAndForm();
+        closeAuthModal();
     }
 
-    function updateHeaderForLoggedInUser() {
+    function applyUserToHeaderAndForm() {
+        if (!currentUser) return;
         const authArea = document.getElementById('authHeaderArea');
-        if (currentUser) {
+        if (authArea) {
             authArea.innerHTML = `
-                <button onclick="openAuthModal('orders')" class="px-3 py-1.5 text-xs font-bold text-green-800 bg-green-100 rounded-full flex items-center gap-1.5">
-                    <i class="fas fa-user-check text-[#4caf27]"></i>
-                    <span>${currentUser.name.split(' ')[0]}</span>
-                </button>
-                <button onclick="logoutUser()" title="লগআউট" class="px-2.5 py-1.5 text-xs font-bold text-red-600 border border-red-200 rounded-full hover:bg-red-50">
-                    <i class="fas fa-sign-out-alt"></i>
+                <button onclick="openAuthModal('orders')" class="px-3 py-1.5 text-xs font-bold text-[#2e7d12] bg-green-50 border border-green-300 rounded-full flex items-center gap-1">
+                    <i class="fas fa-user-check"></i>
+                    <span>${currentUser.name}</span>
                 </button>
             `;
         }
-    }
-
-    function logoutUser() {
-        currentUser = null;
-        document.getElementById('authHeaderArea').innerHTML = `
-            <button onclick="openAuthModal('login')" class="px-3 py-1.5 text-xs font-bold text-green-700 border border-green-600 rounded-full hover:bg-green-50 transition">
-                <i class="fas fa-sign-in-alt mr-1"></i>লগইন
-            </button>
-            <button onclick="openAuthModal('signup')" class="px-3 py-1.5 text-xs font-bold text-white bg-[#4caf27] rounded-full shadow-sm hover:bg-green-700 transition">
-                <i class="fas fa-user-plus mr-1"></i>অ্যাকাউন্ট খুলুন
-            </button>
-        `;
+        if (currentUser.name) document.getElementById('custName').value = currentUser.name;
+        if (currentUser.phone) document.getElementById('custPhone').value = currentUser.phone;
+        if (currentUser.address) document.getElementById('custAddress').value = currentUser.address;
     }
 
     function renderMyOrders() {
-        const panel = document.getElementById('myOrdersPanel');
+        const container = document.getElementById('myOrdersPanel');
+        if (!container) return;
         if (orderHistory.length === 0) {
-            panel.innerHTML = `<p class="text-xs text-gray-500 text-center py-4">এখনো কোনো অর্ডার করা হয়নি।</p>`;
+            container.innerHTML = `<p class="text-xs text-gray-500 text-center py-6">আপনার এখনো কোনো অর্ডার নেই।</p>`;
             return;
         }
-        panel.innerHTML = orderHistory.map(o => `
-            <div class="border border-green-200 bg-green-50/50 rounded-lg p-3 text-xs">
-                <div class="flex justify-between font-bold text-green-800 mb-1">
-                    <span>#${o.orderId}</span>
-                    <span>${o.total}৳</span>
+        container.innerHTML = orderHistory.map(o => `
+            <div class="border border-gray-200 rounded-xl p-3 bg-gray-50 text-left text-xs space-y-1">
+                <div class="flex justify-between font-bold">
+                    <span class="text-green-800">#${o.orderId}</span>
+                    <span class="px-2 py-0.5 rounded-full bg-amber-100 text-amber-800">${o.status}</span>
                 </div>
-                <div class="font-semibold text-gray-800">${o.productName} × ${o.qty}</div>
-                <div class="text-gray-500 mt-0.5">${o.name} | ${o.phone}</div>
+                <div class="font-semibold text-gray-800">${o.productName} × ${o.qty} — ${o.totalPrice}৳</div>
+                <div class="text-gray-500">${o.createdAt || ''}</div>
             </div>
         `).join('');
     }
 
-    // Image Setup / Gallery Uploader Modal Functions
-    function openImageManagerModal() {
-        const modal = document.getElementById('imageManagerModal');
+    // Admin Modal & PIN Verification Functions
+    function openAdminModal() {
+        const menu = document.getElementById('threeDotDropdown');
+        if (menu) menu.classList.add('hidden');
+        isAdminUnlocked = false;
+        document.getElementById('adminPinScreen').classList.remove('hidden');
+        document.getElementById('adminDashboardContent').classList.add('hidden');
+        document.getElementById('adminLockBtn').classList.add('hidden');
+        document.getElementById('adminPinError').classList.add('hidden');
+        document.getElementById('adminPinInput').value = '';
+
+        const modal = document.getElementById('adminModal');
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+    }
+
+    function closeAdminModal() {
+        isAdminUnlocked = false;
+        const modal = document.getElementById('adminModal');
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+    }
+
+    function lockAndCloseAdmin() {
+        closeAdminModal();
+    }
+
+    function verifyAdminPin(e) {
+        e.preventDefault();
+        const entered = document.getElementById('adminPinInput').value.trim();
+        if (entered === ADMIN_PIN) {
+            isAdminUnlocked = true;
+            document.getElementById('adminPinScreen').classList.add('hidden');
+            document.getElementById('adminDashboardContent').classList.remove('hidden');
+            document.getElementById('adminLockBtn').classList.remove('hidden');
+            document.getElementById('adminPinError').classList.add('hidden');
+            switchAdminSection('orders');
+            renderAdminOrders();
+            renderAdminImageManager();
+        } else {
+            document.getElementById('adminPinError').classList.remove('hidden');
+        }
+    }
+
+    function switchAdminSection(section) {
+        if (!isAdminUnlocked) return;
+        const ordersSec = document.getElementById('adminOrdersSection');
+        const imagesSec = document.getElementById('adminImagesSection');
+        const btnOrders = document.getElementById('adminTabOrdersBtn');
+        const btnImages = document.getElementById('adminTabImagesBtn');
+
+        if (section === 'images') {
+            ordersSec.classList.add('hidden');
+            imagesSec.classList.remove('hidden');
+            btnImages.className = 'px-3.5 py-2 rounded-xl text-xs font-bold bg-[#4caf27] text-white shadow-sm flex items-center gap-1.5 transition';
+            btnOrders.className = 'px-3.5 py-2 rounded-xl text-xs font-bold bg-gray-100 text-gray-700 hover:bg-gray-200 flex items-center gap-1.5 transition';
+            renderAdminImageManager();
+        } else {
+            imagesSec.classList.add('hidden');
+            ordersSec.classList.remove('hidden');
+            btnOrders.className = 'px-3.5 py-2 rounded-xl text-xs font-bold bg-[#4caf27] text-white shadow-sm flex items-center gap-1.5 transition';
+            btnImages.className = 'px-3.5 py-2 rounded-xl text-xs font-bold bg-gray-100 text-gray-700 hover:bg-gray-200 flex items-center gap-1.5 transition';
+            renderAdminOrders();
+        }
+    }
+
+    function updateAdminBadgesAndList() {
+        const pendingCount = orderHistory.filter(o => o.status === 'Pending').length;
+        const badge = document.getElementById('adminOrderBadge');
+        const dropBadge = document.getElementById('dropdownOrderBadge');
+
+        if (badge) {
+            badge.textContent = pendingCount;
+            badge.classList.toggle('hidden', pendingCount === 0);
+        }
+        if (dropBadge) {
+            dropBadge.textContent = pendingCount;
+        }
+        if (isAdminUnlocked) {
+            renderAdminOrders();
+        }
+    }
+
+    function renderAdminOrders() {
+        if (!isAdminUnlocked) return;
+        const total = orderHistory.length;
+        const pending = orderHistory.filter(o => o.status === 'Pending').length;
+        const confirmed = orderHistory.filter(o => o.status === 'Confirmed' || o.status === 'Delivered').length;
+        const revenue = orderHistory
+            .filter(o => o.status !== 'Cancelled')
+            .reduce((sum, o) => sum + (Number(o.totalPrice) || 0), 0);
+
+        document.getElementById('statTotalOrders').textContent = total;
+        document.getElementById('statPendingOrders').textContent = pending;
+        document.getElementById('statConfirmedOrders').textContent = confirmed;
+        document.getElementById('statTotalRevenue').textContent = `${revenue}৳`;
+
+        const filter = document.getElementById('adminFilterStatus')?.value || 'ALL';
+        const filtered = filter === 'ALL' ? orderHistory : orderHistory.filter(o => o.status === filter);
+        const container = document.getElementById('adminOrdersContainer');
+        if (!container) return;
+
+        if (filtered.length === 0) {
+            container.innerHTML = `<p class="text-xs text-gray-500 text-center py-6">কোনো অর্ডার পাওয়া যায়নি।</p>`;
+            return;
+        }
+
+        container.innerHTML = filtered.map(o => `
+            <div class="border border-gray-200 rounded-xl p-3 bg-white shadow-sm text-xs space-y-2">
+                <div class="flex flex-wrap items-center justify-between gap-2 border-b border-gray-100 pb-2">
+                    <div>
+                        <span class="font-extrabold text-green-800 text-sm">#${o.orderId}</span>
+                        <span class="text-gray-400 ml-2">${o.createdAt || ''}</span>
+                    </div>
+                    <div class="flex items-center gap-1.5">
+                        <select onchange="changeOrderStatus('${o.orderId}', this.value)"
+                                class="border border-gray-300 rounded-lg px-2 py-1 font-bold text-xs bg-gray-50">
+                            <option value="Pending" ${o.status === 'Pending' ? 'selected' : ''}>পেন্ডিং (Pending)</option>
+                            <option value="Confirmed" ${o.status === 'Confirmed' ? 'selected' : ''}>কনফার্মড (Confirmed)</option>
+                            <option value="Delivered" ${o.status === 'Delivered' ? 'selected' : ''}>ডেলিভারড (Delivered)</option>
+                            <option value="Cancelled" ${o.status === 'Cancelled' ? 'selected' : ''}>বাতিল (Cancelled)</option>
+                        </select>
+                        <button type="button" onclick="deleteOrder('${o.orderId}')" class="text-red-500 hover:text-red-700 px-1.5 py-1" title="ডিলিট">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-gray-800">
+                    <div>
+                        <div><strong>ক্রেতা:</strong> ${o.customerName}</div>
+                        <div><strong>ফোন:</strong> <a href="tel:${o.customerPhone}" class="text-blue-600 underline font-bold">${o.customerPhone}</a></div>
+                        <div><strong>ঠিকানা:</strong> ${o.customerAddress}</div>
+                    </div>
+                    <div class="sm:text-right">
+                        <div class="font-bold text-sm text-[#2e7d12]">${o.productName} × ${o.qty}</div>
+                        <div class="font-extrabold text-base text-[#f26522]">মোট: ${o.totalPrice}৳</div>
+                    </div>
+                </div>
+                <div class="flex flex-wrap items-center gap-2 pt-1">
+                    <a href="tel:${o.customerPhone}" class="px-2.5 py-1 bg-blue-600 text-white rounded-lg font-bold"><i class="fas fa-phone-alt mr-1"></i>কল করুন</a>
+                    <a href="https://wa.me/88${o.customerPhone.replace(/^\\+?88/, '')}" target="_blank" class="px-2.5 py-1 bg-[#25d366] text-white rounded-lg font-bold"><i class="fab fa-whatsapp mr-1"></i>মেসেজ দিন</a>
+                    <button type="button" onclick="copyCourierInfo('${o.orderId}')" class="px-2.5 py-1 bg-gray-200 hover:bg-gray-300 text-gray-800 rounded-lg font-bold"><i class="fas fa-copy mr-1"></i>কুরিয়ার ইনফো কপি</button>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    async function changeOrderStatus(orderId, newStatus) {
+        const ord = orderHistory.find(o => o.orderId === orderId);
+        if (!ord) return;
+        ord.status = newStatus;
+        try { localStorage.setItem('pm_orders_v1', JSON.stringify(orderHistory)); } catch (e) {}
+        if (typeof window.updateOrderInFirestoreCloud === 'function') {
+            try { await window.updateOrderInFirestoreCloud(orderId, { status: newStatus }); } catch (e) {}
+        }
+        updateAdminBadgesAndList();
+    }
+
+    async function deleteOrder(orderId) {
+        orderHistory = orderHistory.filter(o => o.orderId !== orderId);
+        try { localStorage.setItem('pm_orders_v1', JSON.stringify(orderHistory)); } catch (e) {}
+        if (typeof window.deleteOrderFromFirestoreCloud === 'function') {
+            try { await window.deleteOrderFromFirestoreCloud(orderId); } catch (e) {}
+        }
+        updateAdminBadgesAndList();
+    }
+
+    function copyCourierInfo(orderId) {
+        const o = orderHistory.find(item => item.orderId === orderId);
+        if (!o) return;
+        const text = `Name: ${o.customerName}\nPhone: ${o.customerPhone}\nAddress: ${o.customerAddress}\nCOD: ${o.totalPrice} Tk\nItem: ${o.productName} x${o.qty}`;
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        document.body.appendChild(ta);
+        ta.select();
+        try { document.execCommand('copy'); } catch (e) {}
+        document.body.removeChild(ta);
+        const toast = document.getElementById('adminCopyToast');
+        if (toast) {
+            toast.classList.remove('hidden');
+            setTimeout(() => toast.classList.add('hidden'), 2500);
+        }
+    }
+
+    async function createDemoTestOrder() {
+        const prod = products[0];
+        const orderId = 'PM-' + Math.floor(100000 + Math.random() * 900000);
+        const demo = {
+            orderId,
+            productId: prod.id,
+            productName: prod.name,
+            qty: 1,
+            unitPrice: prod.price,
+            totalPrice: prod.price,
+            customerName: 'টেস্ট কাস্টমার',
+            customerAddress: 'মিরপুর ১০, ঢাকা',
+            customerPhone: '01700000000',
+            status: 'Pending',
+            createdAt: new Date().toLocaleString('bn-BD'),
+            createdAtMs: Date.now()
+        };
+        orderHistory.unshift(demo);
+        try { localStorage.setItem('pm_orders_v1', JSON.stringify(orderHistory)); } catch (e) {}
+        if (typeof window.saveOrderToFirestoreCloud === 'function') {
+            try { await window.saveOrderToFirestoreCloud(demo); } catch (e) {}
+        }
+        updateAdminBadgesAndList();
+    }
+
+    function exportOrdersCsv() {
+        if (orderHistory.length === 0) return;
+        const headers = ['OrderID', 'Date', 'CustomerName', 'Phone', 'Address', 'Product', 'Qty', 'Total', 'Status'];
+        const rows = orderHistory.map(o => [
+            o.orderId,
+            `"${(o.createdAt || '').replace(/"/g, '""')}"`,
+            `"${(o.customerName || '').replace(/"/g, '""')}"`,
+            o.customerPhone,
+            `"${(o.customerAddress || '').replace(/"/g, '""')}"`,
+            `"${(o.productName || '').replace(/"/g, '""')}"`,
+            o.qty,
+            o.totalPrice,
+            o.status
+        ].join(','));
+        const csv = '\uFEFF' + [headers.join(','), ...rows].join('\n');
+        const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = `priyo_muhurto_orders.csv`;
+        link.click();
+    }
+
+    // Protected Admin Image Setup / Gallery Uploader Functions (Only accessible after ADMIN_PIN verification)
+    function renderAdminImageManager() {
+        if (!isAdminUnlocked) return;
         const bannerPrev = document.getElementById('previewBannerUpload');
-        if (bannerPrev) bannerPrev.src = mainBannerImageUrl;
+        if (bannerPrev) bannerPrev.src = siteRoundLogoUrl || mainBannerImageUrl;
 
         const list = document.getElementById('productImageManagerList');
+        if (!list) return;
         list.innerHTML = products.map((p, idx) => `
             <div class="border border-gray-200 rounded-xl p-3 bg-gray-50">
                 <div class="flex items-center justify-between mb-2">
                     <span class="font-bold text-xs text-gray-800">${idx + 2}. ${p.label}</span>
-                    <a href="${p.ibbPageUrl}" target="_blank" class="text-[11px] text-blue-600 underline">আপনার লিংক দেখুন</a>
+                    <div class="flex items-center gap-2">
+                        <a href="${p.ibbPageUrl}" target="_blank" class="text-[11px] text-blue-600 underline">মূল লিংক</a>
+                        <button type="button" onclick="resetSingleImage(${p.id})" class="text-[11px] text-red-600 hover:underline font-semibold">রিসেট</button>
+                    </div>
                 </div>
                 <div class="flex items-center gap-3">
-                    <img id="previewProdUpload_${p.id}" src="${p.img}" onerror="this.onerror=null;this.src='${p.fallbackImg}';" class="w-14 h-14 rounded-lg object-cover border bg-white shrink-0">
+                    <img id="previewProdUpload_${p.id}" src="${p.img}" onerror="this.onerror=null;this.src='${p.fallbackImg}';" class="w-16 h-16 rounded-lg object-cover border bg-white shrink-0">
                     <div class="flex-1 space-y-1.5">
                         <label class="inline-flex items-center gap-1.5 bg-[#4caf27] text-white text-xs font-bold px-3 py-1.5 rounded-lg cursor-pointer hover:bg-green-700 transition">
                             <i class="fas fa-upload"></i> গ্যালারি থেকে ছবি দিন
                             <input type="file" accept="image/*" class="hidden" onchange="handleGalleryUpload(event, ${p.id})">
                         </label>
-                        <input type="text" placeholder="অথবা ছবির Direct Link পেস্ট করুন"
+                        <input type="text" placeholder="অথবা Direct/ibb.co.com লিংক পেস্ট করুন"
                                onchange="handleDirectUrlChange(${p.id}, this.value)"
-                               class="w-full px-2.5 py-1 text-xs border border-gray-300 rounded">
+                               class="w-full px-2.5 py-1.5 text-xs border border-gray-300 rounded-lg bg-white">
                     </div>
                 </div>
             </div>
         `).join('');
-
-        modal.classList.remove('hidden');
-        modal.classList.add('flex');
     }
 
-    function closeImageManagerModal() {
-        const modal = document.getElementById('imageManagerModal');
-        modal.classList.add('hidden');
-        modal.classList.remove('flex');
+    function showAdminImageSavedToast(msg = 'ছবি আপডেট ও সেভ হয়েছে!') {
+        const toast = document.getElementById('imgSaveToast');
+        if (!toast) return;
+        toast.textContent = msg;
+        toast.classList.remove('hidden');
+        setTimeout(() => toast.classList.add('hidden'), 2800);
     }
 
     function handleGalleryUpload(event, target) {
+        if (!isAdminUnlocked) return;
         const file = event.target.files && event.target.files[0];
         if (!file) return;
-
         const reader = new FileReader();
-        reader.onload = function(e) {
-            const dataUrl = e.target.result;
-            if (target === 'banner') {
-                mainBannerImageUrl = dataUrl;
-                try { localStorage.setItem('pm_custom_banner', dataUrl); } catch (err) {}
-                document.getElementById('mainBannerImg').src = dataUrl;
-                document.getElementById('previewBannerUpload').src = dataUrl;
-            } else {
-                const prod = products.find(p => p.id === Number(target));
-                if (prod) {
-                    prod.img = dataUrl;
-                    prod.resolved = true;
-                    try { localStorage.setItem('pm_custom_prod_' + prod.id, dataUrl); } catch (err) {}
-                    const prev = document.getElementById('previewProdUpload_' + prod.id);
-                    if (prev) prev.src = dataUrl;
-                    renderProducts();
+        reader.onload = function(ev) {
+            const img = new Image();
+            img.onload = async function() {
+                const canvas = document.createElement('canvas');
+                const maxDim = 700;
+                let w = img.width;
+                let h = img.height;
+                if (w > maxDim || h > maxDim) {
+                    if (w > h) {
+                        h = Math.round((h * maxDim) / w);
+                        w = maxDim;
+                    } else {
+                        w = Math.round((w * maxDim) / h);
+                        h = maxDim;
+                    }
                 }
-            }
+                canvas.width = w;
+                canvas.height = h;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0, w, h);
+                const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.82);
+                await applyUpdatedSiteImage(target, compressedDataUrl);
+            };
+            img.src = ev.target.result;
         };
         reader.readAsDataURL(file);
     }
 
-    function handleDirectUrlChange(target, urlValue) {
+    async function handleDirectUrlChange(target, urlValue) {
+        if (!isAdminUnlocked) return;
         const trimmed = (urlValue || '').trim();
         if (!trimmed) return;
-
-        if (target === 'banner') {
-            mainBannerImageUrl = trimmed;
-            try { localStorage.setItem('pm_custom_banner', trimmed); } catch (err) {}
-            document.getElementById('mainBannerImg').src = trimmed;
-            document.getElementById('previewBannerUpload').src = trimmed;
+        if (trimmed.includes('ibb.co')) {
+            showAdminImageSavedToast('লিংক থেকে ছবি লোড হচ্ছে...');
+            const resolved = await resolveAndVerifyIbb(trimmed);
+            await applyUpdatedSiteImage(target, resolved || trimmed);
         } else {
-            const prod = products.find(p => p.id === Number(target));
-            if (prod) {
-                prod.img = trimmed;
-                prod.resolved = true;
-                try { localStorage.setItem('pm_custom_prod_' + prod.id, trimmed); } catch (err) {}
-                const prev = document.getElementById('previewProdUpload_' + prod.id);
-                if (prev) prev.src = trimmed;
-                renderProducts();
-            }
+            await applyUpdatedSiteImage(target, trimmed);
         }
     }
 
-    // পেইজ লোড হলে প্রোডাক্ট রেন্ডার এবং ImgBB ছবি লোড করা
+    async function applyUpdatedSiteImage(target, finalImageUrl) {
+        if (!finalImageUrl) return;
+        if (target === 'banner') {
+            mainBannerImageUrl = finalImageUrl;
+            siteRoundLogoUrl = finalImageUrl;
+            try { localStorage.setItem('pm_custom_banner', finalImageUrl); } catch (e) {}
+            syncLogoAndBannerDom(finalImageUrl);
+            const prevEl = document.getElementById('previewBannerUpload');
+            if (prevEl) prevEl.src = finalImageUrl;
+            if (typeof window.saveCustomImageToCloud === 'function') {
+                try { await window.saveCustomImageToCloud('banner', finalImageUrl); } catch (e) {}
+            }
+        } else {
+            const prod = products.find(p => p.id === Number(target));
+            if (prod) {
+                prod.img = finalImageUrl;
+                prod.resolved = true;
+                try { localStorage.setItem('pm_custom_prod_' + prod.id, finalImageUrl); } catch (e) {}
+                renderProducts();
+                const prevEl = document.getElementById('previewProdUpload_' + prod.id);
+                if (prevEl) prevEl.src = finalImageUrl;
+                if (typeof window.saveCustomImageToCloud === 'function') {
+                    try { await window.saveCustomImageToCloud('prod_' + prod.id, finalImageUrl); } catch (e) {}
+                }
+            }
+        }
+        showAdminImageSavedToast('ছবি আপডেট ও সেভ হয়েছে!');
+    }
+
+    async function resetSingleImage(target) {
+        if (!isAdminUnlocked) return;
+        if (target === 'banner') {
+            localStorage.removeItem('pm_custom_banner');
+            localStorage.removeItem(CACHE_PREFIX + bannerRawIbb);
+            mainBannerImageUrl = bannerFallbackSvg;
+            siteRoundLogoUrl = roundLogoFallbackSvg;
+            syncLogoAndBannerDom();
+            loadAllUserIbbImages();
+        } else {
+            const prod = products.find(p => p.id === Number(target));
+            if (prod) {
+                localStorage.removeItem('pm_custom_prod_' + prod.id);
+                localStorage.removeItem(CACHE_PREFIX + prod.ibbPageUrl);
+                prod.img = prod.fallbackImg;
+                renderProducts();
+                loadAllUserIbbImages();
+            }
+        }
+        renderAdminImageManager();
+        showAdminImageSavedToast('রিসেট হয়ে মূল লিংক লোড হচ্ছে...');
+    }
+
+    // Initialize Page on Load
     window.addEventListener('DOMContentLoaded', () => {
-        const bannerEl = document.getElementById('mainBannerImg');
-        if (bannerEl) bannerEl.src = mainBannerImageUrl;
+        applyUserToHeaderAndForm();
         renderProducts();
+        initScrollRevealAnimations();
         loadAllUserIbbImages();
         updateAdminBadgesAndList();
     });
 </script>
 
-<!-- Real-Time Cloud Order Sync (Firebase Firestore) -->
+<!-- Firebase Realtime Cloud Sync for Orders & Admin Image Settings -->
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-    import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+    import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
     import { getFirestore, doc, setDoc, updateDoc, deleteDoc, onSnapshot, collection } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-    const appId = typeof __app_id !== 'undefined' ? __app_id : 'priyo-muhurto-shop';
     let db = null;
     let auth = null;
     let currentAuthUser = null;
+    const appId = typeof __app_id !== 'undefined' ? __app_id : 'priyo-muhurto-shop';
 
     async function initCloudOrderSync() {
         try {
@@ -1797,32 +1994,55 @@
             auth = getAuth(app);
 
             if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                await signInWithCustomToken(auth, __initial_auth_token);
+                const cred = await signInWithCustomToken(auth, __initial_auth_token);
+                currentAuthUser = cred.user;
             } else {
-                await signInAnonymously(auth);
+                const cred = await signInAnonymously(auth);
+                currentAuthUser = cred.user;
             }
 
-            onAuthStateChanged(auth, (user) => {
-                currentAuthUser = user;
-                if (!user) return;
+            if (!currentAuthUser) return;
 
-                const ordersRef = collection(db, 'artifacts', appId, 'public', 'data', 'orders');
-                onSnapshot(ordersRef, (snapshot) => {
-                    const cloudOrders = [];
-                    snapshot.forEach((docSnap) => {
-                        cloudOrders.push(docSnap.data());
-                    });
-                    // Sort newest first in memory
-                    cloudOrders.sort((a, b) => (b.createdAtMs || 0) - (a.createdAtMs || 0));
+            // Listen to Orders in Real-Time
+            const ordersCol = collection(db, 'artifacts', appId, 'public', 'data', 'orders');
+            onSnapshot(ordersCol, (snapshot) => {
+                const cloudOrders = [];
+                snapshot.forEach(docSnap => {
+                    cloudOrders.push(docSnap.data());
+                });
+                cloudOrders.sort((a, b) => (b.createdAtMs || 0) - (a.createdAtMs || 0));
+                if (cloudOrders.length > 0) {
                     orderHistory = cloudOrders;
                     renderMyOrders();
                     updateAdminBadgesAndList();
-                }, (error) => {
-                    console.error("Orders snapshot error:", error);
-                });
+                }
+            }, (err) => {
+                console.warn("Orders listener warning:", err);
             });
-        } catch (err) {
-            console.error("Firebase init error:", err);
+
+            // Listen to Custom Admin Images in Real-Time
+            const imagesDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'site_settings', 'images');
+            onSnapshot(imagesDocRef, (docSnap) => {
+                if (docSnap.exists()) {
+                    const data = docSnap.data();
+                    if (data.banner) {
+                        mainBannerImageUrl = data.banner;
+                        siteRoundLogoUrl = data.banner;
+                        syncLogoAndBannerDom(data.banner);
+                    }
+                    products.forEach(p => {
+                        if (data['prod_' + p.id]) {
+                            p.img = data['prod_' + p.id];
+                            p.resolved = true;
+                        }
+                    });
+                    renderProducts();
+                }
+            }, (err) => {
+                console.warn("Image settings listener warning:", err);
+            });
+        } catch (e) {
+            console.warn("Cloud init skipped or offline:", e);
         }
     }
 
@@ -1842,6 +2062,12 @@
         if (!db || !currentAuthUser) return;
         const orderDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'orders', orderId);
         await deleteDoc(orderDocRef);
+    };
+
+    window.saveCustomImageToCloud = async function(key, imageUrlValue) {
+        if (!db || !currentAuthUser) return;
+        const settingsDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'site_settings', 'images');
+        await setDoc(settingsDocRef, { [key]: imageUrlValue, updatedAt: Date.now() }, { merge: true });
     };
 
     initCloudOrderSync();
