@@ -1,2077 +1,1478 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="bn" class="scroll-smooth">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>প্রিয় মুহূর্ত | Priyo Muhurto - Magic Mirror & Gift Shop</title>
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts for Bengali -->
-    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Font Awesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <style>
-        :root {
-            --primary-green: #4caf27;
-            --dark-green: #2e7d12;
-            --orange-btn: #f26522;
-            --whatsapp-green: #25d366;
-            --bg-cream: #fdfaf5;
-            --card-bg: #fff8eb;
-        }
-
-        * {
-            font-family: 'Hind Siliguri', sans-serif;
-            scroll-behavior: smooth;
-        }
-
-        body {
-            background-color: #f0ece1;
-            color: #222;
-        }
-
-        .app-wrapper {
-            max-width: 600px;
-            margin: 0 auto;
-            background: #ffffff;
-            min-height: 100vh;
-            box-shadow: 0 0 25px rgba(0, 0, 0, 0.12);
-        }
-
-        /* Custom Buttons matching video reference */
-        .btn-orange {
-            display: inline-block;
-            background: linear-gradient(180deg, #ff7633 0%, #f26522 100%);
-            color: #ffffff;
-            padding: 8px 26px;
-            border-radius: 999px;
-            font-weight: 700;
-            font-size: 16px;
-            border: none;
-            cursor: pointer;
-            box-shadow: 0 4px 8px rgba(242, 101, 34, 0.35);
-            transition: all 0.2s ease;
-            text-align: center;
-        }
-
-        .btn-orange:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 6px 12px rgba(242, 101, 34, 0.45);
-        }
-
-        .btn-orange:active {
-            transform: scale(0.96);
-        }
-
-        .promo-banner {
-            background-color: var(--primary-green);
-            color: #ffffff;
-            padding: 12px 14px;
-            border-radius: 10px;
-            font-size: 17px;
-            font-weight: 700;
-            text-align: center;
-            box-shadow: 0 3px 6px rgba(76, 175, 39, 0.25);
-        }
-
-        .brand-banner {
-            background-color: var(--primary-green);
-            color: #ffffff;
-            padding: 13px 15px;
-            border-radius: 12px;
-            font-size: 20px;
-            font-weight: 700;
-            width: 100%;
-            text-align: center;
-            letter-spacing: 0.5px;
-            box-shadow: 0 3px 8px rgba(76, 175, 39, 0.25);
-        }
-
-        .product-card {
-            background: var(--card-bg);
-            border: 1.5px solid #f2dfb6;
-            border-radius: 14px;
-            padding: 10px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: space-between;
-            box-shadow: 0 3px 8px rgba(0,0,0,0.04);
-            transition: transform 0.2s;
-        }
-
-        .product-card:hover {
-            transform: translateY(-2px);
-        }
-
-        .product-title-bar {
-            background-color: var(--primary-green);
-            color: #ffffff;
-            width: 100%;
-            padding: 7px 6px;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 700;
-            text-align: center;
-            margin: 8px 0;
-            line-height: 1.35;
-        }
-
-        .checkout-item {
-            border: 1.5px solid #e2e8f0;
-            border-radius: 10px;
-            padding: 12px;
-            margin-bottom: 10px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            background: #ffffff;
-        }
-
-        .checkout-item.selected {
-            border: 2px solid var(--primary-green);
-            background-color: #f3fdef;
-        }
-
-        .notice-box {
-            border: 1.5px dashed #d32f2f;
-            background-color: #fff8f8;
-            border-radius: 8px;
-            padding: 12px;
-            margin-bottom: 18px;
-            color: #b71c1c;
-            font-size: 14px;
-            font-weight: 600;
-            line-height: 1.5;
-        }
-
-        /* Zigzag divider from video */
-        .zigzag-divider {
-            height: 12px;
-            width: 180px;
-            margin: 10px auto 16px;
-            background: linear-gradient(135deg, transparent 33.33%, #4caf27 33.33%, #4caf27 66.67%, transparent 66.67%),
-                        linear-gradient(45deg, transparent 33.33%, #4caf27 33.33%, #4caf27 66.67%, transparent 66.67%);
-            background-size: 16px 24px;
-        }
-
-        /* Loading shimmer for ImgBB resolution */
-        .img-loading {
-            animation: pulse 1.5s infinite;
-        }
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.7; }
-        }
-
-        /* Smooth Scroll Reveal Animations */
-        .scroll-reveal {
-            opacity: 0;
-            transform: translateY(36px) scale(0.96);
-            transition: opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1),
-                        transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
-            will-change: opacity, transform;
-        }
-
-        .scroll-reveal.reveal-left {
-            transform: translateX(-32px) translateY(15px);
-        }
-
-        .scroll-reveal.reveal-right {
-            transform: translateX(32px) translateY(15px);
-        }
-
-        .scroll-reveal.reveal-zoom {
-            transform: scale(0.88) translateY(20px);
-        }
-
-        .scroll-reveal.active {
-            opacity: 1;
-            transform: translateX(0) translateY(0) scale(1);
-        }
-
-        /* Floating pulse animation for main CTA buttons */
-        @keyframes gentleFloat {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-4px); }
-        }
-
-        .btn-float {
-            animation: gentleFloat 2.6s ease-in-out infinite;
-        }
-    </style>
-</head>
-<body>
-
-<div class="app-wrapper">
-    <!-- Top Bar with Circular Logo, User Auth Buttons & 3-Dot Admin Menu -->
-    <header class="sticky top-0 z-40 bg-white/95 backdrop-blur border-b border-gray-200 px-3 py-2.5 flex items-center justify-between gap-1">
-        <div class="flex items-center gap-2.5">
-            <!-- Top-left Circular Round Logo Image from https://ibb.co.com/s9Wp7Gyg -->
-            <div class="w-12 h-12 rounded-full overflow-hidden shadow-md border-2 border-[#4caf27] ring-2 ring-green-100 shrink-0 bg-green-700 flex items-center justify-center">
-                <img id="siteLogoImg"
-                     src=""
-                     alt="প্রিয় মুহূর্ত লোগো"
-                     class="w-full h-full rounded-full object-cover block">
-            </div>
-            <div class="text-left leading-tight">
-                <div class="font-extrabold text-sm text-[#2e7d12]">প্রিয় মুহূর্ত</div>
-                <div class="text-[10px] text-gray-500 font-semibold">Priyo Muhurto</div>
-            </div>
-        </div>
-
-        <!-- Action Buttons: User Auth + Three-Dot (⋮) Admin Control Menu -->
-        <div class="flex items-center gap-1.5 flex-wrap justify-end relative">
-            <div id="authHeaderArea" class="flex items-center gap-1">
-                <button onclick="openAuthModal('login')" class="px-3 py-1.5 text-xs font-bold text-green-700 border border-green-600 rounded-full hover:bg-green-50 transition">
-                    লগইন
-                </button>
-                <button onclick="openAuthModal('signup')" class="px-3 py-1.5 text-xs font-bold text-white bg-[#4caf27] rounded-full shadow-sm hover:bg-green-700 transition">
-                    অ্যাকাউন্ট খুলুন
-                </button>
-            </div>
-
-            <!-- Three-Dot (⋮) Menu Button -->
-            <div class="relative">
-                <button id="threeDotMenuBtn" onclick="toggleThreeDotMenu(event)"
-                        class="w-9 h-9 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 flex items-center justify-center transition relative border border-gray-200"
-                        title="মেনু">
-                    <i class="fas fa-ellipsis-v text-sm"></i>
-                    <span id="adminOrderBadge" class="hidden absolute -top-1 -right-1 px-1.5 py-0.2 bg-red-600 text-white text-[9px] rounded-full font-extrabold">0</span>
-                </button>
-
-                <!-- Three-Dot Dropdown Menu (Strictly ONLY Admin Panel Option Outside) -->
-                <div id="threeDotDropdown" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-xl border border-gray-200 py-1.5 z-50 text-left">
-                    <button type="button" onclick="openAdminModal()"
-                            class="w-full px-3.5 py-2.5 text-xs font-bold text-gray-800 hover:bg-green-50 flex items-center justify-between transition">
-                        <span class="flex items-center gap-2">
-                            <i class="fas fa-lock text-[#4caf27] text-sm"></i>
-                            <span>🔒 অ্যাডমিন প্যানেল</span>
-                        </span>
-                        <span id="dropdownOrderBadge" class="px-1.5 py-0.5 bg-red-100 text-red-700 text-[10px] rounded-full font-extrabold">0</span>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </header>
-
-    <!-- Main Container -->
-    <main class="p-3.5 text-center overflow-x-hidden">
-
-        <!-- Centered Round Website Logo Showcase at Top of Landing Page -->
-        <div class="flex justify-center mb-3 scroll-reveal reveal-zoom">
-            <div class="w-[72px] h-[72px] rounded-full overflow-hidden shadow-lg border-2 border-[#4caf27] ring-4 ring-green-50 bg-white flex items-center justify-center">
-                <img id="topCenterLogoImg"
-                     src=""
-                     alt="প্রিয় মুহূর্ত রাউন্ড লোগো"
-                     class="w-full h-full rounded-full object-cover block">
-            </div>
-        </div>
-
-        <!-- Promo Banner -->
-        <div class="promo-banner mb-3.5 scroll-reveal">
-            💥 সীমিত সময়ের জন্য পাচ্ছেন একদম ফ্রি হোম ডেলিভারি 💥
-        </div>
-
-        <!-- Instruction Text -->
-        <p class="text-[15.5px] font-bold text-gray-800 leading-relaxed mb-4 px-2 scroll-reveal">
-            “আপনার পছন্দের পণ্যটি নির্বাচন করুন। অর্ডার কনফার্ম করার পর অনুগ্রহ করে পণ্যের ছবি ও অর্ডার নম্বর WhatsApp-এ পাঠান।”
-        </p>
-
-        <!-- Top Order CTA -->
-        <div class="mb-4 scroll-reveal reveal-zoom">
-            <a href="#checkout" class="btn-orange btn-float">অর্ডার করতে চাই</a>
-        </div>
-
-        <!-- Website Main Image Banner (Public Clean View - No Camera Buttons) -->
-        <div class="relative rounded-2xl overflow-hidden shadow-lg border-2 border-green-100 mb-4 bg-gray-900 scroll-reveal reveal-zoom">
-            <img id="heroBannerImg"
-                 src=""
-                 alt="প্রিয় মুহূর্ত ব্যানার"
-                 class="w-full h-auto min-h-[230px] max-h-[420px] object-cover mx-auto block bg-gray-800">
-            <div class="bg-gradient-to-t from-black/80 via-black/30 to-transparent absolute bottom-0 inset-x-0 p-3 flex items-center justify-center text-white">
-                <span class="text-sm font-bold"><i class="fas fa-gift text-yellow-400 mr-1.5"></i> প্রিয় মানুষকে দিন সেরা উপহার - প্রিয় মুহূর্ত</span>
-            </div>
-        </div>
-
-        <!-- WhatsApp Pill Button -->
-        <div class="my-3 scroll-reveal">
-            <a href="https://wa.me/8801707483913" target="_blank" rel="noopener noreferrer"
-               class="inline-flex items-center gap-2 bg-[#25d366] text-white font-bold text-base px-6 py-2 rounded-full shadow-md hover:opacity-95 transition">
-                <i class="fab fa-whatsapp text-xl"></i>
-                <span id="displayWhatsappTop">01707483913</span>
-            </a>
-        </div>
-
-        <!-- Brand Name Green Banner -->
-        <div class="brand-banner mb-3.5 uppercase scroll-reveal reveal-zoom">
-            প্রিয় মুহূর্ত - PRIYO MUHURTO
-        </div>
-
-        <!-- Second Order CTA -->
-        <div class="mb-5 scroll-reveal">
-            <a href="#checkout" class="btn-orange btn-float">অর্ডার করতে চাই</a>
-        </div>
-
-        <!-- 2-Column Product Showcase Grid -->
-        <div id="productGrid" class="grid grid-cols-2 gap-3 text-center">
-            <!-- Dynamically populated by JavaScript -->
-        </div>
-
-        <!-- Why Buy From Us Section (Exact match to video) -->
-        <section class="my-8 bg-[#fdfaf3] border border-[#f0e4cc] rounded-2xl p-4 text-center shadow-sm scroll-reveal">
-            <h2 class="text-xl font-bold text-gray-900">আমাদের থেকে কেন কিনবেন ??</h2>
-            <div class="zigzag-divider"></div>
-
-            <div class="space-y-3 text-left text-[15px] text-gray-800 font-medium leading-relaxed">
-                <div class="flex items-start gap-2.5 scroll-reveal reveal-left">
-                    <i class="fas fa-check-circle text-[#4caf27] text-lg mt-1 shrink-0"></i>
-                    <p>“আমরা সরাসরি চায়না থেকে আমদানি করা উচ্চমানের অরিজিনাল ম্যাজিক মিরর আপনাদের প্রদান করছি। প্রতিটি পণ্য টেকসই, প্রিমিয়াম ফিনিশিং এবং গিফট দেওয়ার জন্য একদম পারফেক্ট।”</p>
-                </div>
-                <div class="flex items-start gap-2.5 scroll-reveal reveal-right">
-                    <i class="fas fa-check-circle text-[#4caf27] text-lg mt-1 shrink-0"></i>
-                    <p>সুইচ অন করলেই সাধারণ আয়নাটি মুহূর্তেই আপনার প্রিয়জনের ছবিসহ চমৎকার LED ফটো ফ্রেমে রূপান্তরিত হবে।</p>
-                </div>
-                <div class="flex items-start gap-2.5 scroll-reveal reveal-left">
-                    <i class="fas fa-check-circle text-[#4caf27] text-lg mt-1 shrink-0"></i>
-                    <p>সারাদেশে সম্পূর্ণ <strong>ফ্রি হোম ডেলিভারি</strong> এবং পণ্য হাতে পেয়ে ডেলিভারি ম্যানকে টাকা পরিশোধ করার সুবিধা (Cash on Delivery)।</p>
-                </div>
-            </div>
-
-            <!-- FAQ Accordion from video -->
-            <div class="mt-5 text-left border border-gray-200 rounded-xl bg-white overflow-hidden scroll-reveal">
-                <button type="button" onclick="toggleFaq()" class="w-full px-4 py-3 flex items-center justify-between font-bold text-green-800 text-sm">
-                    <span><i class="fas fa-plus-circle mr-2 text-[#4caf27]"></i>টাকা কিভাবে পে করবো ?</span>
-                    <i id="faqIcon" class="fas fa-chevron-down text-xs transition-transform"></i>
-                </button>
-                <div id="faqContent" class="hidden px-4 pb-3 text-sm text-gray-700 border-t border-gray-100 pt-2">
-                    অর্ডার করার জন্য অগ্রিম এক টাকাও দিতে হবে না। পণ্য আপনার ঠিকানায় পৌঁছালে দেখে চেক করে ডেলিভারি ম্যানের কাছে নগদ টাকা পরিশোধ করবেন।
-                </div>
-            </div>
-        </section>
-
-        <!-- Phone / WhatsApp CTA Section -->
-        <section class="my-6 scroll-reveal reveal-zoom">
-            <h3 class="text-lg font-bold text-[#2e7d12] mb-3">
-                ফোনে অর্ডার করুন অথবা প্রয়োজনে কল করুন
-            </h3>
-            <a href="tel:01707483913" class="flex items-center justify-center gap-2.5 bg-[#4caf27] text-white font-bold text-lg py-3 rounded-full shadow-md mb-2.5 hover:bg-green-700 transition">
-                <i class="fas fa-phone-alt"></i> <span>01707483913</span>
-            </a>
-            <a href="https://wa.me/8801707483913" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2.5 bg-[#4caf27] text-white font-bold text-lg py-3 rounded-full shadow-md hover:bg-green-700 transition">
-                <i class="fab fa-whatsapp text-xl"></i> <span>01707483913</span>
-            </a>
-        </section>
-
-        <!-- Checkout Section -->
-        <section id="checkout" class="pt-3 text-left scroll-reveal">
-            <h2 class="text-center text-[#2e7d12] text-xl font-bold mb-3 leading-snug">
-                অর্ডার করতে সঠিক তথ্য দিয়ে নিচের ফর্ম টি পূরণ করুন
-            </h2>
-
-            <div class="border-2 border-[#4caf27] rounded-xl p-3.5 bg-white shadow-sm">
-                <!-- Notice Box from Video -->
-                <div class="notice-box">
-                    <ul class="list-disc pl-4">
-                        <li>প্রিয় গ্রাহক, অর্ডার কনফার্ম করার পর অনুগ্রহ করে আপনার পছন্দের ছবি ও অর্ডার নম্বর আমাদের হোয়াটসঅ্যাপ নম্বর <strong>01707483913</strong> এ পাঠিয়ে দিন।</li>
-                    </ul>
-                </div>
-
-                <form id="orderForm" onsubmit="submitOrder(event)">
-                    <!-- Product Selection List -->
-                    <h3 class="font-bold text-gray-800 text-base mb-2.5">Your Products</h3>
-                    <div id="checkoutProductList" class="mb-5">
-                        <!-- Dynamically populated by JavaScript -->
-                    </div>
-
-                    <!-- Billing Details -->
-                    <h3 class="font-bold text-gray-800 text-base mb-3">Billing details</h3>
-
-                    <div class="mb-3.5">
-                        <label class="block text-sm font-bold text-gray-700 mb-1">
-                            আপনার নাম লিখুন <span class="text-red-600">*</span>
-                        </label>
-                        <input type="text" id="custName" required placeholder="আপনার সম্পূর্ণ নাম লিখুন"
-                               class="w-full px-3.5 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-[#4caf27] focus:ring-1 focus:ring-[#4caf27]">
-                    </div>
-
-                    <div class="mb-3.5">
-                        <label class="block text-sm font-bold text-gray-700 mb-1">
-                            আপনার সম্পূর্ণ ঠিকানা লিখুন <span class="text-red-600">*</span>
-                        </label>
-                        <input type="text" id="custAddress" required placeholder="গ্রাম/রোড, থানা, জেলা লিখুন"
-                               class="w-full px-3.5 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-[#4caf27] focus:ring-1 focus:ring-[#4caf27]">
-                    </div>
-
-                    <div class="mb-4">
-                        <label class="block text-sm font-bold text-gray-700 mb-1">
-                            ফোন নাম্বার লিখুন <span class="text-red-600">*</span>
-                        </label>
-                        <input type="tel" id="custPhone" required placeholder="017XXXXXXXX" pattern="[0-9+]{11,14}"
-                               class="w-full px-3.5 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-[#4caf27] focus:ring-1 focus:ring-[#4caf27]">
-                    </div>
-
-                    <!-- Shipping -->
-                    <h3 class="font-bold text-gray-800 text-base mb-2">Shipping</h3>
-                    <div class="mb-5">
-                        <input type="text" value="Free shipping" readonly
-                               class="w-full px-3.5 py-2.5 border border-gray-200 rounded-lg text-sm bg-gray-50 text-gray-700 font-semibold">
-                    </div>
-
-                    <!-- Your Order Summary Table -->
-                    <h3 class="font-bold text-gray-800 text-base mb-2">Your order</h3>
-                    <div class="border-t border-gray-200 mb-4">
-                        <div class="flex justify-between py-2.5 border-b border-dashed border-gray-300 font-bold text-sm text-gray-700">
-                            <span>Product</span>
-                            <span>Subtotal</span>
-                        </div>
-
-                        <!-- Selected Item Row -->
-                        <div class="flex items-center justify-between py-3 border-b border-dashed border-gray-300 text-sm">
-                            <div class="flex items-center gap-2.5 pr-2">
-                                <img id="summaryThumb" src="" alt="Product" class="w-11 h-11 rounded-md object-cover border border-gray-200 shrink-0">
-                                <span id="summaryProdTitle" class="font-semibold text-gray-800">লাভ শেইপ</span>
-                            </div>
-                            <div class="flex items-center gap-3 shrink-0">
-                                <span id="summaryQtyBadge" class="text-gray-600 font-semibold">× 1</span>
-                                <span id="summaryItemPrice" class="font-bold text-gray-900">800.00৳</span>
-                            </div>
-                        </div>
-
-                        <div class="flex justify-between py-2.5 border-b border-dashed border-gray-300 text-sm text-gray-700">
-                            <span class="font-semibold">Subtotal</span>
-                            <span id="summarySubtotal" class="font-semibold">800.00৳</span>
-                        </div>
-
-                        <div class="flex justify-between py-2.5 border-b border-dashed border-gray-300 text-sm text-gray-700">
-                            <span class="font-semibold">Shipment</span>
-                            <span class="font-semibold text-green-700">Free shipping</span>
-                        </div>
-
-                        <div class="flex justify-between py-3 text-base font-bold text-gray-900">
-                            <span>Total</span>
-                            <span id="summaryTotal">800.00৳</span>
-                        </div>
-                    </div>
-
-                    <!-- Cash on delivery box -->
-                    <div class="bg-gray-50 border border-gray-200 rounded-lg p-3.5 mb-3">
-                        <div class="font-bold text-sm text-gray-800 mb-2">Cash on delivery</div>
-                        <div class="bg-[#efefef] text-gray-600 text-xs font-medium p-2.5 rounded">
-                            Pay with cash upon delivery.
-                        </div>
-                    </div>
-
-                    <p class="text-[11.5px] text-gray-500 leading-relaxed mb-4">
-                        Your personal data will be used to process your order, support your experience throughout this website, and for other purposes described in our <span class="text-red-500 underline cursor-pointer">privacy policy</span>.
-                    </p>
-
-                    <!-- Place Order Button -->
-                    <button type="submit" id="placeOrderBtn"
-                            class="w-full bg-[#4caf27] hover:bg-green-700 text-white font-bold text-lg py-3.5 rounded-full shadow-md flex items-center justify-center gap-2 transition active:scale-98">
-                        <i class="fas fa-lock text-sm"></i>
-                        <span id="placeOrderBtnText">Place Order 800.00৳</span>
-                    </button>
-                </form>
-            </div>
-        </section>
-
-        <!-- Footer -->
-        <footer class="mt-7 pb-8 text-center scroll-reveal">
-            <div class="promo-banner text-sm mb-3">
-                বিস্তারিত জানতে আমাদের ফেসবুক পেজ ফলো করুন
-            </div>
-            <a href="#checkout" class="inline-flex w-11 h-11 rounded-full bg-[#4caf27] text-white items-center justify-center text-xl shadow hover:bg-green-700 transition">
-                <i class="fab fa-facebook-f"></i>
-            </a>
-            <p class="text-xs text-gray-500 mt-4 font-medium">
-                © ২০২৬ <strong>প্রিয় মুহূর্ত (Priyo Muhurto)</strong> | সর্বস্বত্ব সংরক্ষিত
-            </p>
-        </footer>
-    </main>
-</div>
-
-<!-- Password-Protected Admin Control Panel Modal (Orders + Image Setup Inside Only) -->
-<div id="adminModal" class="fixed inset-0 bg-black/70 z-50 hidden items-center justify-center p-2.5 sm:p-4 backdrop-blur-sm">
-    <div class="bg-white w-full max-w-2xl rounded-2xl p-4 sm:p-5 relative shadow-2xl max-h-[92vh] flex flex-col">
-        <button onclick="closeAdminModal()" class="absolute top-3.5 right-4 text-gray-400 hover:text-gray-700 text-xl" title="বন্ধ করুন">
-            <i class="fas fa-times"></i>
-        </button>
-
-        <!-- Header -->
-        <div class="flex items-center justify-between gap-2.5 mb-3 pb-2.5 border-b border-gray-200 pr-7">
-            <div class="flex items-center gap-2.5">
-                <div class="w-10 h-10 rounded-full bg-green-100 text-[#2e7d12] flex items-center justify-center text-lg font-bold shrink-0">
-                    <i class="fas fa-user-shield"></i>
-                </div>
-                <div>
-                    <h3 class="font-bold text-gray-900 text-base sm:text-lg flex items-center gap-2">
-                        <span>প্রিয় মুহূর্ত - অ্যাডমিন প্যানেল</span>
-                        <span id="cloudSyncBadge" class="text-[10px] px-2 py-0.5 rounded-full bg-green-100 text-green-800 font-semibold">
-                            <i class="fas fa-circle text-[7px] text-green-600 mr-1"></i>লাইভ সিঙ্ক
-                        </span>
-                    </h3>
-                    <p class="text-xs text-gray-500">সুরক্ষিত অ্যাডমিন কন্ট্রোল ড্যাশবোর্ড</p>
-                </div>
-            </div>
-
-            <!-- Logout / Lock button when unlocked -->
-            <button id="adminLockBtn" onclick="lockAndCloseAdmin()" class="hidden px-3 py-1.5 rounded-lg bg-red-50 hover:bg-red-100 text-red-600 text-xs font-bold border border-red-200 transition shrink-0">
-                <i class="fas fa-sign-out-alt mr-1"></i>লগআউট / বন্ধ করুন
-            </button>
-        </div>
-
-        <!-- PIN / Password Lock Screen (Strictly Required Every Time Admin Panel Opens) -->
-        <div id="adminPinScreen" class="py-7 px-3 text-center">
-            <div class="w-14 h-14 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center text-2xl mx-auto mb-3">
-                <i class="fas fa-lock"></i>
-            </div>
-            <h4 class="font-bold text-gray-800 text-base mb-1">অ্যাডমিন প্যানেল লগইন</h4>
-            <p class="text-xs text-gray-500 mb-4">অ্যাডমিন প্যানেলে প্রবেশ করতে আপনার গোপন পাসওয়ার্ড দিন।</p>
-
-            <form onsubmit="verifyAdminPin(event)" class="max-w-xs mx-auto space-y-3">
-                <input type="password" id="adminPinInput" placeholder="পাসওয়ার্ড লিখুন" required autocomplete="off"
-                       class="w-full px-4 py-2.5 text-center tracking-widest font-bold text-lg border-2 border-gray-300 rounded-xl focus:outline-none focus:border-[#4caf27]">
-                <div id="adminPinError" class="hidden text-xs text-red-600 font-bold">ভুল পাসওয়ার্ড! সঠিক অ্যাডমিন পাসওয়ার্ড দিন।</div>
-                <button type="submit" class="w-full bg-[#4caf27] hover:bg-green-700 text-white font-bold py-2.5 rounded-xl text-sm shadow transition">
-                    <i class="fas fa-unlock-alt mr-1"></i> লগইন করুন
-                </button>
-            </form>
-        </div>
-
-        <!-- Admin Dashboard Content (Visible ONLY after entering password) -->
-        <div id="adminDashboardContent" class="hidden flex-1 overflow-y-auto flex flex-col pr-1">
-            <!-- Admin Navigation Tabs + Inner 3-Dot Control Menu -->
-            <div class="flex items-center justify-between border-b border-gray-200 mb-3 pb-2 gap-2">
-                <div class="flex items-center gap-1.5 flex-wrap">
-                    <button type="button" id="adminTabOrdersBtn" onclick="switchAdminSection('orders')"
-                            class="px-3.5 py-2 rounded-xl text-xs font-bold bg-[#4caf27] text-white shadow-sm flex items-center gap-1.5 transition">
-                        <i class="fas fa-boxes"></i>
-                        <span>📦 অর্ডার লিস্ট</span>
-                    </button>
-                    <button type="button" id="adminTabImagesBtn" onclick="switchAdminSection('images')"
-                            class="px-3.5 py-2 rounded-xl text-xs font-bold bg-gray-100 text-gray-700 hover:bg-gray-200 flex items-center gap-1.5 transition">
-                        <i class="fas fa-images"></i>
-                        <span>🖼️ ছবি পরিবর্তন ও সেটআপ</span>
-                    </button>
-                </div>
-
-                <!-- Inner 3-dot quick menu inside Admin Panel -->
-                <div class="relative">
-                    <button type="button" onclick="toggleInnerAdminMenu(event)"
-                            class="w-8 h-8 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-700 flex items-center justify-center border border-gray-200"
-                            title="অ্যাডমিন অপশন">
-                        <i class="fas fa-ellipsis-v text-xs"></i>
-                    </button>
-                    <div id="innerAdminDropdown" class="hidden absolute right-0 mt-1.5 w-52 bg-white rounded-xl shadow-lg border border-gray-200 py-1 z-50 text-left">
-                        <button type="button" onclick="switchAdminSection('orders'); hideInnerAdminMenu();"
-                                class="w-full px-3 py-2 text-xs font-bold text-gray-700 hover:bg-green-50 flex items-center gap-2">
-                            <i class="fas fa-box-open text-[#4caf27]"></i> 📦 অর্ডার লিস্ট
-                        </button>
-                        <button type="button" onclick="switchAdminSection('images'); hideInnerAdminMenu();"
-                                class="w-full px-3 py-2 text-xs font-bold text-gray-700 hover:bg-green-50 flex items-center gap-2 border-t border-gray-100">
-                            <i class="fas fa-camera text-amber-600"></i> 🖼️ ছবি পরিবর্তন ও সেটআপ
-                        </button>
-                        <button type="button" onclick="lockAndCloseAdmin(); hideInnerAdminMenu();"
-                                class="w-full px-3 py-2 text-xs font-bold text-red-600 hover:bg-red-50 flex items-center gap-2 border-t border-gray-100">
-                            <i class="fas fa-sign-out-alt"></i> লগআউট / বন্ধ করুন
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- SECTION 1: ORDERS MANAGEMENT -->
-            <div id="adminOrdersSection" class="space-y-4">
-                <!-- Stats Cards -->
-                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
-                    <div class="bg-blue-50 border border-blue-200 rounded-xl p-2.5 text-center">
-                        <div class="text-[11px] font-bold text-blue-700">মোট অর্ডার</div>
-                        <div id="statTotalOrders" class="text-xl font-extrabold text-blue-900">0</div>
-                    </div>
-                    <div class="bg-amber-50 border border-amber-200 rounded-xl p-2.5 text-center">
-                        <div class="text-[11px] font-bold text-amber-700">পেন্ডিং অর্ডার</div>
-                        <div id="statPendingOrders" class="text-xl font-extrabold text-amber-900">0</div>
-                    </div>
-                    <div class="bg-green-50 border border-green-200 rounded-xl p-2.5 text-center">
-                        <div class="text-[11px] font-bold text-green-700">কনফার্ম / ডেলিভারড</div>
-                        <div id="statConfirmedOrders" class="text-xl font-extrabold text-green-900">0</div>
-                    </div>
-                    <div class="bg-purple-50 border border-purple-200 rounded-xl p-2.5 text-center">
-                        <div class="text-[11px] font-bold text-purple-700">মোট বিক্রি (৳)</div>
-                        <div id="statTotalRevenue" class="text-lg font-extrabold text-purple-900">0৳</div>
-                    </div>
-                </div>
-
-                <!-- Action Toolbar -->
-                <div class="flex flex-wrap items-center justify-between gap-2 bg-gray-50 p-2.5 rounded-xl border border-gray-200">
-                    <div class="flex items-center gap-1.5">
-                        <select id="adminFilterStatus" onchange="renderAdminOrders()" class="text-xs font-bold border border-gray-300 rounded-lg px-2.5 py-1.5 bg-white">
-                            <option value="ALL">সব অর্ডার (All)</option>
-                            <option value="Pending">পেন্ডিং (Pending)</option>
-                            <option value="Confirmed">কনফার্মড (Confirmed)</option>
-                            <option value="Delivered">ডেলিভারড (Delivered)</option>
-                            <option value="Cancelled">বাতিল (Cancelled)</option>
-                        </select>
-                        <button type="button" onclick="createDemoTestOrder()" class="px-2.5 py-1.5 bg-amber-500 hover:bg-amber-600 text-white text-xs font-bold rounded-lg transition flex items-center gap-1">
-                            <i class="fas fa-plus-circle"></i> + টেস্ট অর্ডার
-                        </button>
-                    </div>
-
-                    <div class="flex items-center gap-1.5">
-                        <button type="button" onclick="exportOrdersCsv()" class="px-2.5 py-1.5 bg-green-700 hover:bg-green-800 text-white text-xs font-bold rounded-lg transition flex items-center gap-1">
-                            <i class="fas fa-file-csv"></i> এক্সেল/CSV ডাউনলোড
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Copy Toast Alert -->
-                <div id="adminCopyToast" class="hidden bg-green-800 text-white text-xs font-bold px-3 py-2 rounded-lg text-center">
-                    কুরিয়ার বুকিংয়ের জন্য অর্ডারের তথ্য কপি হয়েছে!
-                </div>
-
-                <!-- Orders List -->
-                <div id="adminOrdersContainer" class="space-y-3">
-                    <p class="text-xs text-gray-500 text-center py-6">এখনো কোনো অর্ডার আসেনি।</p>
-                </div>
-            </div>
-
-            <!-- SECTION 2: PROTECTED IMAGE SETUP / GALLERY UPLOADER (Only Inside Admin Panel) -->
-            <div id="adminImagesSection" class="hidden space-y-3">
-                <div class="bg-green-50 border border-green-200 rounded-xl p-3 text-xs text-green-900 leading-relaxed flex items-center justify-between gap-2">
-                    <div>
-                        <i class="fas fa-shield-alt text-[#4caf27] mr-1"></i>
-                        <strong>শুধুমাত্র অ্যাডমিন কন্ট্রোল:</strong> এখান থেকে আপনি গোল লোগো, ব্যানার বা প্রোডাক্টের ছবি পরিবর্তন করলে তা ক্লাউডে সেভ হবে এবং সব কাস্টমার দেখতে পাবে।
-                    </div>
-                    <span id="imgSaveToast" class="hidden px-2.5 py-1 bg-[#4caf27] text-white rounded-lg font-bold shrink-0">সেভ হয়েছে!</span>
-                </div>
-
-                <!-- 1. Circular Website Logo & Main Banner Image Uploader -->
-                <div class="border border-gray-200 rounded-xl p-3 bg-gray-50">
-                    <div class="flex items-center justify-between mb-2">
-                        <span class="font-bold text-xs text-gray-800">১. ওয়েবসাইটের গোল লোগো ও মূল ব্যানার ছবি</span>
-                        <div class="flex items-center gap-2">
-                            <a href="https://ibb.co.com/s9Wp7Gyg" target="_blank" class="text-[11px] text-blue-600 underline">মূল লিংক (s9Wp7Gyg)</a>
-                            <button type="button" onclick="resetSingleImage('banner')" class="text-[11px] text-red-600 hover:underline font-semibold">রিসেট</button>
-                        </div>
-                    </div>
-                    <div class="flex items-center gap-3">
-                        <img id="previewBannerUpload" src="" class="w-16 h-16 rounded-full object-cover border-2 border-[#4caf27] bg-white shrink-0 shadow">
-                        <div class="flex-1 space-y-1.5">
-                            <label class="inline-flex items-center gap-1.5 bg-[#4caf27] text-white text-xs font-bold px-3 py-1.5 rounded-lg cursor-pointer hover:bg-green-700 transition">
-                                <i class="fas fa-upload"></i> গ্যালারি থেকে লোগো / ব্যানার ছবি দিন
-                                <input type="file" accept="image/*" class="hidden" onchange="handleGalleryUpload(event, 'banner')">
-                            </label>
-                            <input type="text" id="inputBannerUrl" placeholder="অথবা https://ibb.co.com/s9Wp7Gyg বা ডাইরেক্ট লিংক পেস্ট করুন"
-                                   onchange="handleDirectUrlChange('banner', this.value)"
-                                   class="w-full px-2.5 py-1.5 text-xs border border-gray-300 rounded-lg bg-white">
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 2. 4 Products Image Uploaders -->
-                <div id="productImageManagerList" class="space-y-2.5">
-                    <!-- Populated by JS -->
-                </div>
-
-                <div class="flex items-center justify-between gap-2 pt-2 border-t border-gray-200">
-                    <button type="button" onclick="retryAllIbbFetch()" class="px-3.5 py-2 text-xs font-bold text-green-700 border border-green-600 rounded-lg hover:bg-green-50">
-                        <i class="fas fa-sync-alt mr-1"></i>লিংক থেকে আবার অটো-লোড করুন
-                    </button>
-                    <button type="button" onclick="switchAdminSection('orders')" class="px-4 py-2 text-xs font-bold text-white bg-[#4caf27] rounded-lg hover:bg-green-700">
-                        অর্ডার লিস্টে ফিরে যান
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Order Success Confirmation Modal -->
-<div id="orderSuccessModal" class="fixed inset-0 bg-black/60 z-50 hidden items-center justify-center p-4 backdrop-blur-sm">
-    <div class="bg-white w-full max-w-md rounded-2xl p-6 text-center relative shadow-2xl">
-        <div class="w-16 h-16 rounded-full bg-green-100 text-[#4caf27] flex items-center justify-center text-3xl mx-auto mb-3">
-            <i class="fas fa-check-circle"></i>
-        </div>
-        <h3 class="text-xl font-bold text-gray-900 mb-1">অভিনন্দন! আপনার অর্ডার সফল হয়েছে</h3>
-        <p class="text-xs text-gray-600 mb-4">প্রিয় মুহূর্ত (Priyo Muhurto)-এ অর্ডার করার জন্য ধন্যবাদ।</p>
-
-        <div class="bg-green-50 border border-green-200 rounded-xl p-3.5 text-left text-sm space-y-1.5 mb-4">
-            <div class="flex justify-between">
-                <span class="text-gray-600">অর্ডার নম্বর:</span>
-                <span id="modalOrderId" class="font-bold text-green-800">#PM-1024</span>
-            </div>
-            <div class="flex justify-between">
-                <span class="text-gray-600">পণ্য:</span>
-                <span id="modalOrderProd" class="font-bold text-gray-800">লাভ শেইপ × 1</span>
-            </div>
-            <div class="flex justify-between">
-                <span class="text-gray-600">মোট মূল্য (ফ্রি ডেলিভারি):</span>
-                <span id="modalOrderTotal" class="font-bold text-[#f26522]">800.00৳</span>
-            </div>
-            <div class="flex justify-between">
-                <span class="text-gray-600">ক্রেতার নাম ও ফোন:</span>
-                <span id="modalOrderCustomer" class="font-semibold text-gray-800"></span>
-            </div>
-        </div>
-
-        <p class="text-xs text-red-600 font-semibold mb-4">
-            * অর্ডারটি দ্রুত ডেলিভারি পেতে নিচের বাটনে ক্লিক করে WhatsApp-এ আপনার ছবি ও অর্ডার নম্বরটি পাঠিয়ে দিন।
-        </p>
-
-        <a id="modalWhatsappBtn" href="#" target="_blank" rel="noopener noreferrer"
-           class="w-full bg-[#25d366] hover:bg-green-600 text-white font-bold py-3 px-4 rounded-full flex items-center justify-center gap-2 text-sm shadow-md mb-2.5">
-            <i class="fab fa-whatsapp text-lg"></i> WhatsApp-এ ছবি ও অর্ডার নম্বর পাঠান
-        </a>
-
-        <button onclick="closeOrderModal()" class="w-full py-2 text-xs font-bold text-gray-500 hover:text-gray-800">
-            বন্ধ করুন
-        </button>
-    </div>
-</div>
-
-<!-- User Login / Signup / My Orders Modal -->
-<div id="authModal" class="fixed inset-0 bg-black/60 z-50 hidden items-center justify-center p-4 backdrop-blur-sm">
-    <div class="bg-white w-full max-w-md rounded-2xl p-5 relative shadow-2xl">
-        <button onclick="closeAuthModal()" class="absolute top-3.5 right-4 text-gray-400 hover:text-gray-700 text-xl">
-            <i class="fas fa-times"></i>
-        </button>
-
-        <div class="flex border-b border-gray-200 mb-4 text-sm font-bold text-center">
-            <button type="button" id="tabBtnLogin" onclick="switchAuthTab('login')" class="flex-1 py-2.5 text-[#4caf27] border-b-2 border-[#4caf27]">
-                লগইন
-            </button>
-            <button type="button" id="tabBtnSignup" onclick="switchAuthTab('signup')" class="flex-1 py-2.5 text-gray-500">
-                নতুন অ্যাকাউন্ট
-            </button>
-            <button type="button" id="tabBtnOrders" onclick="switchAuthTab('orders')" class="flex-1 py-2.5 text-gray-500">
-                আমার অর্ডার
-            </button>
-        </div>
-
-        <div id="authAlertBox" class="hidden mb-3 p-2.5 rounded-lg text-xs font-semibold"></div>
-
-        <!-- Login Form -->
-        <form id="loginForm" onsubmit="handleUserAuth(event, 'login')" class="space-y-3">
-            <div>
-                <label class="block text-xs font-bold text-gray-700 mb-1">মোবাইল নাম্বার <span class="text-red-500">*</span></label>
-                <input type="tel" id="loginPhone" required placeholder="017XXXXXXXX"
-                       class="w-full px-3.5 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-[#4caf27]">
-            </div>
-            <div>
-                <label class="block text-xs font-bold text-gray-700 mb-1">পাসওয়ার্ড <span class="text-red-500">*</span></label>
-                <input type="password" id="loginPass" required placeholder="******"
-                       class="w-full px-3.5 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-[#4caf27]">
-            </div>
-            <button type="submit" class="w-full bg-[#4caf27] hover:bg-green-700 text-white font-bold py-2.5 rounded-lg text-sm shadow">
-                লগইন করুন
-            </button>
-        </form>
-
-        <!-- Signup Form -->
-        <form id="signupForm" onsubmit="handleUserAuth(event, 'signup')" class="hidden space-y-3">
-            <div>
-                <label class="block text-xs font-bold text-gray-700 mb-1">আপনার নাম <span class="text-red-500">*</span></label>
-                <input type="text" id="signupName" required placeholder="আপনার সম্পূর্ণ নাম"
-                       class="w-full px-3.5 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-[#4caf27]">
-            </div>
-            <div>
-                <label class="block text-xs font-bold text-gray-700 mb-1">মোবাইল নাম্বার <span class="text-red-500">*</span></label>
-                <input type="tel" id="signupPhone" required placeholder="017XXXXXXXX"
-                       class="w-full px-3.5 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-[#4caf27]">
-            </div>
-            <div>
-                <label class="block text-xs font-bold text-gray-700 mb-1">সম্পূর্ণ ঠিকানা</label>
-                <input type="text" id="signupAddress" placeholder="বাসা/গ্রাম, থানা, জেলা"
-                       class="w-full px-3.5 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-[#4caf27]">
-            </div>
-            <div>
-                <label class="block text-xs font-bold text-gray-700 mb-1">পাসওয়ার্ড তৈরি করুন <span class="text-red-500">*</span></label>
-                <input type="password" id="signupPass" required placeholder="******"
-                       class="w-full px-3.5 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-[#4caf27]">
-            </div>
-            <button type="submit" class="w-full bg-[#4caf27] hover:bg-green-700 text-white font-bold py-2.5 rounded-lg text-sm shadow">
-                অ্যাকাউন্ট তৈরি করুন
-            </button>
-        </form>
-
-        <!-- My Orders Panel -->
-        <div id="myOrdersPanel" class="hidden max-h-64 overflow-y-auto space-y-2">
-            <!-- Populated by JS -->
-        </div>
-    </div>
-</div>
-
-<script>
-    // Clear any broken old cache keys from previous versions so broken URLs never stick
-    try {
-        Object.keys(localStorage).forEach(k => {
-            if (k.startsWith('priyo_muhurto_img_v') && !k.startsWith('priyo_muhurto_img_v5_')) {
-                localStorage.removeItem(k);
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>প্রিয় মুহূর্ত (Priyo Muhurto) | Custom Gift & Home Decor Store</title>
+
+  <!-- Google Fonts: Hind Siliguri & Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', '"Hind Siliguri"', 'sans-serif'],
+            bangla: ['"Hind Siliguri"', 'sans-serif'],
+          },
+          colors: {
+            primary: {
+              50: '#f8fafc',
+              100: '#f1f5f9',
+              200: '#e2e8f0',
+              300: '#cbd5e1',
+              400: '#94a3b8',
+              500: '#334155',
+              600: '#0F172A',
+              700: '#1E293B',
+              800: '#090D16',
+              900: '#020617',
+            },
+            gold: {
+              400: '#E5C158',
+              500: '#D4AF37',
+              600: '#C59B27',
+            },
+            roseaccent: {
+              50: '#fff1f2',
+              100: '#ffe4e6',
+              500: '#e11d48',
+              600: '#be123c',
             }
-        });
-    } catch (e) {}
+          }
+        }
+      }
+    };
+  </script>
 
-    // Circular Round Logo Fallback SVG
-    function createRoundLogoSvgDataUri() {
-        const logoSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
-            <defs>
-                <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stop-color="#166534"/>
-                    <stop offset="50%" stop-color="#4caf27"/>
-                    <stop offset="100%" stop-color="#14532d"/>
-                </linearGradient>
-            </defs>
-            <circle cx="100" cy="100" r="96" fill="url(#logoGrad)" stroke="#fde047" stroke-width="6"/>
-            <path d="M100 142 C100 142 52 106 52 74 C52 54 68 42 84 42 C93 42 98 48 100 54 C102 48 107 42 116 42 C132 42 148 54 148 74 C148 106 100 142 100 142 Z" fill="#111827" stroke="#fef08a" stroke-width="5"/>
-            <circle cx="90" cy="82" r="11" fill="#fda4af"/>
-            <circle cx="110" cy="84" r="10" fill="#93c5fd"/>
-            <text x="100" y="166" text-anchor="middle" font-family="sans-serif" font-size="22" font-weight="bold" fill="#ffffff">প্রিয় মুহূর্ত</text>
-            <text x="100" y="183" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="bold" fill="#fef08a">PRIYO MUHURTO</text>
-        </svg>`;
-        return 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(logoSvg)));
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', 'Hind Siliguri', sans-serif;
+      background-color: #FAF9F6;
+      color: #1E293B;
+      padding-bottom: 74px;
     }
-
-    // Layer 1: High-Detail Realistic Canvas/SVG DataURL Generator (Base64 encoded so it 100% renders in all browsers immediately)
-    function createProductSvgDataUri(title, priceText, shapeType) {
-        let frameMarkup = '';
-        if (shapeType === 'banner') {
-            frameMarkup = `
-                <!-- Showcase table -->
-                <rect x="0" y="340" width="800" height="160" fill="#292524"/>
-                <rect x="0" y="340" width="800" height="8" fill="#fbbf24"/>
-                <!-- Heart Mirror Left -->
-                <path d="M180 320 C180 320 90 250 90 190 C90 155 118 132 148 132 C166 132 176 145 180 156 C184 145 194 132 212 132 C242 132 270 155 270 190 C270 250 180 320 180 320 Z" fill="#111827" stroke="#fef08a" stroke-width="8"/>
-                <circle cx="180" cy="215" r="45" fill="#fb7185" opacity="0.9"/>
-                <rect x="135" y="322" width="90" height="18" rx="9" fill="#f3f4f6"/>
-                <!-- Center LOVE Frame -->
-                <rect x="305" y="120" width="190" height="200" rx="22" fill="#111827" stroke="#4ade80" stroke-width="8"/>
-                <circle cx="400" cy="215" r="58" fill="#38bdf8" opacity="0.9"/>
-                <rect x="340" y="322" width="120" height="18" rx="9" fill="#f3f4f6"/>
-                <!-- Clock Mirror Right -->
-                <circle cx="615" cy="220" r="85" fill="#111827" stroke="#fef08a" stroke-width="8"/>
-                <circle cx="695" cy="255" r="45" fill="#ffffff" stroke="#cbd5e1" stroke-width="6"/>
-                <line x1="695" y1="255" x2="695" y2="225" stroke="#1e293b" stroke-width="4"/>
-                <line x1="695" y1="255" x2="715" y2="255" stroke="#ef4444" stroke-width="3"/>
-                <rect x="555" y="322" width="145" height="18" rx="9" fill="#f3f4f6"/>
-                <!-- Top Badge -->
-                <rect x="180" y="25" width="440" height="62" rx="31" fill="#4caf27" stroke="#ffffff" stroke-width="3"/>
-                <text x="400" y="65" text-anchor="middle" font-family="sans-serif" font-size="28" font-weight="bold" fill="#ffffff">${title}</text>
-                <text x="400" y="425" text-anchor="middle" font-family="sans-serif" font-size="30" font-weight="bold" fill="#fef08a">${priceText}</text>
-            `;
-            const bannerSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 480" width="800" height="480">
-                <defs>
-                    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stop-color="#14532d"/>
-                        <stop offset="50%" stop-color="#1e293b"/>
-                        <stop offset="100%" stop-color="#0f172a"/>
-                    </linearGradient>
-                </defs>
-                <rect width="800" height="480" fill="url(#bgGrad)"/>
-                ${frameMarkup}
-            </svg>`;
-            return 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(bannerSvg)));
-        }
-
-        if (shapeType === 'heart') {
-            frameMarkup = `
-                <!-- Glowing Aura -->
-                <circle cx="250" cy="215" r="155" fill="#fef08a" opacity="0.28"/>
-                <!-- Heart LED Mirror Outer Frame -->
-                <path d="M250 355 C250 355 95 245 95 155 C95 102 140 68 190 68 C222 68 242 90 250 108 C258 90 278 68 310 68 C360 68 405 102 405 155 C405 245 250 355 250 355 Z" fill="#111827" stroke="#fde047" stroke-width="12"/>
-                <!-- LED Strip Inner Glow -->
-                <path d="M250 334 C250 334 116 235 116 158 C116 115 152 88 193 88 C220 88 240 106 250 124 C260 106 280 88 307 88 C348 88 384 115 384 158 C384 235 250 334 250 334 Z" fill="#1f2937" stroke="#ffffff" stroke-width="5"/>
-                <!-- Couple Portrait Silhouette Inside Mirror -->
-                <circle cx="222" cy="185" r="32" fill="#fda4af"/>
-                <circle cx="278" cy="192" r="30" fill="#93c5fd"/>
-                <path d="M175 268 Q222 220 265 268" fill="#e11d48"/>
-                <path d="M235 268 Q278 225 325 268" fill="#2563eb"/>
-                <!-- White Base Stand -->
-                <rect x="165" y="352" width="170" height="28" rx="14" fill="#ffffff" stroke="#cbd5e1" stroke-width="4"/>
-            `;
-        } else if (shapeType === 'round') {
-            frameMarkup = `
-                <circle cx="250" cy="210" r="155" fill="#fef08a" opacity="0.28"/>
-                <!-- Round LED Mirror Outer Frame -->
-                <circle cx="250" cy="205" r="132" fill="#111827" stroke="#fde047" stroke-width="12"/>
-                <circle cx="250" cy="205" r="114" fill="#1f2937" stroke="#ffffff" stroke-width="5"/>
-                <!-- Portrait Silhouette Inside Mirror -->
-                <circle cx="250" cy="175" r="38" fill="#fcd34d"/>
-                <path d="M180 275 Q250 215 320 275" fill="#10b981"/>
-                <!-- White Base Stand -->
-                <rect x="160" y="335" width="180" height="30" rx="15" fill="#ffffff" stroke="#cbd5e1" stroke-width="4"/>
-            `;
-        } else if (shapeType === 'clock') {
-            frameMarkup = `
-                <circle cx="190" cy="210" r="135" fill="#fef08a" opacity="0.28"/>
-                <!-- Left LED Mirror -->
-                <circle cx="185" cy="205" r="112" fill="#111827" stroke="#fde047" stroke-width="11"/>
-                <circle cx="185" cy="205" r="96" fill="#1f2937" stroke="#ffffff" stroke-width="4"/>
-                <circle cx="185" cy="180" r="32" fill="#f472b6"/>
-                <path d="M130 262 Q185 210 240 262" fill="#ec4899"/>
-                <!-- Right Analog Clock -->
-                <circle cx="365" cy="245" r="72" fill="#ffffff" stroke="#e2e8f0" stroke-width="10"/>
-                <circle cx="365" cy="245" r="5" fill="#111827"/>
-                <line x1="365" y1="245" x2="365" y2="198" stroke="#111827" stroke-width="6" stroke-linecap="round"/>
-                <line x1="365" y1="245" x2="402" y2="245" stroke="#ef4444" stroke-width="5" stroke-linecap="round"/>
-                <!-- Combined White Stand -->
-                <rect x="95" y="320" width="325" height="32" rx="14" fill="#ffffff" stroke="#cbd5e1" stroke-width="4"/>
-            `;
-        } else if (shapeType === 'penholder') {
-            frameMarkup = `
-                <circle cx="185" cy="210" r="135" fill="#fef08a" opacity="0.28"/>
-                <!-- Left Round LED Mirror -->
-                <circle cx="185" cy="205" r="112" fill="#111827" stroke="#fde047" stroke-width="11"/>
-                <circle cx="185" cy="205" r="96" fill="#1f2937" stroke="#ffffff" stroke-width="4"/>
-                <circle cx="185" cy="180" r="32" fill="#fb923c"/>
-                <path d="M130 262 Q185 210 240 262" fill="#f97316"/>
-                <!-- Pens inside Holder -->
-                <line x1="345" y1="190" x2="332" y2="115" stroke="#ef4444" stroke-width="12" stroke-linecap="round"/>
-                <line x1="372" y1="190" x2="375" y2="108" stroke="#3b82f6" stroke-width="12" stroke-linecap="round"/>
-                <line x1="398" y1="190" x2="412" y2="122" stroke="#10b981" stroke-width="12" stroke-linecap="round"/>
-                <!-- Right Pen Holder Cup -->
-                <rect x="320" y="180" width="100" height="142" rx="14" fill="#fef3c7" stroke="#f59e0b" stroke-width="5"/>
-                <!-- Combined Stand -->
-                <rect x="95" y="320" width="340" height="30" rx="14" fill="#ffffff" stroke="#cbd5e1" stroke-width="4"/>
-            `;
-        }
-
-        const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="500" height="500">
-            <defs>
-                <radialGradient id="roomBg" cx="50%" cy="42%" r="65%">
-                    <stop offset="0%" stop-color="#374151"/>
-                    <stop offset="100%" stop-color="#111827"/>
-                </radialGradient>
-            </defs>
-            <rect width="500" height="500" fill="url(#roomBg)"/>
-            <!-- Wooden Table Surface -->
-            <rect x="0" y="355" width="500" height="145" fill="#451a03"/>
-            <rect x="0" y="355" width="500" height="6" fill="#78350f"/>
-            ${frameMarkup}
-            <!-- Bottom Label Pill -->
-            <rect x="35" y="400" width="430" height="78" rx="16" fill="#ffffff" opacity="0.96"/>
-            <text x="250" y="434" text-anchor="middle" font-family="sans-serif" font-size="25" font-weight="bold" fill="#166534">${title}</text>
-            <text x="250" y="466" text-anchor="middle" font-family="sans-serif" font-size="22" font-weight="bold" fill="#ea580c">${priceText}</text>
-        </svg>`;
-        return 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svg)));
+    @media (min-width: 768px) {
+      body {
+        padding-bottom: 0;
+      }
     }
-
-    const CACHE_PREFIX = 'priyo_muhurto_img_v5_';
-    const bannerRawIbb = "https://ibb.co.com/s9Wp7Gyg";
-    const roundLogoFallbackSvg = createRoundLogoSvgDataUri();
-    const bannerFallbackSvg = createProductSvgDataUri("প্রিয় মুহূর্ত - PRIYO MUHURTO", "✨ অরিজিনাল LED ম্যাজিক মিরর ফটো ফ্রেম ✨", "banner");
-    let mainBannerImageUrl = localStorage.getItem('pm_custom_banner') || bannerFallbackSvg;
-    let siteRoundLogoUrl = localStorage.getItem('pm_custom_banner') || roundLogoFallbackSvg;
-
-    // Update all logo & hero banner DOM elements synchronously
-    function syncLogoAndBannerDom(imgUrl) {
-        const logoEl = document.getElementById('siteLogoImg');
-        const topCenterLogoEl = document.getElementById('topCenterLogoImg');
-        const bannerEl = document.getElementById('heroBannerImg');
-
-        if (logoEl) {
-            logoEl.src = imgUrl || siteRoundLogoUrl;
-            logoEl.onerror = function() {
-                this.onerror = null;
-                this.src = roundLogoFallbackSvg;
-            };
-        }
-        if (topCenterLogoEl) {
-            topCenterLogoEl.src = imgUrl || siteRoundLogoUrl;
-            topCenterLogoEl.onerror = function() {
-                this.onerror = null;
-                this.src = roundLogoFallbackSvg;
-            };
-        }
-        if (bannerEl) {
-            bannerEl.src = imgUrl || mainBannerImageUrl;
-            bannerEl.onerror = function() {
-                this.onerror = null;
-                this.src = bannerFallbackSvg;
-            };
-        }
+    /* Sleek Dark Obsidian Badge for Priyo Muhurto Black-Background Logo */
+    .logo-obsidian-frame {
+      background-color: #000000;
+      border: 1.5px solid rgba(212, 175, 55, 0.55);
+      box-shadow: 0 4px 16px rgba(15, 23, 42, 0.2), inset 0 0 10px rgba(225, 29, 72, 0.16);
+      border-radius: 12px;
+      padding: 3px 10px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
     }
+    .logo-obsidian-frame img {
+      height: 40px;
+      width: auto;
+      object-fit: contain;
+      border-radius: 6px;
+    }
+    @media (min-width: 640px) {
+      .logo-obsidian-frame img {
+        height: 46px;
+      }
+    }
+    ::-webkit-scrollbar {
+      width: 5px;
+      height: 5px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 9999px;
+    }
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    .side-cart-shadow {
+      box-shadow: -4px 6px 24px rgba(15, 23, 42, 0.22);
+    }
+    .bottom-nav-shadow {
+      box-shadow: 0 -4px 20px rgba(15, 23, 42, 0.08);
+    }
+  </style>
+</head>
+<body class="antialiased selection:bg-roseaccent-600 selection:text-white">
 
-    // আপনার দেওয়া ৪টি প্রোডাক্টের সম্পূর্ণ তালিকা
-    const products = [
-        {
-            id: 1,
-            name: "লাভ শেইপ",
-            label: "লাভ শেইপ | প্রাইস ৮০০ টাকা",
-            price: 800,
-            ibbPageUrl: "https://ibb.co.com/1JBYLkr7",
-            shortId: "1JBYLkr7",
-            fallbackImg: createProductSvgDataUri("লাভ শেইপ ম্যাজিক মিরর", "প্রাইস ৮০০ টাকা", "heart"),
-            img: localStorage.getItem('pm_custom_prod_1') || createProductSvgDataUri("লাভ শেইপ ম্যাজিক মিরর", "প্রাইস ৮০০ টাকা", "heart"),
-            resolved: !!localStorage.getItem('pm_custom_prod_1')
-        },
-        {
-            id: 2,
-            name: "গোল শেইপ",
-            label: "গোল শেইপ | প্রাইস ৮০০ টাকা",
-            price: 800,
-            ibbPageUrl: "https://ibb.co.com/xqrPNCYk",
-            shortId: "xqrPNCYk",
-            fallbackImg: createProductSvgDataUri("গোল শেইপ ম্যাজিক মিরর", "প্রাইস ৮০০ টাকা", "round"),
-            img: localStorage.getItem('pm_custom_prod_2') || createProductSvgDataUri("গোল শেইপ ম্যাজিক মিরর", "প্রাইস ৮০০ টাকা", "round"),
-            resolved: !!localStorage.getItem('pm_custom_prod_2')
-        },
-        {
-            id: 3,
-            name: "ঘড়িসহ মিরোর",
-            label: "ঘড়িসহ মিরোর। 1200 টাকা",
-            price: 1200,
-            ibbPageUrl: "https://ibb.co.com/Z662mfdm",
-            shortId: "Z662mfdm",
-            fallbackImg: createProductSvgDataUri("ঘড়িসহ ম্যাজিক মিরোর", "প্রাইস ১২০০ টাকা", "clock"),
-            img: localStorage.getItem('pm_custom_prod_3') || createProductSvgDataUri("ঘড়িসহ ম্যাজিক মিরোর", "প্রাইস ১২০০ টাকা", "clock"),
-            resolved: !!localStorage.getItem('pm_custom_prod_3')
-        },
-        {
-            id: 4,
-            name: "গোল কলমদানি",
-            label: "গোল কলমদানি । ৯০০ টাকা",
-            price: 900,
-            ibbPageUrl: "https://ibb.co.com/cqsCyxJ",
-            shortId: "cqsCyxJ",
-            fallbackImg: createProductSvgDataUri("গোল কলমদানি মিরর", "প্রাইস ৯০০ টাকা", "penholder"),
-            img: localStorage.getItem('pm_custom_prod_4') || createProductSvgDataUri("গোল কলমদানি মিরর", "প্রাইস ৯০০ টাকা", "penholder"),
-            resolved: !!localStorage.getItem('pm_custom_prod_4')
-        }
+  <!-- ==================== 1. STICKY HEADER ==================== -->
+  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-stone-200/80 shadow-2xs">
+    <div class="max-w-7xl mx-auto px-3 sm:px-6 h-16 flex items-center justify-between gap-2">
+      <!-- Left: Hamburger Menu + Brand Logo -->
+      <div class="flex items-center gap-2.5 sm:gap-4">
+        <button onclick="openMenuDrawer()" class="w-10 h-10 rounded-xl bg-stone-100 hover:bg-stone-200 text-primary-600 flex items-center justify-center transition" aria-label="Open Menu">
+          <i class="fa-solid fa-bars text-lg"></i>
+        </button>
+
+        <button onclick="showStorefront()" class="logo-obsidian-frame transition hover:scale-[1.02]" title="প্রিয় মুহূর্ত - Home">
+          <img src="https://ibb.co.com/4nSLpdYW" data-ibb="4nSLpdYW" alt="প্রিয় মুহূর্ত (Priyo Muhurto)" onerror="handleImgbbFallback(this)" />
+        </button>
+      </div>
+
+      <!-- Center: Desktop Search Bar -->
+      <div class="hidden md:flex flex-1 max-w-md mx-4">
+        <div class="relative w-full">
+          <input type="text" id="desktopSearchInput" oninput="handleSearch(this.value)" placeholder="গিফট, ফটো ফ্রেম বা ম্যাজিক মিরর খুঁজুন..." class="w-full h-10 pl-4 pr-10 rounded-xl bg-stone-100 border border-stone-200 text-sm focus:outline-none focus:border-primary-600 focus:bg-white transition font-bangla" />
+          <i class="fa-solid fa-magnifying-glass absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
+        </div>
+      </div>
+
+      <!-- Right: Search (Mobile), Wishlist, Cart, Account -->
+      <div class="flex items-center gap-1.5 sm:gap-2.5">
+        <button onclick="openSearchModal()" class="md:hidden w-9 h-9 rounded-xl bg-stone-100 hover:bg-stone-200 text-primary-600 flex items-center justify-center transition" aria-label="Search">
+          <i class="fa-solid fa-magnifying-glass text-sm"></i>
+        </button>
+
+        <button onclick="openWishlistModal()" class="relative w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-stone-100 hover:bg-stone-200 text-primary-600 flex items-center justify-center transition" aria-label="Wishlist">
+          <i class="fa-regular fa-heart text-base"></i>
+          <span id="headerWishlistCount" class="absolute -top-1 -right-1 min-w-[18px] h-[18px] px-1 rounded-full bg-roseaccent-600 text-white text-[10px] font-bold flex items-center justify-center">0</span>
+        </button>
+
+        <button onclick="openCartDrawer()" class="relative w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-stone-100 hover:bg-stone-200 text-primary-600 flex items-center justify-center transition" aria-label="Shopping Cart">
+          <i class="fa-solid fa-bag-shopping text-base"></i>
+          <span id="headerCartCount" class="absolute -top-1 -right-1 min-w-[18px] h-[18px] px-1 rounded-full bg-primary-600 text-gold-400 text-[10px] font-extrabold flex items-center justify-center">0</span>
+        </button>
+
+        <button onclick="openAccountModal('orders')" class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-primary-600 hover:bg-primary-700 text-gold-400 flex items-center justify-center transition" aria-label="Account & Orders">
+          <i class="fa-regular fa-user text-base"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==================== 2. FLOATING STICKY SIDE CART WIDGET ==================== -->
+  <button onclick="openCartDrawer()" class="fixed right-0 top-1/2 -translate-y-1/2 z-30 bg-white border border-r-0 border-gold-500/50 rounded-l-2xl overflow-hidden side-cart-shadow hover:scale-105 transition-transform group text-center">
+    <div class="bg-primary-600 text-gold-400 px-2.5 py-2 flex flex-col items-center justify-center">
+      <i class="fa-solid fa-bag-shopping text-sm mb-0.5"></i>
+      <span id="sideCartCount" class="text-[10px] font-bold text-white whitespace-nowrap">0 Items</span>
+    </div>
+    <div class="bg-[#FAF9F6] text-primary-600 px-2 py-1.5 text-[11px] font-extrabold whitespace-nowrap border-t border-stone-200">
+      ৳ <span id="sideCartTotal">0</span>
+    </div>
+  </button>
+
+  <!-- Floating Bottom-Right WhatsApp & Scroll-To-Top -->
+  <div class="fixed right-3 bottom-20 md:bottom-6 z-30 flex flex-col items-center gap-2.5">
+    <a href="https://wa.me/8801707483913" target="_blank" rel="noopener noreferrer" class="w-11 h-11 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white shadow-lg flex items-center justify-center text-xl transition-transform hover:scale-110" title="Live Chat / WhatsApp">
+      <i class="fa-brands fa-whatsapp"></i>
+    </a>
+    <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="w-10 h-10 rounded-full bg-white border border-stone-200 text-primary-600 shadow-md flex items-center justify-center text-sm hover:bg-stone-50 transition" title="Back to Top">
+      <i class="fa-solid fa-chevron-up"></i>
+    </button>
+  </div>
+
+  <!-- ==================== MAIN CONTENT CONTAINER ==================== -->
+  <main id="mainAppView" class="min-h-screen">
+
+    <!-- ==================== VIEW 1: STOREFRONT HOME ==================== -->
+    <div id="storefrontView">
+
+      <!-- HERO BANNER SLIDER -->
+      <section class="max-w-7xl mx-auto px-3 sm:px-6 pt-4 pb-2">
+        <div class="relative rounded-2xl overflow-hidden shadow-lg bg-gradient-to-r from-[#090D16] via-[#0F172A] to-[#1E293B] border border-gold-500/20">
+          <div id="heroSliderTrack" class="flex transition-transform duration-500 ease-out">
+
+            <!-- Slide 1 -->
+            <div class="w-full flex-shrink-0 p-5 sm:p-10 md:p-12 flex flex-col sm:flex-row items-center justify-between gap-6 text-white">
+              <div class="space-y-3 text-center sm:text-left max-w-lg">
+                <span class="inline-block px-3 py-1 rounded-full bg-gold-500/15 border border-gold-500/30 text-gold-400 text-[11px] font-bold tracking-wider uppercase">
+                  JHENAIDAH'S TRUSTED CUSTOM GIFT BOUTIQUE
+                </span>
+                <h1 class="text-2xl sm:text-4xl font-extrabold leading-tight font-bangla">
+                  প্রিয় মুহূর্ত — ভালোবাসার সেরা সারপ্রাইজ গিফট শপ
+                </h1>
+                <p class="text-xs sm:text-sm text-slate-300 font-bangla">
+                  কাস্টমাইজড ফটো ফ্রেম, ম্যাজিক মিরর ও চকলেট গিফট বক্স ঝিনাইদহসহ সারা বাংলাদেশে হোম ডেলিভারি।
+                </p>
+                <div class="pt-1 flex flex-wrap gap-2.5 justify-center sm:justify-start">
+                  <a href="#trending-section" class="px-5 py-2.5 rounded-xl bg-gold-500 text-slate-950 font-extrabold text-xs sm:text-sm shadow hover:bg-gold-400 transition">
+                    Shop Now <i class="fa-solid fa-arrow-right ml-1"></i>
+                  </a>
+                  <button onclick="openAccountModal('orders')" class="px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-semibold text-xs sm:text-sm border border-white/20 transition">
+                    Track Order
+                  </button>
+                </div>
+              </div>
+              <div class="flex-shrink-0">
+                <div class="p-2.5 rounded-2xl bg-black border border-gold-500/50 shadow-2xl">
+                  <img src="https://ibb.co.com/4nSLpdYW" data-ibb="4nSLpdYW" alt="Priyo Muhurto" class="w-48 sm:w-64 h-auto rounded-xl object-contain" onerror="handleImgbbFallback(this)" />
+                </div>
+              </div>
+            </div>
+
+            <!-- Slide 2 -->
+            <div class="w-full flex-shrink-0 p-5 sm:p-10 md:p-12 flex flex-col sm:flex-row items-center justify-between gap-6 text-white bg-gradient-to-r from-[#1E1B2E] via-[#2D142C] to-[#881337]">
+              <div class="space-y-3 text-center sm:text-left max-w-lg">
+                <span class="inline-block px-3 py-1 rounded-full bg-gold-500 text-slate-950 text-[11px] font-extrabold uppercase">
+                  SPECIAL COMBO OFFER • UP TO 20% OFF
+                </span>
+                <h2 class="text-2xl sm:text-4xl font-extrabold leading-tight font-bangla">
+                  LED লাভ ম্যাজিক মিরর ও কাস্টম ফটো ফ্রেম
+                </h2>
+                <p class="text-xs sm:text-sm text-rose-100 font-bangla">
+                  সুইচ অন করলেই ভেসে উঠবে আপনার ও প্রিয়জনের সুন্দর ছবি! জন্মদিন বা অ্যানিভার্সারির সেরা উপহার।
+                </p>
+                <div class="pt-1">
+                  <a href="#mirrors-section" class="inline-block px-5 py-2.5 rounded-xl bg-white text-roseaccent-600 font-extrabold text-xs sm:text-sm shadow hover:bg-rose-50 transition">
+                    Explore Magic Mirrors
+                  </a>
+                </div>
+              </div>
+              <div class="flex-shrink-0">
+                <img src="https://images.unsplash.com/photo-1513519245088-0e12902e5a38?w=500&auto=format&fit=crop&q=80" alt="Magic Mirror" class="w-44 sm:w-60 h-36 sm:h-44 rounded-2xl object-cover border-2 border-gold-500/40 shadow-xl" />
+              </div>
+            </div>
+
+            <!-- Slide 3 -->
+            <div class="w-full flex-shrink-0 p-5 sm:p-10 md:p-12 flex flex-col sm:flex-row items-center justify-between gap-6 text-white bg-gradient-to-r from-[#0F172A] via-[#1E293B] to-[#334155]">
+              <div class="space-y-3 text-center sm:text-left max-w-lg">
+                <span class="inline-block px-3 py-1 rounded-full bg-emerald-400/15 text-emerald-300 border border-emerald-400/30 text-[11px] font-bold uppercase">
+                  BUDGET FRIENDLY SURPRISE (৳400 - ৳500)
+                </span>
+                <h2 class="text-2xl sm:text-4xl font-extrabold leading-tight font-bangla">
+                  কাস্টমাইজড ফটো চকলেট বক্স ও পোলারয়েড
+                </h2>
+                <p class="text-xs sm:text-sm text-slate-200 font-bangla">
+                  মাত্র ৪০০ থেকে ৫০০ টাকার মধ্যে আপনার ছবি ও মেসেজসহ প্রিমিয়াম চকলেট বক্স অর্ডার করুন।
+                </p>
+                <div class="pt-1">
+                  <a href="#chocolate-section" class="inline-block px-5 py-2.5 rounded-xl bg-gold-500 text-slate-950 font-extrabold text-xs sm:text-sm shadow hover:bg-gold-400 transition">
+                    View Gift Boxes
+                  </a>
+                </div>
+              </div>
+              <div class="flex-shrink-0">
+                <img src="https://images.unsplash.com/photo-1549007994-cb92caebd54b?w=500&auto=format&fit=crop&q=80" alt="Chocolate Box" class="w-44 sm:w-60 h-36 sm:h-44 rounded-2xl object-cover border-2 border-gold-500/40 shadow-xl" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Pagination Dots -->
+          <div id="heroDots" class="flex items-center justify-center gap-1.5 pb-3 pt-1">
+            <button onclick="goToSlide(0)" class="w-5 h-2 rounded-full bg-gold-400 transition-all" aria-label="Slide 1"></button>
+            <button onclick="goToSlide(1)" class="w-2 h-2 rounded-full bg-white/35 transition-all" aria-label="Slide 2"></button>
+            <button onclick="goToSlide(2)" class="w-2 h-2 rounded-full bg-white/35 transition-all" aria-label="Slide 3"></button>
+          </div>
+        </div>
+      </section>
+
+      <!-- CATEGORY QUICK PILLS -->
+      <section class="max-w-7xl mx-auto px-3 sm:px-6 py-3">
+        <div class="flex items-center gap-2 overflow-x-auto no-scrollbar py-1">
+          <button onclick="filterByCategory('ALL')" data-cat="ALL" class="cat-pill active px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap bg-primary-600 text-gold-400 shadow-xs transition">
+            All Gifts
+          </button>
+          <button onclick="filterByCategory('Photo Frames')" data-cat="Photo Frames" class="cat-pill px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap bg-white border border-stone-200 text-slate-700 hover:border-primary-600 transition">
+            Photo Frames
+          </button>
+          <button onclick="filterByCategory('Magic Mirrors')" data-cat="Magic Mirrors" class="cat-pill px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap bg-white border border-stone-200 text-slate-700 hover:border-primary-600 transition">
+            LED Magic Mirrors
+          </button>
+          <button onclick="filterByCategory('Chocolate Boxes')" data-cat="Chocolate Boxes" class="cat-pill px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap bg-white border border-stone-200 text-slate-700 hover:border-primary-600 transition">
+            Chocolate Gift Boxes
+          </button>
+          <button onclick="filterByCategory('Table Decor')" data-cat="Table Decor" class="cat-pill px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap bg-white border border-stone-200 text-slate-700 hover:border-primary-600 transition">
+            Table & Wall Decor
+          </button>
+        </div>
+      </section>
+
+      <!-- FILTERED / SEARCH RESULTS SECTION (Hidden unless filtering) -->
+      <section id="filteredSection" class="hidden max-w-7xl mx-auto px-3 sm:px-6 py-4">
+        <div class="flex items-center justify-between mb-3">
+          <h2 id="filteredHeading" class="text-lg sm:text-xl font-extrabold text-primary-600 font-bangla">সার্চ ফলাফল</h2>
+          <button onclick="filterByCategory('ALL')" class="text-xs font-bold text-roseaccent-600 hover:underline">
+            Clear Filter <i class="fa-solid fa-xmark ml-0.5"></i>
+          </button>
+        </div>
+        <div id="filteredGrid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-5"></div>
+      </section>
+
+      <!-- CATEGORIZED STOREFRONT SECTIONS -->
+      <div id="defaultCatalogSections">
+        <!-- Section 1: Trending Custom Gifts -->
+        <section id="trending-section" class="max-w-7xl mx-auto px-3 sm:px-6 py-4">
+          <div class="flex items-center justify-between mb-3">
+            <div>
+              <h2 class="text-lg sm:text-xl font-extrabold text-primary-600 font-bangla">ট্রেন্ডিং কাস্টম গিফটস</h2>
+              <p class="text-xs text-slate-500 font-bangla">সবচেয়ে বেশি অর্ডার হওয়া ৪০০-৫০০ টাকার প্রিমিয়াম উপহার</p>
+            </div>
+            <button onclick="filterByCategory('Photo Frames')" class="text-xs font-bold text-primary-600 hover:text-roseaccent-600">
+              See All <i class="fa-solid fa-chevron-right text-[10px]"></i>
+            </button>
+          </div>
+          <div id="trendingGrid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-5"></div>
+        </section>
+
+        <!-- Section 2: LED Magic Mirrors -->
+        <section id="mirrors-section" class="max-w-7xl mx-auto px-3 sm:px-6 py-4">
+          <div class="flex items-center justify-between mb-3">
+            <div>
+              <h2 class="text-lg sm:text-xl font-extrabold text-primary-600 font-bangla">LED ম্যাজিক মিরর ও লাইট ফ্রেম</h2>
+              <p class="text-xs text-slate-500 font-bangla">জন্মদিন ও অ্যানিভার্সারি সারপ্রাইজের জন্য স্পেশাল কালেকশন</p>
+            </div>
+            <button onclick="filterByCategory('Magic Mirrors')" class="text-xs font-bold text-primary-600 hover:text-roseaccent-600">
+              See All <i class="fa-solid fa-chevron-right text-[10px]"></i>
+            </button>
+          </div>
+          <div id="mirrorsGrid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-5"></div>
+        </section>
+
+        <!-- Section 3: Chocolate Gift Boxes & Decor -->
+        <section id="chocolate-section" class="max-w-7xl mx-auto px-3 sm:px-6 py-4">
+          <div class="flex items-center justify-between mb-3">
+            <div>
+              <h2 class="text-lg sm:text-xl font-extrabold text-primary-600 font-bangla">চকলেট গিফট বক্স ও টেবিল ডেকোর</h2>
+              <p class="text-xs text-slate-500 font-bangla">প্রিয়জনের মুখে হাসি ফোটাতে কাস্টম মেসেজসহ গিফট বক্স</p>
+            </div>
+            <button onclick="filterByCategory('Chocolate Boxes')" class="text-xs font-bold text-primary-600 hover:text-roseaccent-600">
+              See All <i class="fa-solid fa-chevron-right text-[10px]"></i>
+            </button>
+          </div>
+          <div id="chocolateGrid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-5"></div>
+        </section>
+      </div>
+
+      <!-- TRUST & DELIVERY HIGHLIGHTS -->
+      <section class="max-w-7xl mx-auto px-3 sm:px-6 py-6">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+          <div class="bg-white rounded-2xl p-3.5 border border-stone-200 flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-primary-600 text-gold-400 flex items-center justify-center flex-shrink-0">
+              <i class="fa-solid fa-truck-fast"></i>
+            </div>
+            <div>
+              <h4 class="text-xs font-bold text-primary-600 font-bangla">দ্রুত হোম ডেলিভারি</h4>
+              <p class="text-[11px] text-slate-500 font-bangla">ঝিনাইদহ ৳৬০, সারাদেশে ৳১২০</p>
+            </div>
+          </div>
+          <div class="bg-white rounded-2xl p-3.5 border border-stone-200 flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-roseaccent-50 text-roseaccent-600 flex items-center justify-center flex-shrink-0">
+              <i class="fa-solid fa-wand-magic-sparkles"></i>
+            </div>
+            <div>
+              <h4 class="text-xs font-bold text-primary-600 font-bangla">১০০% কাস্টমাইজড</h4>
+              <p class="text-[11px] text-slate-500 font-bangla">আপনার ছবি ও নাম প্রিন্ট</p>
+            </div>
+          </div>
+          <div class="bg-white rounded-2xl p-3.5 border border-stone-200 flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center flex-shrink-0">
+              <i class="fa-solid fa-hand-holding-dollar"></i>
+            </div>
+            <div>
+              <h4 class="text-xs font-bold text-primary-600 font-bangla">ক্যাশ অন ডেলিভারি</h4>
+              <p class="text-[11px] text-slate-500 font-bangla">পণ্য হাতে পেয়ে টাকা দিন</p>
+            </div>
+          </div>
+          <div class="bg-white rounded-2xl p-3.5 border border-stone-200 flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center flex-shrink-0">
+              <i class="fa-solid fa-headset"></i>
+            </div>
+            <div>
+              <h4 class="text-xs font-bold text-primary-600 font-bangla">সরাসরি সাপোর্ট</h4>
+              <p class="text-[11px] text-slate-500 font-bangla">হোয়াটসঅ্যাপে তাৎক্ষণিক তথ্য</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ==================== VIEW 2: PRODUCT DETAIL VIEW ==================== -->
+    <div id="productDetailView" class="hidden max-w-5xl mx-auto px-3 sm:px-6 py-5">
+      <button onclick="showStorefront()" class="mb-4 inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white border border-stone-200 text-xs font-bold text-primary-600 hover:bg-stone-50 transition">
+        <i class="fa-solid fa-arrow-left"></i> Back to Shop
+      </button>
+      <div id="productDetailContent" class="bg-white rounded-2xl border border-stone-200 p-4 sm:p-8 shadow-xs"></div>
+    </div>
+
+    <!-- ==================== VIEW 3: BANGLA CHECKOUT PAGE ==================== -->
+    <div id="checkoutView" class="hidden max-w-4xl mx-auto px-3 sm:px-6 py-5">
+      <div class="flex items-center justify-between mb-4">
+        <div>
+          <h1 class="text-xl sm:text-2xl font-extrabold text-primary-600 font-bangla">চেকআউট (Checkout)</h1>
+          <p class="text-xs text-slate-500 font-bangla">আপনার ডেলিভারি তথ্য দিয়ে অর্ডার কনফার্ম করুন</p>
+        </div>
+        <button onclick="showStorefront()" class="px-3.5 py-2 rounded-xl bg-white border border-stone-200 text-xs font-bold text-primary-600 hover:bg-stone-50 transition">
+          <i class="fa-solid fa-arrow-left mr-1"></i> আরও কেনাকাটা করুন
+        </button>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-5">
+        <!-- Left: Delivery Form -->
+        <form id="checkoutForm" onsubmit="submitOrder(event)" class="lg:col-span-7 bg-white rounded-2xl border border-stone-200 p-4 sm:p-6 space-y-4">
+          <h2 class="text-base font-extrabold text-primary-600 border-b border-stone-100 pb-2 font-bangla">
+            <i class="fa-solid fa-location-dot text-roseaccent-600 mr-1.5"></i> ডেলিভারি ঠিকানা
+          </h2>
+
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1 font-bangla">আপনার পুরো নাম *</label>
+            <input type="text" id="custName" required placeholder="যেমন: তানভীর আহমেদ" class="w-full h-11 px-3.5 rounded-xl border border-stone-300 text-sm focus:outline-none focus:border-primary-600 font-bangla" />
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1 font-bangla">আপনার মোবাইল নম্বর *</label>
+            <div class="flex">
+              <span class="inline-flex items-center px-3 rounded-l-xl border border-r-0 border-stone-300 bg-stone-100 text-xs font-bold text-slate-600">+88</span>
+              <input type="tel" id="custPhone" required pattern="01[0-9]{9}" placeholder="017XXXXXXXX" class="w-full h-11 px-3.5 rounded-r-xl border border-stone-300 text-sm focus:outline-none focus:border-primary-600" />
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label class="block text-xs font-bold text-slate-700 mb-1 font-bangla">জেলা সিলেক্ট করুন *</label>
+              <select id="custDistrict" onchange="updateThanaOptions()" required class="w-full h-11 px-3 rounded-xl border border-stone-300 text-sm bg-white focus:outline-none focus:border-primary-600 font-bangla">
+                <option value="Jhenaidah">ঝিনাইদহ (Jhenaidah) - ৳৬০</option>
+                <option value="Dhaka">ঢাকা (Dhaka) - ৳১২০</option>
+                <option value="Jashore">যশোর (Jashore) - ৳১২০</option>
+                <option value="Kushtia">কুষ্টিয়া (Kushtia) - ৳১২০</option>
+                <option value="Chuadanga">চুয়াডাঙ্গা (Chuadanga) - ৳১২০</option>
+                <option value="Magura">মাগুরা (Magura) - ৳১২০</option>
+                <option value="Khulna">খুলনা (Khulna) - ৳১২০</option>
+                <option value="Chattogram">চট্টগ্রাম (Chattogram) - ৳১২০</option>
+                <option value="Rajshahi">রাজশাহী (Rajshahi) - ৳১২০</option>
+                <option value="Sylhet">সিলেট (Sylhet) - ৳১২০</option>
+                <option value="Other">অন্যান্য জেলা (All Bangladesh) - ৳১২০</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="block text-xs font-bold text-slate-700 mb-1 font-bangla">থানা / উপজেলা *</label>
+              <select id="custThana" required class="w-full h-11 px-3 rounded-xl border border-stone-300 text-sm bg-white focus:outline-none focus:border-primary-600 font-bangla"></select>
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1 font-bangla">বিস্তারিত ঠিকানা (বাসা/রোড/গ্রাম/বাজার) *</label>
+            <input type="text" id="custAddress" required placeholder="যেমন: হামদহ, ঝিনাইদহ সদর" class="w-full h-11 px-3.5 rounded-xl border border-stone-300 text-sm focus:outline-none focus:border-primary-600 font-bangla" />
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1 font-bangla">কাস্টমাইজেশন নোট / ফ্রেমে যে লেখা বা ছবি দেবেন (ঐচ্ছিক)</label>
+            <textarea id="custNote" rows="2" placeholder="যেমন: ফ্রেমের নিচে Happy Birthday লিখবেন (ছবি হোয়াটসঅ্যাপে পাঠাবো)" class="w-full p-3 rounded-xl border border-stone-300 text-sm focus:outline-none focus:border-primary-600 font-bangla"></textarea>
+          </div>
+
+          <!-- Payment Method -->
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-2 font-bangla">পেমেন্ট মেথড</label>
+            <div class="grid grid-cols-2 gap-2.5">
+              <label class="cursor-pointer border-2 border-primary-600 bg-primary-50 rounded-xl p-3 flex items-center gap-2">
+                <input type="radio" name="paymentMethod" value="Cash on Delivery" checked class="accent-primary-600" />
+                <span class="text-xs font-bold text-primary-600 font-bangla">ক্যাশ অন ডেলিভারি</span>
+              </label>
+              <label class="cursor-pointer border border-stone-200 rounded-xl p-3 flex items-center gap-2">
+                <input type="radio" name="paymentMethod" value="bKash / Nagad" class="accent-primary-600" />
+                <span class="text-xs font-bold text-slate-700 font-bangla">বিকাশ / নগদ</span>
+              </label>
+            </div>
+          </div>
+
+          <button type="submit" class="w-full py-3.5 rounded-xl bg-primary-600 hover:bg-primary-700 text-gold-400 font-extrabold text-sm sm:text-base shadow-lg transition flex items-center justify-center gap-2 font-bangla">
+            <i class="fa-brands fa-whatsapp text-lg text-emerald-400"></i> অর্ডার কনফার্ম করুন
+          </button>
+        </form>
+
+        <!-- Right: Order Summary -->
+        <div class="lg:col-span-5 bg-white rounded-2xl border border-stone-200 p-4 sm:p-6 h-fit space-y-4">
+          <h2 class="text-base font-extrabold text-primary-600 border-b border-stone-100 pb-2 font-bangla">
+            আপনার অর্ডার সামারি
+          </h2>
+          <div id="checkoutItemsList" class="space-y-3 max-h-64 overflow-y-auto pr-1"></div>
+
+          <div class="border-t border-stone-200 pt-3 space-y-2 text-xs sm:text-sm font-bangla">
+            <div class="flex justify-between text-slate-600">
+              <span>সাব-টোটাল</span>
+              <span class="font-bold">৳ <span id="checkoutSubtotal">0</span></span>
+            </div>
+            <div class="flex justify-between text-slate-600">
+              <span>ডেলিভারি চার্জ (<span id="checkoutZoneLabel">ঝিনাইদহ</span>)</span>
+              <span class="font-bold">৳ <span id="checkoutShipping">60</span></span>
+            </div>
+            <div id="checkoutDiscountRow" class="hidden flex justify-between text-emerald-600 font-bold">
+              <span>কুপন ডিসকাউন্ট</span>
+              <span>- ৳ <span id="checkoutDiscount">0</span></span>
+            </div>
+            <div class="flex justify-between text-base font-extrabold text-primary-600 border-t border-stone-200 pt-2">
+              <span>সর্বমোট বিল</span>
+              <span>৳ <span id="checkoutGrandTotal">0</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="bg-[#090D16] text-slate-300 mt-10 border-t border-gold-500/20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-10 grid grid-cols-1 md:grid-cols-3 gap-8">
+      <!-- Brand Info -->
+      <div class="space-y-3">
+        <div class="logo-obsidian-frame">
+          <img src="https://ibb.co.com/4nSLpdYW" data-ibb="4nSLpdYW" alt="প্রিয় মুহূর্ত" onerror="handleImgbbFallback(this)" />
+        </div>
+        <p class="text-xs text-slate-400 leading-relaxed font-bangla">
+          প্রিয় মুহূর্ত (Priyo Muhurto) — ঝিনাইদহ ও সারাদেশের বিশ্বস্ত কাস্টমাইজড গিফট এবং হোম ডেকোর শপ। আপনার প্রিয় স্মৃতিগুলোকে ফ্রেমবন্দি করুন ভালোবাসায়।
+        </p>
+        <div class="space-y-1.5 text-xs">
+          <p class="flex items-center gap-2 text-slate-300">
+            <i class="fa-solid fa-location-dot text-gold-400"></i> ঝিনাইদহ, বাংলাদেশ (Jhenaidah, Bangladesh)
+          </p>
+          <p class="flex items-center gap-2 text-slate-300">
+            <i class="fa-solid fa-phone text-gold-400"></i> +880 1707-483913
+          </p>
+          <p class="flex items-center gap-2 text-slate-300">
+            <i class="fa-solid fa-envelope text-gold-400"></i> priyomuhurto@gmail.com
+          </p>
+        </div>
+      </div>
+
+      <!-- Quick Links -->
+      <div>
+        <h3 class="text-sm font-extrabold text-white uppercase tracking-wider mb-3">Quick Categories</h3>
+        <ul class="space-y-2 text-xs text-slate-400">
+          <li><button onclick="filterByCategory('Photo Frames'); showStorefront();" class="hover:text-gold-400 transition">Custom Photo Frames</button></li>
+          <li><button onclick="filterByCategory('Magic Mirrors'); showStorefront();" class="hover:text-gold-400 transition">LED Love Magic Mirrors</button></li>
+          <li><button onclick="filterByCategory('Chocolate Boxes'); showStorefront();" class="hover:text-gold-400 transition">Photo Chocolate Gift Boxes</button></li>
+          <li><button onclick="filterByCategory('Table Decor'); showStorefront();" class="hover:text-gold-400 transition">Wooden & LED Table Decor</button></li>
+        </ul>
+      </div>
+
+      <!-- Customer Service -->
+      <div>
+        <h3 class="text-sm font-extrabold text-white uppercase tracking-wider mb-3">Customer Care</h3>
+        <ul class="space-y-2 text-xs text-slate-400">
+          <li><button onclick="openAccountModal('orders')" class="hover:text-gold-400 transition">My Orders & Admin Panel</button></li>
+          <li><a href="https://wa.me/8801707483913" target="_blank" rel="noopener noreferrer" class="hover:text-gold-400 transition">Send Custom Photo on WhatsApp</a></li>
+          <li><span class="text-slate-500">Delivery: Jhenaidah ৳60 | Nationwide ৳120</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="border-t border-slate-800 py-4 text-center text-[11px] text-slate-500">
+      © 2026 প্রিয় মুহূর্ত (priyomuhurto.store) • ঝিনাইদহ, বাংলাদেশ। All Rights Reserved.
+    </div>
+  </footer>
+
+  <!-- ==================== MOBILE BOTTOM NAVIGATION BAR ==================== -->
+  <nav class="md:hidden fixed bottom-0 inset-x-0 z-40 bg-white border-t border-stone-200 bottom-nav-shadow h-16 px-2 flex items-center justify-around">
+    <button onclick="showStorefront()" class="flex flex-col items-center justify-center text-primary-600 text-[10px] font-bold gap-0.5">
+      <i class="fa-solid fa-house text-base"></i>
+      <span>HOME</span>
+    </button>
+    <button onclick="openMenuDrawer()" class="flex flex-col items-center justify-center text-slate-500 hover:text-primary-600 text-[10px] font-bold gap-0.5">
+      <i class="fa-solid fa-table-cells-large text-base"></i>
+      <span>MENU</span>
+    </button>
+    <button onclick="openCartDrawer()" class="relative -top-3 w-13 h-13 rounded-full bg-primary-600 text-gold-400 shadow-lg flex flex-col items-center justify-center border-4 border-[#FAF9F6]">
+      <i class="fa-solid fa-bag-shopping text-base"></i>
+      <span id="bottomCartCount" class="text-[9px] font-extrabold text-white leading-none mt-0.5">0</span>
+    </button>
+    <button onclick="openSearchModal()" class="flex flex-col items-center justify-center text-slate-500 hover:text-primary-600 text-[10px] font-bold gap-0.5">
+      <i class="fa-solid fa-magnifying-glass text-base"></i>
+      <span>SEARCH</span>
+    </button>
+    <button onclick="openAccountModal('orders')" class="flex flex-col items-center justify-center text-slate-500 hover:text-primary-600 text-[10px] font-bold gap-0.5">
+      <i class="fa-regular fa-user text-base"></i>
+      <span>ACCOUNT</span>
+    </button>
+  </nav>
+
+  <!-- ==================== SLIDE-OVER SHOPPING CART DRAWER ==================== -->
+  <div id="cartDrawerOverlay" onclick="closeCartDrawer()" class="fixed inset-0 bg-slate-950/50 backdrop-blur-2xs z-50 hidden"></div>
+  <aside id="cartDrawer" class="fixed top-0 right-0 h-full w-full max-w-md bg-white z-50 shadow-2xl translate-x-full transition-transform duration-300 flex flex-col">
+    <div class="p-4 bg-primary-600 text-white flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <i class="fa-solid fa-bag-shopping text-gold-400"></i>
+        <h3 class="font-extrabold text-sm sm:text-base">Shopping Cart (<span id="drawerCartCount">0</span>)</h3>
+      </div>
+      <button onclick="closeCartDrawer()" class="px-3 py-1 rounded-lg bg-white/10 hover:bg-white/20 text-xs font-bold">
+        Close <i class="fa-solid fa-xmark ml-1"></i>
+      </button>
+    </div>
+
+    <div id="drawerCartItems" class="flex-1 overflow-y-auto p-4 space-y-3"></div>
+
+    <!-- Coupon & Checkout Footer -->
+    <div class="p-4 border-t border-stone-200 bg-[#FAF9F6] space-y-3">
+      <div class="flex gap-2">
+        <input type="text" id="couponInput" placeholder="Coupon code (Try: PRIYO50)" class="flex-1 h-9 px-3 rounded-xl border border-stone-300 text-xs bg-white focus:outline-none focus:border-primary-600" />
+        <button onclick="applyCoupon()" class="px-3.5 h-9 rounded-xl bg-primary-600 text-gold-400 text-xs font-bold hover:bg-primary-700 transition">
+          Apply
+        </button>
+      </div>
+      <div id="couponMsg" class="text-[11px] font-semibold hidden"></div>
+
+      <div class="flex items-center justify-between text-sm font-extrabold text-primary-600">
+        <span>Subtotal</span>
+        <span>৳ <span id="drawerCartTotal">0</span></span>
+      </div>
+
+      <button onclick="proceedToCheckout()" class="w-full py-3 rounded-xl bg-primary-600 hover:bg-primary-700 text-gold-400 font-extrabold text-sm shadow transition flex items-center justify-center gap-2">
+        Proceed to Checkout <i class="fa-solid fa-arrow-right"></i>
+      </button>
+    </div>
+  </aside>
+
+  <!-- ==================== LEFT CATEGORY MENU DRAWER ==================== -->
+  <div id="menuDrawerOverlay" onclick="closeMenuDrawer()" class="fixed inset-0 bg-slate-950/50 z-50 hidden"></div>
+  <aside id="menuDrawer" class="fixed top-0 left-0 h-full w-72 bg-white z-50 shadow-2xl -translate-x-full transition-transform duration-300 flex flex-col">
+    <div class="p-4 bg-primary-600 text-white flex items-center justify-between">
+      <span class="font-extrabold text-sm tracking-wide text-gold-400">CATEGORIES MENU</span>
+      <button onclick="closeMenuDrawer()" class="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+    <div class="p-3 space-y-1 flex-1 overflow-y-auto font-bangla">
+      <button onclick="filterByCategory('ALL'); closeMenuDrawer();" class="w-full text-left px-3.5 py-2.5 rounded-xl hover:bg-stone-100 text-sm font-bold text-primary-600 flex items-center justify-between">
+        <span>সব গিফট আইটেম (All)</span> <i class="fa-solid fa-chevron-right text-xs text-slate-400"></i>
+      </button>
+      <button onclick="filterByCategory('Photo Frames'); closeMenuDrawer();" class="w-full text-left px-3.5 py-2.5 rounded-xl hover:bg-stone-100 text-sm font-semibold text-slate-700 flex items-center justify-between">
+        <span>কাস্টম ফটো ফ্রেম</span> <i class="fa-solid fa-chevron-right text-xs text-slate-400"></i>
+      </button>
+      <button onclick="filterByCategory('Magic Mirrors'); closeMenuDrawer();" class="w-full text-left px-3.5 py-2.5 rounded-xl hover:bg-stone-100 text-sm font-semibold text-slate-700 flex items-center justify-between">
+        <span>LED ম্যাজিক মিরর</span> <i class="fa-solid fa-chevron-right text-xs text-slate-400"></i>
+      </button>
+      <button onclick="filterByCategory('Chocolate Boxes'); closeMenuDrawer();" class="w-full text-left px-3.5 py-2.5 rounded-xl hover:bg-stone-100 text-sm font-semibold text-slate-700 flex items-center justify-between">
+        <span>চকলেট গিফট বক্স</span> <i class="fa-solid fa-chevron-right text-xs text-slate-400"></i>
+      </button>
+      <button onclick="filterByCategory('Table Decor'); closeMenuDrawer();" class="w-full text-left px-3.5 py-2.5 rounded-xl hover:bg-stone-100 text-sm font-semibold text-slate-700 flex items-center justify-between">
+        <span>টেবিল ও ওয়াল ডেকোর</span> <i class="fa-solid fa-chevron-right text-xs text-slate-400"></i>
+      </button>
+      <hr class="my-2 border-stone-200" />
+      <button onclick="closeMenuDrawer(); openAccountModal('orders');" class="w-full text-left px-3.5 py-2.5 rounded-xl bg-amber-50 text-sm font-bold text-primary-600 flex items-center gap-2">
+        <i class="fa-solid fa-receipt text-gold-600"></i> My Orders / Admin List
+      </button>
+    </div>
+    <div class="p-4 border-t border-stone-200 text-xs text-slate-500 font-bangla">
+      <p class="font-bold text-primary-600">প্রিয় মুহূর্ত স্টোর</p>
+      <p>ঝিনাইদহ, বাংলাদেশ • 01707-483913</p>
+    </div>
+  </aside>
+
+  <!-- ==================== MOBILE SEARCH MODAL ==================== -->
+  <div id="searchModal" class="fixed inset-0 bg-slate-950/60 z-50 hidden flex items-start justify-center pt-16 px-4">
+    <div class="bg-white w-full max-w-md rounded-2xl p-4 shadow-2xl space-y-3">
+      <div class="flex items-center justify-between">
+        <span class="text-xs font-extrabold text-primary-600 uppercase">Search Products</span>
+        <button onclick="closeSearchModal()" class="w-7 h-7 rounded-lg bg-stone-100 text-slate-600 flex items-center justify-center">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <input type="text" id="mobileSearchInput" oninput="handleSearch(this.value)" placeholder="পণ্যের নাম লিখুন..." class="w-full h-11 px-3.5 rounded-xl border border-stone-300 text-sm focus:outline-none focus:border-primary-600 font-bangla" />
+    </div>
+  </div>
+
+  <!-- ==================== WISHLIST MODAL ==================== -->
+  <div id="wishlistModal" class="fixed inset-0 bg-slate-950/60 z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white w-full max-w-md rounded-2xl overflow-hidden shadow-2xl">
+      <div class="p-4 bg-primary-600 text-white flex items-center justify-between">
+        <h3 class="font-extrabold text-sm">My Wishlist (<span id="modalWishlistCount">0</span>)</h3>
+        <button onclick="closeWishlistModal()" class="w-7 h-7 rounded-lg bg-white/10 flex items-center justify-center">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div id="wishlistItemsContainer" class="p-4 max-h-80 overflow-y-auto space-y-2.5"></div>
+    </div>
+  </div>
+
+  <!-- ==================== ACCOUNT / MY ORDERS / ADMIN MODAL ==================== -->
+  <div id="accountModal" class="fixed inset-0 bg-slate-950/60 z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white w-full max-w-lg rounded-2xl overflow-hidden shadow-2xl flex flex-col max-h-[88vh]">
+      <div class="p-4 bg-primary-600 text-white flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <i class="fa-solid fa-user-shield text-gold-400"></i>
+          <h3 class="font-extrabold text-sm sm:text-base">My Orders & Store Admin</h3>
+        </div>
+        <button onclick="closeAccountModal()" class="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="p-4 overflow-y-auto space-y-4">
+        <div class="bg-amber-50 border border-amber-200 rounded-xl p-3 text-xs text-slate-700 font-bangla space-y-1">
+          <p class="font-bold text-primary-600"><i class="fa-solid fa-circle-info text-gold-600 mr-1"></i> অর্ডার ও ছবি আপডেট নির্দেশিকা:</p>
+          <p>• কাস্টমার অর্ডার করলেই তা সরাসরি আপনার হোয়াটসঅ্যাপে (<strong>+8801707483913</strong>) চলে যাবে এবং নিচে সেভ থাকবে।</p>
+          <p>• নতুন ছবি আপলোড করতে <strong>ImgBB</strong>-তে গিয়ে <strong>"Direct link"</strong> (<code>https://i.ibb.co.com/...</code>) কপি করে কোডে বসাবেন।</p>
+        </div>
+
+        <div>
+          <div class="flex items-center justify-between mb-2">
+            <h4 class="text-xs font-extrabold uppercase text-primary-600">Saved Orders History</h4>
+            <button onclick="clearSavedOrders()" class="text-[11px] font-bold text-roseaccent-600 hover:underline">Clear History</button>
+          </div>
+          <div id="savedOrdersList" class="space-y-2.5"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== TOAST NOTIFICATION ==================== -->
+  <div id="toastBox" class="fixed top-20 left-1/2 -translate-x-1/2 z-50 hidden">
+    <div class="px-4 py-2.5 rounded-xl bg-primary-600 text-white text-xs font-bold shadow-xl border border-gold-500/40 flex items-center gap-2 font-bangla">
+      <i class="fa-solid fa-circle-check text-emerald-400"></i>
+      <span id="toastText">Added to cart!</span>
+    </div>
+  </div>
+
+  <!-- ==================== JAVASCRIPT APPLICATION LOGIC ==================== -->
+  <script>
+    // ==================== 1. STORE DATA & CONFIG ====================
+    const WHATSAPP_NUMBER = "8801707483913";
+
+    const PRODUCTS = [
+      {
+        id: 101,
+        title: "মিনি ডটেড টেবিল ফটো ফ্রেম (Mini Dotted Table Frame)",
+        category: "Photo Frames",
+        price: 400,
+        oldPrice: 520,
+        image: "https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?w=600&auto=format&fit=crop&q=80",
+        description: "প্রিমিয়াম ম্যাট ফিনিশ মিনি ডটেড টেবিল ফটো ফ্রেম। আপনার প্রিয়জনের ছবি ও ছোট্ট একটি শুভেচ্ছা বার্তা প্রিন্ট করে দেওয়া হবে। সাইজ: ৬x৮ ইঞ্চি।"
+      },
+      {
+        id: 102,
+        title: "LED হার্ট শেপ ম্যাজিক মিরর (LED Heart Magic Mirror)",
+        category: "Magic Mirrors",
+        price: 490,
+        oldPrice: 650,
+        image: "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?w=600&auto=format&fit=crop&q=80",
+        description: "সাধারণ অবস্থায় আয়না হিসেবে কাজ করবে, কিন্তু সুইচ অন করলেই ভেতরে আপনার প্রিয়জনের রঙিন ছবি জ্বলে উঠবে। USB ক্যাবল ও ব্যাটারি সাপোর্টেড।"
+      },
+      {
+        id: 103,
+        title: "কাস্টমাইজড ফটো চকলেট গিফট বক্স (Photo Chocolate Box)",
+        category: "Chocolate Boxes",
+        price: 450,
+        oldPrice: 580,
+        image: "https://images.unsplash.com/photo-1549007994-cb92caebd54b?w=600&auto=format&fit=crop&q=80",
+        description: "বক্সের ভেতরে আপনার ছবি ও স্পেশাল মেসেজসহ ডেইরি মিল্ক ও কিটক্যাট চকলেট কম্বো। জন্মদিন বা অ্যানিভার্সারির সেরা বাজেট গিফট।"
+      },
+      {
+        id: 104,
+        title: "কাপল নেম ও ডেট উডেন ফটো ফ্রেম (Couple Memory Frame)",
+        category: "Photo Frames",
+        price: 480,
+        oldPrice: 600,
+        image: "https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?w=600&auto=format&fit=crop&q=80",
+        description: "বিশেষ দিন, তারিখ এবং দুজনের নামসহ কাস্টম ডিজাইন করা প্রিমিয়াম গ্লাস ফটো ফ্রেম। দেয়াল ও টেবিল—দুইভাবেই রাখা যাবে।"
+      },
+      {
+        id: 105,
+        title: "রাউন্ড LED গ্লোয়িং ফটো ল্যাম্প মিরর (Round Magic Mirror)",
+        category: "Magic Mirrors",
+        price: 500,
+        oldPrice: 680,
+        image: "https://images.unsplash.com/photo-1534349762230-e0cadf78f5da?w=600&auto=format&fit=crop&q=80",
+        description: "রাউন্ড শেপের স্টাইলিশ ম্যাজিক মিরর ফটো ফ্রেম। রাতের অন্ধকারে নাইট ল্যাম্প হিসেবেও দারুণ শোভা ছড়ায়।"
+      },
+      {
+        id: 106,
+        title: "পোলারয়েড ফটো ও ফেয়ারি লাইট কম্বো (Polaroid Light Set)",
+        category: "Table Decor",
+        price: 420,
+        oldPrice: 550,
+        image: "https://images.unsplash.com/photo-1513201099705-a9746e1e201f?w=600&auto=format&fit=crop&q=80",
+        description: "১২টি কাস্টম প্রিন্টেড পোলারয়েড ছবি, ১০টি উডেন ক্লিপ এবং ১০ ফুট ওয়ার্ম এলইডি ফেয়ারি লাইটসহ কমপ্লিট রুম ডেকোর প্যাকেজ।"
+      },
+      {
+        id: 107,
+        title: "লাক্সারি রোজ ও চকলেট সারপ্রাইজ বক্স (Rose & Choco Box)",
+        category: "Chocolate Boxes",
+        price: 499,
+        oldPrice: 650,
+        image: "https://images.unsplash.com/photo-1548848221-0c2e497ed557?w=600&auto=format&fit=crop&q=80",
+        description: "আর্টিফিশিয়াল রেড রোজ, কাস্টম ফটো কার্ড এবং প্রিমিয়াম চকলেট সমৃদ্ধ রোমান্টিক গিফট বক্স।"
+      },
+      {
+        id: 108,
+        title: "ক্যালেন্ডার স্পেশাল ডে মার্ক ফটো ফ্রেম (Special Date Frame)",
+        category: "Table Decor",
+        price: 440,
+        oldPrice: 560,
+        image: "https://images.unsplash.com/photo-1582555172866-f73bb12a2ab3?w=600&auto=format&fit=crop&q=80",
+        description: "আপনাদের প্রথম দেখা বা বিয়ের বিশেষ তারিখ হার্ট চিহ্ন দিয়ে হাইলাইট করা কাস্টম ক্যালেন্ডার ফটো ফ্রেম।"
+      }
     ];
 
-    let selectedProductId = 1;
-    let quantities = { 1: 1, 2: 1, 3: 1, 4: 1 };
-    let currentUser = null;
-    let orderHistory = [];
-    let registeredUsers = [];
+    const DISTRICT_THANAS = {
+      Jhenaidah: ["ঝিনাইদহ সদর (Jhenaidah Sadar)", "শৈলকুপা (Shailkupa)", "হরিণাকুণ্ডু (Harinakundu)", "কালীগঞ্জ (Kaliganj)", "কোটচাঁদপুর (Kotchandpur)", "মহেশপুর (Maheshpur)"],
+      Dhaka: ["ধানমন্ডি", "মিরপুর", "উত্তরা", "গুলশান", "বনানী", "মোহাম্মদপুর", "যাত্রাবাড়ী", "সাভার", "কেরানীগঞ্জ"],
+      Jashore: ["যশোর সদর", "ঝিকরগাছা", "শার্শা", "বেনাপোল", "মনিরামপুর", "অভয়নগর", "চৌগাছা", "বাঘারপাড়া"],
+      Kushtia: ["কুষ্টিয়া সদর", "কুমারখালী", "খোকসা", "মিরপুর", "ভেড়ামারা", "দৌলতপুর"],
+      Chuadanga: ["চুয়াডাঙ্গা সদর", "আলমডাঙ্গা", "দামুড়হুদা", "জীবননগর"],
+      Magura: ["মাগুরা সদর", "শ্রীপুর", "শালিখা", "মহম্মদপুর"],
+      Khulna: ["খুলনা সদর", "সোনাডাঙ্গা", "খালিশপুর", "দৌলতপুর", "ডুমুরিয়া", "পাইকগাছা"],
+      Chattogram: ["কোতোয়ালী", "পাঁচলাইশ", "হালিশহর", "পতেঙ্গা", "আগ্রাবাদ", "সীতাকুণ্ড"],
+      Rajshahi: ["বোয়ালিয়া", "রাজপাড়া", "মতিহার", "শাহমখদুম", "পবা", "গোদাগাড়ী"],
+      Sylhet: ["সিলেট সদর", "দক্ষিণ সুরমা", "জৈন্তাপুর", "বিয়ানীবাজার", "গোলাপগঞ্জ"],
+      Other: ["সদর উপজেলা (Sadar Upazila)", "অন্যান্য থানা (Mention in Address)"]
+    };
 
-    // Helper: Extract direct i.ibb.co image link from raw HTML string
-    function extractDirectIbbFromHtml(html) {
-        if (!html || typeof html !== 'string') return null;
-        const patterns = [
-            /property=["']og:image["'][^>]*content=["'](https?:\/\/i\.ibb\.co[^"'\s<>]+)["']/i,
-            /content=["'](https?:\/\/i\.ibb\.co[^"'\s<>]+)["'][^>]*property=["']og:image["']/i,
-            /name=["']twitter:image["'][^>]*content=["'](https?:\/\/i\.ibb\.co[^"'\s<>]+)["']/i,
-            /rel=["']image_src["'][^>]*href=["'](https?:\/\/i\.ibb\.co[^"'\s<>]+)["']/i,
-            /(https?:\/\/i\.ibb\.co(?:\.com)?\/[A-Za-z0-9]+\/[^"'\s<>]+\.(?:jpg|jpeg|png|webp|gif))/i
-        ];
-        for (const regex of patterns) {
-            const match = html.match(regex);
-            if (match && match[1]) {
-                return match[1].replace(/&amp;/g, '&');
-            }
-        }
-        return null;
-    }
-
-    // Helper: Test if an image URL actually loads in the user's browser (bypasses BD ISP blocks)
-    function verifyImageLoadsInBrowser(candidateUrl, timeoutMs = 6000) {
-        return new Promise((resolve, reject) => {
-            if (!candidateUrl) return reject(new Error('Empty URL'));
-            const img = new Image();
-            const timer = setTimeout(() => {
-                img.src = '';
-                reject(new Error('Image load timeout'));
-            }, timeoutMs);
-            img.onload = () => {
-                clearTimeout(timer);
-                if (img.naturalWidth > 10) {
-                    resolve(candidateUrl);
-                } else {
-                    reject(new Error('Invalid image dimensions'));
-                }
-            };
-            img.onerror = () => {
-                clearTimeout(timer);
-                reject(new Error('Image load error'));
-            };
-            img.src = candidateUrl;
-        });
-    }
-
-    // Given a raw i.ibb.co URL, test 3 variants (wsrv.nl global CDN proxy, i.ibb.co.com BD mirror, and direct i.ibb.co)
-    // and return the first one that actually loads in the user's browser!
-    async function getWorkingDisplayUrl(rawDirectUrl) {
-        if (!rawDirectUrl) return null;
-        const normalized = rawDirectUrl.replace('i.ibb.co.com/', 'i.ibb.co/');
-        const bdMirrorUrl = normalized.replace('i.ibb.co/', 'i.ibb.co.com/');
-        const wsrvProxyUrl = `https://wsrv.nl/?url=${encodeURIComponent(normalized)}&output=webp`;
-        const wsrvMirrorUrl = `https://wsrv.nl/?url=${encodeURIComponent(bdMirrorUrl)}&output=webp`;
-
-        try {
-            const workingUrl = await Promise.any([
-                verifyImageLoadsInBrowser(wsrvProxyUrl),
-                verifyImageLoadsInBrowser(bdMirrorUrl),
-                verifyImageLoadsInBrowser(normalized),
-                verifyImageLoadsInBrowser(wsrvMirrorUrl)
-            ]);
-            return workingUrl;
-        } catch (err) {
-            return null;
-        }
-    }
-
-    async function fetchWithTimeout(url, timeoutMs = 6500) {
-        const controller = new AbortController();
-        const timer = setTimeout(() => controller.abort(), timeoutMs);
-        try {
-            const response = await fetch(url, { signal: controller.signal });
-            clearTimeout(timer);
-            return response;
-        } catch (err) {
-            clearTimeout(timer);
-            throw err;
-        }
-    }
-
-    // Layer 2: Resolve ImgBB Viewer URL -> Direct Image URL -> Verify it renders in Browser
-    async function resolveAndVerifyIbb(pageUrl) {
-        const cleanPageUrl = pageUrl.trim();
-        const cacheKey = CACHE_PREFIX + cleanPageUrl;
-        const cached = localStorage.getItem(cacheKey);
-        if (cached && cached.startsWith('http')) {
-            try {
-                const verifiedCached = await verifyImageLoadsInBrowser(cached, 4000);
-                if (verifiedCached) return verifiedCached;
-            } catch (e) {
-                localStorage.removeItem(cacheKey);
-            }
-        }
-
-        const slug = cleanPageUrl.split('/').filter(Boolean).pop();
-        const coUrl = `https://ibb.co/${slug}`;
-        const coComUrl = `https://ibb.co.com/${slug}`;
-
-        const tasks = [
-            // 1. Microlink on ibb.co
-            (async () => {
-                const res = await fetchWithTimeout(`https://api.microlink.io/?url=${encodeURIComponent(coUrl)}`);
-                if (!res.ok) throw new Error('Microlink 1');
-                const data = await res.json();
-                const url = data?.data?.image?.url;
-                if (url && url.startsWith('http')) return url;
-                throw new Error('No image');
-            })(),
-            // 2. Microlink on ibb.co.com
-            (async () => {
-                const res = await fetchWithTimeout(`https://api.microlink.io/?url=${encodeURIComponent(coComUrl)}`);
-                if (!res.ok) throw new Error('Microlink 2');
-                const data = await res.json();
-                const url = data?.data?.image?.url;
-                if (url && url.startsWith('http')) return url;
-                throw new Error('No image');
-            })(),
-            // 3. AllOrigins JSON on ibb.co
-            (async () => {
-                const res = await fetchWithTimeout(`https://api.allorigins.win/get?url=${encodeURIComponent(coUrl)}`);
-                if (!res.ok) throw new Error('AllOrigins 1');
-                const data = await res.json();
-                const extracted = extractDirectIbbFromHtml(data?.contents || '');
-                if (extracted) return extracted;
-                throw new Error('Not found');
-            })(),
-            // 4. AllOrigins JSON on ibb.co.com
-            (async () => {
-                const res = await fetchWithTimeout(`https://api.allorigins.win/get?url=${encodeURIComponent(coComUrl)}`);
-                if (!res.ok) throw new Error('AllOrigins 2');
-                const data = await res.json();
-                const extracted = extractDirectIbbFromHtml(data?.contents || '');
-                if (extracted) return extracted;
-                throw new Error('Not found');
-            })(),
-            // 5. CodeTabs on ibb.co
-            (async () => {
-                const res = await fetchWithTimeout(`https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(coUrl)}`);
-                if (!res.ok) throw new Error('CodeTabs');
-                const html = await res.text();
-                const extracted = extractDirectIbbFromHtml(html);
-                if (extracted) return extracted;
-                throw new Error('Not found');
-            })()
-        ];
-
-        try {
-            const rawDirectUrl = await Promise.any(tasks);
-            if (rawDirectUrl) {
-                const displayableUrl = await getWorkingDisplayUrl(rawDirectUrl);
-                if (displayableUrl) {
-                    try { localStorage.setItem(cacheKey, displayableUrl); } catch (e) {}
-                    return displayableUrl;
-                }
-            }
-        } catch (err) {
-            // Keep rich SVG illustration if proxies are offline
-        }
-        return null;
-    }
-
-    // Load Circular Logo + Banner (https://ibb.co.com/s9Wp7Gyg) + all 4 product images in parallel
-    async function loadAllUserIbbImages() {
-        syncLogoAndBannerDom();
-
-        const bannerPromise = (async () => {
-            if (!localStorage.getItem('pm_custom_banner')) {
-                const verifiedBanner = await resolveAndVerifyIbb(bannerRawIbb);
-                if (verifiedBanner) {
-                    mainBannerImageUrl = verifiedBanner;
-                    siteRoundLogoUrl = verifiedBanner;
-                    syncLogoAndBannerDom(verifiedBanner);
-                }
-            } else {
-                const customSaved = localStorage.getItem('pm_custom_banner');
-                mainBannerImageUrl = customSaved;
-                siteRoundLogoUrl = customSaved;
-                syncLogoAndBannerDom(customSaved);
-            }
-        })();
-
-        const productPromises = products.map(async (prod) => {
-            if (localStorage.getItem('pm_custom_prod_' + prod.id)) {
-                prod.resolved = true;
-                return true;
-            }
-            const verifiedUrl = await resolveAndVerifyIbb(prod.ibbPageUrl);
-            if (verifiedUrl) {
-                prod.img = verifiedUrl;
-                prod.resolved = true;
-                renderProducts();
-                return true;
-            }
-            return false;
-        });
-
-        await Promise.allSettled([bannerPromise, ...productPromises]);
-    }
-
-    const ADMIN_PIN = "01590034786";
-    let isAdminUnlocked = false;
+    // ==================== 2. SAFE STATE MANAGEMENT ====================
+    let cart = [];
+    let wishlist = [];
+    let savedOrders = [];
+    let appliedDiscount = 0;
+    let currentSlide = 0;
 
     try {
-        orderHistory = JSON.parse(localStorage.getItem('pm_orders_v1') || '[]');
-        registeredUsers = JSON.parse(localStorage.getItem('pm_users_v1') || '[]');
-        currentUser = JSON.parse(localStorage.getItem('pm_current_user_v1') || 'null');
+      cart = JSON.parse(localStorage.getItem('pm_cart_v2')) || [];
+      wishlist = JSON.parse(localStorage.getItem('pm_wishlist_v2')) || [];
+      savedOrders = JSON.parse(localStorage.getItem('pm_orders_v2')) || [];
     } catch (e) {
-        orderHistory = [];
-        registeredUsers = [];
-        currentUser = null;
+      cart = [];
+      wishlist = [];
+      savedOrders = [];
     }
 
-    function retryAllIbbFetch() {
-        localStorage.removeItem(CACHE_PREFIX + bannerRawIbb);
-        products.forEach(p => localStorage.removeItem(CACHE_PREFIX + p.ibbPageUrl));
-        loadAllUserIbbImages();
-        showAdminImageSavedToast('লিংক থেকে আবার ছবি লোড হচ্ছে...');
+    function saveState() {
+      try {
+        localStorage.setItem('pm_cart_v2', JSON.stringify(cart));
+        localStorage.setItem('pm_wishlist_v2', JSON.stringify(wishlist));
+        localStorage.setItem('pm_orders_v2', JSON.stringify(savedOrders));
+      } catch (e) {}
     }
 
-    // FAQ Toggle Function
-    function toggleFaq() {
-        const content = document.getElementById('faqContent');
-        const icon = document.getElementById('faqIcon');
-        if (!content) return;
-        content.classList.toggle('hidden');
-        if (icon) {
-            icon.classList.toggle('rotate-180');
-        }
+    // ==================== 3. IMGBB SMART RESOLVER & FALLBACK ====================
+    function handleImgbbFallback(imgEl) {
+      if (!imgEl || imgEl.dataset.fallbackTried === 'true') return;
+      imgEl.dataset.fallbackTried = 'true';
+      imgEl.src = 'https://placehold.co/240x80/000000/D4AF37?text=Priyo+Muhurto';
     }
 
-    // Three-dot menu functions
-    function toggleThreeDotMenu(e) {
-        if (e) e.stopPropagation();
-        const menu = document.getElementById('threeDotDropdown');
-        if (menu) menu.classList.toggle('hidden');
-    }
-
-    function toggleInnerAdminMenu(e) {
-        if (e) e.stopPropagation();
-        const menu = document.getElementById('innerAdminDropdown');
-        if (menu) menu.classList.toggle('hidden');
-    }
-
-    function hideInnerAdminMenu() {
-        const menu = document.getElementById('innerAdminDropdown');
-        if (menu) menu.classList.add('hidden');
-    }
-
-    document.addEventListener('click', () => {
-        const menu = document.getElementById('threeDotDropdown');
-        if (menu) menu.classList.add('hidden');
-        hideInnerAdminMenu();
-    });
-
-    // Render Showcase Grid & Checkout List
-    function renderProducts() {
-        const grid = document.getElementById('productGrid');
-        const checkoutList = document.getElementById('checkoutProductList');
-        if (!grid || !checkoutList) return;
-
-        grid.innerHTML = products.map((p, idx) => `
-            <div class="product-card scroll-reveal ${idx % 2 === 0 ? 'reveal-left' : 'reveal-right'}" style="transition-delay: ${(idx % 2) * 90}ms;">
-                <div class="w-full aspect-square rounded-xl overflow-hidden bg-gray-900 border border-amber-200 mb-1 relative">
-                    <img src="${p.img}" alt="${p.name}"
-                         onerror="this.onerror=null;this.src='${p.fallbackImg}';"
-                         class="w-full h-full object-cover block transition-transform duration-500 hover:scale-105">
-                </div>
-                <div class="product-title-bar">${p.label}</div>
-                <button type="button" onclick="selectAndScrollToCheckout(${p.id})" class="btn-orange w-full text-sm py-2">
-                    অর্ডার করতে চাই
-                </button>
-            </div>
-        `).join('');
-
-        checkoutList.innerHTML = products.map((p, idx) => {
-            const isSelected = p.id === selectedProductId;
-            const qty = quantities[p.id] || 1;
-            const lineTotal = (p.price * qty).toFixed(2);
-            return `
-                <div class="checkout-item scroll-reveal ${isSelected ? 'selected' : ''} flex items-center gap-3" style="transition-delay: ${idx * 60}ms;" onclick="selectProductInCheckout(${p.id})">
-                    <input type="radio" name="selectedProduct" ${isSelected ? 'checked' : ''} class="w-4 h-4 accent-[#4caf27] shrink-0">
-                    <img src="${p.img}" alt="${p.name}"
-                         onerror="this.onerror=null;this.src='${p.fallbackImg}';"
-                         class="w-14 h-14 rounded-lg object-cover border border-gray-200 shrink-0">
-                    <div class="flex-1 min-w-0">
-                        <div class="font-bold text-sm text-gray-800 truncate mb-1.5">${p.name}</div>
-                        <div class="flex items-center justify-between gap-2">
-                            <div class="inline-flex items-center border border-gray-300 rounded-md bg-white overflow-hidden" onclick="event.stopPropagation()">
-                                <button type="button" onclick="changeQuantity(${p.id}, -1)" class="px-2.5 py-0.5 text-sm font-bold text-gray-700 hover:bg-gray-100">−</button>
-                                <span class="px-2.5 py-0.5 text-xs font-bold text-gray-900">${qty}</span>
-                                <button type="button" onclick="changeQuantity(${p.id}, 1)" class="px-2.5 py-0.5 text-sm font-bold text-gray-700 hover:bg-gray-100">+</button>
-                            </div>
-                            <span class="font-bold text-sm text-gray-900">${lineTotal}৳</span>
-                        </div>
-                    </div>
-                </div>
-            `;
-        }).join('');
-
-        updateOrderSummaryUI();
-        initScrollRevealAnimations();
-    }
-
-    // IntersectionObserver for Smooth Scroll-Down & Scroll-Up Animations
-    let scrollObserver = null;
-    function initScrollRevealAnimations() {
-        const elements = document.querySelectorAll('.scroll-reveal');
-        if (!('IntersectionObserver' in window)) {
-            elements.forEach(el => el.classList.add('active'));
-            return;
-        }
-
-        if (!scrollObserver) {
-            scrollObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('active');
-                    } else if (entry.boundingClientRect.top > 0) {
-                        // Re-animate smoothly when scrolling back down again
-                        entry.target.classList.remove('active');
-                    }
-                });
-            }, {
-                threshold: 0.12,
-                rootMargin: '0px 0px -30px 0px'
-            });
-        }
-
-        elements.forEach(el => {
-            scrollObserver.observe(el);
-        });
-    }
-
-    function selectAndScrollToCheckout(id) {
-        selectedProductId = id;
-        renderProducts();
-        const checkoutEl = document.getElementById('checkout');
-        if (checkoutEl) checkoutEl.scrollIntoView({ behavior: 'smooth' });
-    }
-
-    function selectProductInCheckout(id) {
-        selectedProductId = id;
-        renderProducts();
-    }
-
-    function changeQuantity(id, delta) {
-        const next = (quantities[id] || 1) + delta;
-        if (next >= 1 && next <= 50) {
-            quantities[id] = next;
-            selectedProductId = id;
-            renderProducts();
-        }
-    }
-
-    function updateOrderSummaryUI() {
-        const prod = products.find(p => p.id === selectedProductId) || products[0];
-        const qty = quantities[prod.id] || 1;
-        const total = (prod.price * qty).toFixed(2);
-
-        const thumb = document.getElementById('summaryThumb');
-        if (thumb) {
-            thumb.src = prod.img;
-            thumb.onerror = function() {
-                this.onerror = null;
-                this.src = prod.fallbackImg;
-            };
-        }
-        const titleEl = document.getElementById('summaryProdTitle');
-        if (titleEl) titleEl.textContent = prod.name;
-        const qtyBadge = document.getElementById('summaryQtyBadge');
-        if (qtyBadge) qtyBadge.textContent = `× ${qty}`;
-        const itemPrice = document.getElementById('summaryItemPrice');
-        if (itemPrice) itemPrice.textContent = `${total}৳`;
-        const subEl = document.getElementById('summarySubtotal');
-        if (subEl) subEl.textContent = `${total}৳`;
-        const totalEl = document.getElementById('summaryTotal');
-        if (totalEl) totalEl.textContent = `${total}৳`;
-        const btnText = document.getElementById('placeOrderBtnText');
-        if (btnText) btnText.textContent = `Place Order ${total}৳`;
-    }
-
-    // Submit Order Function
-    async function submitOrder(e) {
-        e.preventDefault();
-        const name = document.getElementById('custName').value.trim();
-        const address = document.getElementById('custAddress').value.trim();
-        const phone = document.getElementById('custPhone').value.trim();
-
-        if (!name || !address || !phone) return;
-
-        const prod = products.find(p => p.id === selectedProductId) || products[0];
-        const qty = quantities[prod.id] || 1;
-        const total = prod.price * qty;
-        const orderId = 'PM-' + Math.floor(100000 + Math.random() * 900000);
-        const nowStr = new Date().toLocaleString('bn-BD');
-
-        const newOrder = {
-            orderId,
-            productId: prod.id,
-            productName: prod.name,
-            qty,
-            unitPrice: prod.price,
-            totalPrice: total,
-            customerName: name,
-            customerAddress: address,
-            customerPhone: phone,
-            status: 'Pending',
-            createdAt: nowStr,
-            createdAtMs: Date.now()
-        };
-
-        orderHistory.unshift(newOrder);
+    async function resolveImgbbLinks() {
+      const imgs = document.querySelectorAll('img[data-ibb]');
+      for (const img of imgs) {
+        const code = img.getAttribute('data-ibb');
+        if (!code) continue;
         try {
-            localStorage.setItem('pm_orders_v1', JSON.stringify(orderHistory));
-        } catch (err) {}
-
-        if (typeof window.saveOrderToFirestoreCloud === 'function') {
-            try { await window.saveOrderToFirestoreCloud(newOrder); } catch (err) {}
+          const res = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent('https://ibb.co.com/' + code)}`);
+          if (res.ok) {
+            const data = await res.json();
+            const match = data.contents && data.contents.match(/https:\/\/i\.ibb\.co(?:\.com)?\/[^"'\s<>]+/);
+            if (match && match[0]) {
+              img.src = match[0];
+            }
+          }
+        } catch (err) {
+          // Fallback handled gracefully by onerror
         }
-
-        updateAdminBadgesAndList();
-
-        // Populate Success Modal
-        document.getElementById('modalOrderId').textContent = '#' + orderId;
-        document.getElementById('modalOrderProd').textContent = `${prod.name} × ${qty}`;
-        document.getElementById('modalOrderTotal').textContent = `${total.toFixed(2)}৳`;
-        document.getElementById('modalOrderCustomer').textContent = `${name} (${phone})`;
-
-        const waMsg = `আসসালামু আলাইকুম প্রিয় মুহূর্ত!\nআমার অর্ডার কনফার্ম করেছি।\nঅর্ডার নম্বর: #${orderId}\nপণ্য: ${prod.name} (${qty}টি)\nমোট মূল্য: ${total} টাকা\nনাম: ${name}\nফোন: ${phone}\nঠিকানা: ${address}`;
-        document.getElementById('modalWhatsappBtn').href = `https://wa.me/8801707483913?text=${encodeURIComponent(waMsg)}`;
-
-        const modal = document.getElementById('orderSuccessModal');
-        modal.classList.remove('hidden');
-        modal.classList.add('flex');
+      }
     }
 
-    function closeOrderModal() {
-        const modal = document.getElementById('orderSuccessModal');
-        modal.classList.add('hidden');
-        modal.classList.remove('flex');
+    // ==================== 4. TOAST HELPER ====================
+    let toastTimer = null;
+    function showToast(msg) {
+      const box = document.getElementById('toastBox');
+      const text = document.getElementById('toastText');
+      if (!box || !text) return;
+      text.textContent = msg;
+      box.classList.remove('hidden');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        box.classList.add('hidden');
+      }, 2400);
     }
 
-    // User Auth Modal Functions
-    function openAuthModal(tab = 'login') {
-        const modal = document.getElementById('authModal');
-        modal.classList.remove('hidden');
-        modal.classList.add('flex');
-        switchAuthTab(tab);
+    // ==================== 5. HERO SLIDER ====================
+    function goToSlide(index) {
+      currentSlide = index;
+      const track = document.getElementById('heroSliderTrack');
+      if (track) {
+        track.style.transform = `translateX(-${currentSlide * 100}%)`;
+      }
+      const dotsEl = document.getElementById('heroDots');
+      if (dotsEl) {
+        const dots = dotsEl.children;
+        for (let i = 0; i < dots.length; i++) {
+          dots[i].className = i === currentSlide
+            ? 'w-5 h-2 rounded-full bg-gold-400 transition-all'
+            : 'w-2 h-2 rounded-full bg-white/35 transition-all';
+        }
+      }
     }
 
-    function closeAuthModal() {
-        const modal = document.getElementById('authModal');
-        modal.classList.add('hidden');
-        modal.classList.remove('flex');
+    setInterval(() => {
+      goToSlide((currentSlide + 1) % 3);
+    }, 4500);
+
+    // ==================== 6. PRODUCT RENDERING & WISHLIST ====================
+    function getDiscountPercent(price, oldPrice) {
+      if (!oldPrice || oldPrice <= price) return 15;
+      return Math.round(((oldPrice - price) / oldPrice) * 100);
     }
 
-    function switchAuthTab(tab) {
-        const loginForm = document.getElementById('loginForm');
-        const signupForm = document.getElementById('signupForm');
-        const ordersPanel = document.getElementById('myOrdersPanel');
-        const btnLogin = document.getElementById('tabBtnLogin');
-        const btnSignup = document.getElementById('tabBtnSignup');
-        const btnOrders = document.getElementById('tabBtnOrders');
-        const alertBox = document.getElementById('authAlertBox');
-        if (alertBox) alertBox.classList.add('hidden');
+    function toggleWishlist(productId) {
+      const idx = wishlist.indexOf(productId);
+      if (idx > -1) {
+        wishlist.splice(idx, 1);
+        showToast("উইশলিস্ট থেকে সরানো হয়েছে");
+      } else {
+        wishlist.push(productId);
+        showToast("উইশলিস্টে যোগ করা হয়েছে ❤️");
+      }
+      saveState();
+      updateAllBadges();
+      renderAllGrids();
+    }
 
-        [btnLogin, btnSignup, btnOrders].forEach(b => {
-            if (!b) return;
-            b.className = 'flex-1 py-2.5 text-gray-500';
+    function createProductCardHTML(product) {
+      const discount = getDiscountPercent(product.price, product.oldPrice);
+      const cartItem = cart.find(c => c.id === product.id);
+      const isWished = wishlist.includes(product.id);
+
+      const actionHTML = cartItem
+        ? `
+          <div class="w-full h-9 rounded-xl border border-primary-600 bg-stone-100 flex items-center justify-between px-2">
+            <button onclick="updateCardQty(${product.id}, -1)" class="w-7 h-7 rounded-lg bg-white text-primary-600 font-bold shadow-2xs flex items-center justify-center hover:bg-stone-200" aria-label="Decrease">
+              <i class="fa-solid fa-minus text-[10px]"></i>
+            </button>
+            <span class="text-xs font-extrabold text-primary-600">${cartItem.qty}</span>
+            <button onclick="updateCardQty(${product.id}, 1)" class="w-7 h-7 rounded-lg bg-primary-600 text-gold-400 font-bold shadow-2xs flex items-center justify-center hover:bg-primary-700" aria-label="Increase">
+              <i class="fa-solid fa-plus text-[10px]"></i>
+            </button>
+          </div>
+        `
+        : `
+          <button onclick="addToCart(${product.id}, 1)" class="w-full h-9 rounded-xl border border-stone-300 bg-white hover:bg-primary-600 text-primary-600 hover:text-white font-bold text-xs flex items-center justify-center gap-1.5 transition">
+            <i class="fa-solid fa-cart-shopping text-[11px]"></i> Add to Cart
+          </button>
+        `;
+
+      return `
+        <div class="bg-white rounded-2xl border border-stone-200/90 p-2.5 sm:p-3 flex flex-col justify-between shadow-2xs hover:shadow-md hover:border-gold-500/40 transition group">
+          <div>
+            <div class="relative aspect-square rounded-xl overflow-hidden bg-stone-100 mb-2.5">
+              <img onclick="openProductDetail(${product.id})" src="${product.image}" alt="${product.title}" class="w-full h-full object-cover cursor-pointer group-hover:scale-105 transition-transform duration-300" />
+              <span class="absolute top-2 right-2 px-2 py-0.5 rounded-md bg-roseaccent-600 text-white text-[10px] font-extrabold shadow-xs">
+                -${discount}%
+              </span>
+              <button onclick="toggleWishlist(${product.id})" class="absolute top-2 left-2 w-7 h-7 rounded-full bg-white/90 text-roseaccent-600 flex items-center justify-center shadow-xs hover:scale-110 transition" aria-label="Wishlist">
+                <i class="${isWished ? 'fa-solid' : 'fa-regular'} fa-heart text-xs"></i>
+              </button>
+            </div>
+
+            <h3 onclick="openProductDetail(${product.id})" class="text-xs sm:text-sm font-semibold text-slate-800 line-clamp-2 min-h-[2.4rem] cursor-pointer hover:text-roseaccent-600 font-bangla">
+              ${product.title}
+            </h3>
+
+            <div class="flex items-center gap-2 mt-1.5 mb-2.5">
+              <span class="text-sm sm:text-base font-extrabold text-primary-600">৳ ${product.price}</span>
+              <span class="text-[11px] text-slate-400 line-through">৳ ${product.oldPrice}</span>
+            </div>
+          </div>
+
+          <div>${actionHTML}</div>
+        </div>
+      `;
+    }
+
+    function renderAllGrids() {
+      const trendingEl = document.getElementById('trendingGrid');
+      const mirrorsEl = document.getElementById('mirrorsGrid');
+      const chocolateEl = document.getElementById('chocolateGrid');
+
+      if (trendingEl) {
+        trendingEl.innerHTML = PRODUCTS.slice(0, 4).map(createProductCardHTML).join('');
+      }
+      if (mirrorsEl) {
+        mirrorsEl.innerHTML = PRODUCTS.filter(p => p.category === 'Magic Mirrors' || p.category === 'Photo Frames').slice(0, 4).map(createProductCardHTML).join('');
+      }
+      if (chocolateEl) {
+        chocolateEl.innerHTML = PRODUCTS.filter(p => p.category === 'Chocolate Boxes' || p.category === 'Table Decor').map(createProductCardHTML).join('');
+      }
+    }
+
+    // ==================== 7. FILTER & SEARCH ====================
+    function filterByCategory(cat) {
+      document.querySelectorAll('.cat-pill').forEach(btn => {
+        if (btn.dataset.cat === cat) {
+          btn.className = 'cat-pill active px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap bg-primary-600 text-gold-400 shadow-xs transition';
+        } else {
+          btn.className = 'cat-pill px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap bg-white border border-stone-200 text-slate-700 hover:border-primary-600 transition';
+        }
+      });
+
+      const filteredSec = document.getElementById('filteredSection');
+      const defaultSec = document.getElementById('defaultCatalogSections');
+      const filteredGrid = document.getElementById('filteredGrid');
+      const heading = document.getElementById('filteredHeading');
+
+      if (cat === 'ALL') {
+        filteredSec.classList.add('hidden');
+        defaultSec.classList.remove('hidden');
+        return;
+      }
+
+      const list = PRODUCTS.filter(p => p.category === cat);
+      heading.textContent = `${cat} (${list.length} টি পণ্য)`;
+      filteredGrid.innerHTML = list.map(createProductCardHTML).join('');
+      defaultSec.classList.add('hidden');
+      filteredSec.classList.remove('hidden');
+    }
+
+    function handleSearch(query) {
+      const q = (query || '').trim().toLowerCase();
+      const filteredSec = document.getElementById('filteredSection');
+      const defaultSec = document.getElementById('defaultCatalogSections');
+      const filteredGrid = document.getElementById('filteredGrid');
+      const heading = document.getElementById('filteredHeading');
+
+      if (!q) {
+        filteredSec.classList.add('hidden');
+        defaultSec.classList.remove('hidden');
+        return;
+      }
+
+      showStorefront();
+      const matches = PRODUCTS.filter(p =>
+        p.title.toLowerCase().includes(q) || p.category.toLowerCase().includes(q)
+      );
+
+      heading.textContent = `"${query}" এর ফলাফল (${matches.length} টি)`;
+      filteredGrid.innerHTML = matches.length
+        ? matches.map(createProductCardHTML).join('')
+        : `<p class="col-span-full text-center py-8 text-sm text-slate-500 font-bangla">কোনো পণ্য পাওয়া যায়নি। অন্য নামে খুঁজে দেখুন।</p>`;
+
+      defaultSec.classList.add('hidden');
+      filteredSec.classList.remove('hidden');
+    }
+
+    // ==================== 8. VIEW SWITCHING & PRODUCT DETAILS ====================
+    function showStorefront() {
+      document.getElementById('storefrontView').classList.remove('hidden');
+      document.getElementById('productDetailView').classList.add('hidden');
+      document.getElementById('checkoutView').classList.add('hidden');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function openProductDetail(productId) {
+      const p = PRODUCTS.find(item => item.id === productId);
+      if (!p) return;
+
+      const discount = getDiscountPercent(p.price, p.oldPrice);
+      const detailContainer = document.getElementById('productDetailContent');
+
+      detailContainer.innerHTML = `
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+          <div class="relative rounded-2xl overflow-hidden bg-stone-100 aspect-square border border-stone-200">
+            <img src="${p.image}" alt="${p.title}" class="w-full h-full object-cover" />
+            <span class="absolute top-3 right-3 px-2.5 py-1 rounded-lg bg-roseaccent-600 text-white text-xs font-extrabold">
+              ${discount}% OFF
+            </span>
+          </div>
+
+          <div class="space-y-4 font-bangla">
+            <span class="inline-block px-3 py-1 rounded-full bg-stone-100 text-primary-600 text-xs font-bold">${p.category}</span>
+            <h1 class="text-xl sm:text-2xl font-extrabold text-primary-600 leading-snug">${p.title}</h1>
+            <div class="flex items-center gap-3">
+              <span class="text-2xl font-extrabold text-primary-600">৳ ${p.price}</span>
+              <span class="text-sm text-slate-400 line-through">৳ ${p.oldPrice}</span>
+            </div>
+
+            <p class="text-sm text-slate-600 leading-relaxed bg-stone-50 p-3.5 rounded-xl border border-stone-200">
+              ${p.description}
+            </p>
+
+            <div class="text-xs text-slate-500 space-y-1">
+              <p><i class="fa-solid fa-check text-emerald-600 mr-1.5"></i> ইন স্টক (অর্ডার করার পর কাস্টমাইজ করে পাঠানো হয়)</p>
+              <p><i class="fa-solid fa-truck text-primary-600 mr-1.5"></i> ঝিনাইদহ শহরে ৳৬০ এবং সারাদেশে ৳১২০ ডেলিভারি চার্জ</p>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3 pt-2">
+              <button onclick="addToCart(${p.id}, 1)" class="py-3 rounded-xl border-2 border-primary-600 text-primary-600 hover:bg-primary-50 font-extrabold text-xs sm:text-sm transition">
+                <i class="fa-solid fa-cart-plus mr-1"></i> Add to Cart
+              </button>
+              <button onclick="orderNowDirect(${p.id})" class="py-3 rounded-xl bg-primary-600 hover:bg-primary-700 text-gold-400 font-extrabold text-xs sm:text-sm shadow transition">
+                ORDER NOW <i class="fa-solid fa-bolt ml-1"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+
+      document.getElementById('storefrontView').classList.add('hidden');
+      document.getElementById('checkoutView').classList.add('hidden');
+      document.getElementById('productDetailView').classList.remove('hidden');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // ==================== 9. CART OPERATIONS ====================
+    function addToCart(productId, qty = 1) {
+      const product = PRODUCTS.find(p => p.id === productId);
+      if (!product) return;
+
+      const existing = cart.find(c => c.id === productId);
+      if (existing) {
+        existing.qty += qty;
+      } else {
+        cart.push({
+          id: product.id,
+          title: product.title,
+          price: product.price,
+          image: product.image,
+          qty: qty
         });
+      }
 
-        loginForm.classList.add('hidden');
-        signupForm.classList.add('hidden');
-        ordersPanel.classList.add('hidden');
-
-        if (tab === 'login') {
-            loginForm.classList.remove('hidden');
-            btnLogin.className = 'flex-1 py-2.5 text-[#4caf27] border-b-2 border-[#4caf27]';
-        } else if (tab === 'signup') {
-            signupForm.classList.remove('hidden');
-            btnSignup.className = 'flex-1 py-2.5 text-[#4caf27] border-b-2 border-[#4caf27]';
-        } else {
-            ordersPanel.classList.remove('hidden');
-            btnOrders.className = 'flex-1 py-2.5 text-[#4caf27] border-b-2 border-[#4caf27]';
-            renderMyOrders();
-        }
+      saveState();
+      updateAllBadges();
+      renderAllGrids();
+      renderCartDrawer();
+      showToast("কার্টে যোগ করা হয়েছে!");
     }
 
-    function handleUserAuth(e, type) {
-        e.preventDefault();
-        if (type === 'signup') {
-            const name = document.getElementById('signupName').value.trim();
-            const phone = document.getElementById('signupPhone').value.trim();
-            const address = document.getElementById('signupAddress').value.trim();
-            const pass = document.getElementById('signupPass').value;
+    function updateCardQty(productId, delta) {
+      const idx = cart.findIndex(c => c.id === productId);
+      if (idx === -1) return;
 
-            currentUser = { name, phone, address, pass };
-            registeredUsers.push(currentUser);
-            try {
-                localStorage.setItem('pm_users_v1', JSON.stringify(registeredUsers));
-                localStorage.setItem('pm_current_user_v1', JSON.stringify(currentUser));
-            } catch (err) {}
-        } else {
-            const phone = document.getElementById('loginPhone').value.trim();
-            const found = registeredUsers.find(u => u.phone === phone);
-            currentUser = found || { name: phone, phone, address: '' };
-            try {
-                localStorage.setItem('pm_current_user_v1', JSON.stringify(currentUser));
-            } catch (err) {}
-        }
+      cart[idx].qty += delta;
+      if (cart[idx].qty <= 0) {
+        cart.splice(idx, 1);
+      }
 
-        applyUserToHeaderAndForm();
-        closeAuthModal();
+      saveState();
+      updateAllBadges();
+      renderAllGrids();
+      renderCartDrawer();
+      if (!document.getElementById('checkoutView').classList.contains('hidden')) {
+        renderCheckoutSummary();
+      }
     }
 
-    function applyUserToHeaderAndForm() {
-        if (!currentUser) return;
-        const authArea = document.getElementById('authHeaderArea');
-        if (authArea) {
-            authArea.innerHTML = `
-                <button onclick="openAuthModal('orders')" class="px-3 py-1.5 text-xs font-bold text-[#2e7d12] bg-green-50 border border-green-300 rounded-full flex items-center gap-1">
-                    <i class="fas fa-user-check"></i>
-                    <span>${currentUser.name}</span>
-                </button>
-            `;
-        }
-        if (currentUser.name) document.getElementById('custName').value = currentUser.name;
-        if (currentUser.phone) document.getElementById('custPhone').value = currentUser.phone;
-        if (currentUser.address) document.getElementById('custAddress').value = currentUser.address;
+    function removeFromCart(productId) {
+      cart = cart.filter(c => c.id !== productId);
+      saveState();
+      updateAllBadges();
+      renderAllGrids();
+      renderCartDrawer();
+      if (!document.getElementById('checkoutView').classList.contains('hidden')) {
+        renderCheckoutSummary();
+      }
     }
 
-    function renderMyOrders() {
-        const container = document.getElementById('myOrdersPanel');
-        if (!container) return;
-        if (orderHistory.length === 0) {
-            container.innerHTML = `<p class="text-xs text-gray-500 text-center py-6">আপনার এখনো কোনো অর্ডার নেই।</p>`;
-            return;
-        }
-        container.innerHTML = orderHistory.map(o => `
-            <div class="border border-gray-200 rounded-xl p-3 bg-gray-50 text-left text-xs space-y-1">
-                <div class="flex justify-between font-bold">
-                    <span class="text-green-800">#${o.orderId}</span>
-                    <span class="px-2 py-0.5 rounded-full bg-amber-100 text-amber-800">${o.status}</span>
-                </div>
-                <div class="font-semibold text-gray-800">${o.productName} × ${o.qty} — ${o.totalPrice}৳</div>
-                <div class="text-gray-500">${o.createdAt || ''}</div>
+    function orderNowDirect(productId) {
+      const existing = cart.find(c => c.id === productId);
+      if (!existing) {
+        addToCart(productId, 1);
+      }
+      proceedToCheckout();
+    }
+
+    function getCartSubtotal() {
+      return cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+    }
+
+    function getCartTotalQty() {
+      return cart.reduce((sum, item) => sum + item.qty, 0);
+    }
+
+    function updateAllBadges() {
+      const totalQty = getCartTotalQty();
+      const subtotal = getCartSubtotal();
+
+      document.getElementById('headerCartCount').textContent = totalQty;
+      document.getElementById('bottomCartCount').textContent = totalQty;
+      document.getElementById('drawerCartCount').textContent = totalQty;
+      document.getElementById('sideCartCount').textContent = `${totalQty} Items`;
+      document.getElementById('sideCartTotal').textContent = subtotal;
+      document.getElementById('headerWishlistCount').textContent = wishlist.length;
+    }
+
+    function renderCartDrawer() {
+      const container = document.getElementById('drawerCartItems');
+      const totalEl = document.getElementById('drawerCartTotal');
+
+      if (!cart.length) {
+        container.innerHTML = `
+          <div class="text-center py-14 space-y-3 font-bangla">
+            <i class="fa-solid fa-bag-shopping text-4xl text-stone-300"></i>
+            <p class="text-sm text-slate-500">আপনার শপিং কার্ট বর্তমানে খালি!</p>
+            <button onclick="closeCartDrawer()" class="px-4 py-2 rounded-xl bg-primary-600 text-gold-400 text-xs font-bold">
+              কেনাকাটা শুরু করুন
+            </button>
+          </div>
+        `;
+        totalEl.textContent = '0';
+        return;
+      }
+
+      container.innerHTML = cart.map(item => `
+        <div class="flex items-center gap-3 bg-stone-50 p-2.5 rounded-xl border border-stone-200">
+          <img src="${item.image}" alt="${item.title}" class="w-14 h-14 rounded-lg object-cover flex-shrink-0" />
+          <div class="flex-1 min-w-0">
+            <h4 class="text-xs font-bold text-slate-800 truncate font-bangla">${item.title}</h4>
+            <p class="text-xs font-extrabold text-primary-600 mt-0.5">৳ ${item.price} × ${item.qty} = ৳ ${item.price * item.qty}</p>
+            <div class="flex items-center gap-2 mt-1.5">
+              <button onclick="updateCardQty(${item.id}, -1)" class="w-6 h-6 rounded-md bg-white border border-stone-300 text-xs font-bold">-</button>
+              <span class="text-xs font-bold">${item.qty}</span>
+              <button onclick="updateCardQty(${item.id}, 1)" class="w-6 h-6 rounded-md bg-primary-600 text-gold-400 text-xs font-bold">+</button>
             </div>
-        `).join('');
+          </div>
+          <button onclick="removeFromCart(${item.id})" class="text-slate-400 hover:text-roseaccent-600 p-1" aria-label="Remove">
+            <i class="fa-solid fa-trash-can text-xs"></i>
+          </button>
+        </div>
+      `).join('');
+
+      totalEl.textContent = Math.max(0, getCartSubtotal() - appliedDiscount);
     }
 
-    // Admin Modal & PIN Verification Functions
-    function openAdminModal() {
-        const menu = document.getElementById('threeDotDropdown');
-        if (menu) menu.classList.add('hidden');
-        isAdminUnlocked = false;
-        document.getElementById('adminPinScreen').classList.remove('hidden');
-        document.getElementById('adminDashboardContent').classList.add('hidden');
-        document.getElementById('adminLockBtn').classList.add('hidden');
-        document.getElementById('adminPinError').classList.add('hidden');
-        document.getElementById('adminPinInput').value = '';
+    function applyCoupon() {
+      const code = (document.getElementById('couponInput').value || '').trim().toUpperCase();
+      const msgEl = document.getElementById('couponMsg');
+      msgEl.classList.remove('hidden');
 
-        const modal = document.getElementById('adminModal');
-        modal.classList.remove('hidden');
-        modal.classList.add('flex');
+      if (code === 'PRIYO50' && getCartSubtotal() >= 400) {
+        appliedDiscount = 50;
+        msgEl.className = 'text-[11px] font-bold text-emerald-600';
+        msgEl.textContent = 'অভিনন্দন! ৫০ টাকা ডিসকাউন্ট যোগ হয়েছে।';
+      } else {
+        appliedDiscount = 0;
+        msgEl.className = 'text-[11px] font-bold text-roseaccent-600';
+        msgEl.textContent = 'সঠিক কুপন কোড দিন (যেমন: PRIYO50 - ন্যূনতম ৪০০ টাকার অর্ডারে)';
+      }
+      renderCartDrawer();
     }
 
-    function closeAdminModal() {
-        isAdminUnlocked = false;
-        const modal = document.getElementById('adminModal');
-        modal.classList.add('hidden');
-        modal.classList.remove('flex');
+    // ==================== 10. CHECKOUT & WHATSAPP ORDER ====================
+    function proceedToCheckout() {
+      if (!cart.length) {
+        showToast("প্রথমে কার্টে অন্তত একটি পণ্য যোগ করুন!");
+        return;
+      }
+      closeCartDrawer();
+      document.getElementById('storefrontView').classList.add('hidden');
+      document.getElementById('productDetailView').classList.add('hidden');
+      document.getElementById('checkoutView').classList.remove('hidden');
+      updateThanaOptions();
+      renderCheckoutSummary();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    function lockAndCloseAdmin() {
-        closeAdminModal();
+    function updateThanaOptions() {
+      const districtEl = document.getElementById('custDistrict');
+      const thanaEl = document.getElementById('custThana');
+      if (!districtEl || !thanaEl) return;
+
+      const dist = districtEl.value;
+      const thanas = DISTRICT_THANAS[dist] || DISTRICT_THANAS.Other;
+      thanaEl.innerHTML = thanas.map(t => `<option value="${t}">${t}</option>`).join('');
+      renderCheckoutSummary();
     }
 
-    function verifyAdminPin(e) {
-        e.preventDefault();
-        const entered = document.getElementById('adminPinInput').value.trim();
-        if (entered === ADMIN_PIN) {
-            isAdminUnlocked = true;
-            document.getElementById('adminPinScreen').classList.add('hidden');
-            document.getElementById('adminDashboardContent').classList.remove('hidden');
-            document.getElementById('adminLockBtn').classList.remove('hidden');
-            document.getElementById('adminPinError').classList.add('hidden');
-            switchAdminSection('orders');
-            renderAdminOrders();
-            renderAdminImageManager();
-        } else {
-            document.getElementById('adminPinError').classList.remove('hidden');
-        }
+    function getDeliveryCharge() {
+      const dist = document.getElementById('custDistrict')?.value || 'Jhenaidah';
+      return dist === 'Jhenaidah' ? 60 : 120;
     }
 
-    function switchAdminSection(section) {
-        if (!isAdminUnlocked) return;
-        const ordersSec = document.getElementById('adminOrdersSection');
-        const imagesSec = document.getElementById('adminImagesSection');
-        const btnOrders = document.getElementById('adminTabOrdersBtn');
-        const btnImages = document.getElementById('adminTabImagesBtn');
+    function renderCheckoutSummary() {
+      const listEl = document.getElementById('checkoutItemsList');
+      const subtotal = getCartSubtotal();
+      const shipping = getDeliveryCharge();
+      const dist = document.getElementById('custDistrict')?.value || 'Jhenaidah';
+      const grandTotal = Math.max(0, subtotal + shipping - appliedDiscount);
 
-        if (section === 'images') {
-            ordersSec.classList.add('hidden');
-            imagesSec.classList.remove('hidden');
-            btnImages.className = 'px-3.5 py-2 rounded-xl text-xs font-bold bg-[#4caf27] text-white shadow-sm flex items-center gap-1.5 transition';
-            btnOrders.className = 'px-3.5 py-2 rounded-xl text-xs font-bold bg-gray-100 text-gray-700 hover:bg-gray-200 flex items-center gap-1.5 transition';
-            renderAdminImageManager();
-        } else {
-            imagesSec.classList.add('hidden');
-            ordersSec.classList.remove('hidden');
-            btnOrders.className = 'px-3.5 py-2 rounded-xl text-xs font-bold bg-[#4caf27] text-white shadow-sm flex items-center gap-1.5 transition';
-            btnImages.className = 'px-3.5 py-2 rounded-xl text-xs font-bold bg-gray-100 text-gray-700 hover:bg-gray-200 flex items-center gap-1.5 transition';
-            renderAdminOrders();
-        }
-    }
-
-    function updateAdminBadgesAndList() {
-        const pendingCount = orderHistory.filter(o => o.status === 'Pending').length;
-        const badge = document.getElementById('adminOrderBadge');
-        const dropBadge = document.getElementById('dropdownOrderBadge');
-
-        if (badge) {
-            badge.textContent = pendingCount;
-            badge.classList.toggle('hidden', pendingCount === 0);
-        }
-        if (dropBadge) {
-            dropBadge.textContent = pendingCount;
-        }
-        if (isAdminUnlocked) {
-            renderAdminOrders();
-        }
-    }
-
-    function renderAdminOrders() {
-        if (!isAdminUnlocked) return;
-        const total = orderHistory.length;
-        const pending = orderHistory.filter(o => o.status === 'Pending').length;
-        const confirmed = orderHistory.filter(o => o.status === 'Confirmed' || o.status === 'Delivered').length;
-        const revenue = orderHistory
-            .filter(o => o.status !== 'Cancelled')
-            .reduce((sum, o) => sum + (Number(o.totalPrice) || 0), 0);
-
-        document.getElementById('statTotalOrders').textContent = total;
-        document.getElementById('statPendingOrders').textContent = pending;
-        document.getElementById('statConfirmedOrders').textContent = confirmed;
-        document.getElementById('statTotalRevenue').textContent = `${revenue}৳`;
-
-        const filter = document.getElementById('adminFilterStatus')?.value || 'ALL';
-        const filtered = filter === 'ALL' ? orderHistory : orderHistory.filter(o => o.status === filter);
-        const container = document.getElementById('adminOrdersContainer');
-        if (!container) return;
-
-        if (filtered.length === 0) {
-            container.innerHTML = `<p class="text-xs text-gray-500 text-center py-6">কোনো অর্ডার পাওয়া যায়নি।</p>`;
-            return;
-        }
-
-        container.innerHTML = filtered.map(o => `
-            <div class="border border-gray-200 rounded-xl p-3 bg-white shadow-sm text-xs space-y-2">
-                <div class="flex flex-wrap items-center justify-between gap-2 border-b border-gray-100 pb-2">
-                    <div>
-                        <span class="font-extrabold text-green-800 text-sm">#${o.orderId}</span>
-                        <span class="text-gray-400 ml-2">${o.createdAt || ''}</span>
-                    </div>
-                    <div class="flex items-center gap-1.5">
-                        <select onchange="changeOrderStatus('${o.orderId}', this.value)"
-                                class="border border-gray-300 rounded-lg px-2 py-1 font-bold text-xs bg-gray-50">
-                            <option value="Pending" ${o.status === 'Pending' ? 'selected' : ''}>পেন্ডিং (Pending)</option>
-                            <option value="Confirmed" ${o.status === 'Confirmed' ? 'selected' : ''}>কনফার্মড (Confirmed)</option>
-                            <option value="Delivered" ${o.status === 'Delivered' ? 'selected' : ''}>ডেলিভারড (Delivered)</option>
-                            <option value="Cancelled" ${o.status === 'Cancelled' ? 'selected' : ''}>বাতিল (Cancelled)</option>
-                        </select>
-                        <button type="button" onclick="deleteOrder('${o.orderId}')" class="text-red-500 hover:text-red-700 px-1.5 py-1" title="ডিলিট">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </div>
-                </div>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-gray-800">
-                    <div>
-                        <div><strong>ক্রেতা:</strong> ${o.customerName}</div>
-                        <div><strong>ফোন:</strong> <a href="tel:${o.customerPhone}" class="text-blue-600 underline font-bold">${o.customerPhone}</a></div>
-                        <div><strong>ঠিকানা:</strong> ${o.customerAddress}</div>
-                    </div>
-                    <div class="sm:text-right">
-                        <div class="font-bold text-sm text-[#2e7d12]">${o.productName} × ${o.qty}</div>
-                        <div class="font-extrabold text-base text-[#f26522]">মোট: ${o.totalPrice}৳</div>
-                    </div>
-                </div>
-                <div class="flex flex-wrap items-center gap-2 pt-1">
-                    <a href="tel:${o.customerPhone}" class="px-2.5 py-1 bg-blue-600 text-white rounded-lg font-bold"><i class="fas fa-phone-alt mr-1"></i>কল করুন</a>
-                    <a href="https://wa.me/88${o.customerPhone.replace(/^\\+?88/, '')}" target="_blank" class="px-2.5 py-1 bg-[#25d366] text-white rounded-lg font-bold"><i class="fab fa-whatsapp mr-1"></i>মেসেজ দিন</a>
-                    <button type="button" onclick="copyCourierInfo('${o.orderId}')" class="px-2.5 py-1 bg-gray-200 hover:bg-gray-300 text-gray-800 rounded-lg font-bold"><i class="fas fa-copy mr-1"></i>কুরিয়ার ইনফো কপি</button>
-                </div>
+      listEl.innerHTML = cart.map(item => `
+        <div class="flex items-center justify-between gap-2 text-xs font-bangla border-b border-stone-100 pb-2">
+          <div class="flex items-center gap-2 min-w-0">
+            <img src="${item.image}" alt="${item.title}" class="w-10 h-10 rounded-lg object-cover flex-shrink-0" />
+            <div class="truncate">
+              <p class="font-bold text-slate-800 truncate">${item.title}</p>
+              <p class="text-slate-500">Qty: ${item.qty} × ৳${item.price}</p>
             </div>
-        `).join('');
+          </div>
+          <span class="font-extrabold text-primary-600 whitespace-nowrap">৳ ${item.price * item.qty}</span>
+        </div>
+      `).join('');
+
+      document.getElementById('checkoutSubtotal').textContent = subtotal;
+      document.getElementById('checkoutShipping').textContent = shipping;
+      document.getElementById('checkoutZoneLabel').textContent = dist === 'Jhenaidah' ? 'ঝিনাইদহ জেলা' : 'ঝিনাইদহের বাইরে';
+
+      const discountRow = document.getElementById('checkoutDiscountRow');
+      if (appliedDiscount > 0) {
+        discountRow.classList.remove('hidden');
+        document.getElementById('checkoutDiscount').textContent = appliedDiscount;
+      } else {
+        discountRow.classList.add('hidden');
+      }
+
+      document.getElementById('checkoutGrandTotal').textContent = grandTotal;
     }
 
-    async function changeOrderStatus(orderId, newStatus) {
-        const ord = orderHistory.find(o => o.orderId === orderId);
-        if (!ord) return;
-        ord.status = newStatus;
-        try { localStorage.setItem('pm_orders_v1', JSON.stringify(orderHistory)); } catch (e) {}
-        if (typeof window.updateOrderInFirestoreCloud === 'function') {
-            try { await window.updateOrderInFirestoreCloud(orderId, { status: newStatus }); } catch (e) {}
-        }
-        updateAdminBadgesAndList();
+    function submitOrder(e) {
+      e.preventDefault();
+      if (!cart.length) return;
+
+      const name = document.getElementById('custName').value.trim();
+      const phone = document.getElementById('custPhone').value.trim();
+      const district = document.getElementById('custDistrict').value;
+      const thana = document.getElementById('custThana').value;
+      const address = document.getElementById('custAddress').value.trim();
+      const note = document.getElementById('custNote').value.trim();
+      const payment = document.querySelector('input[name="paymentMethod"]:checked')?.value || 'Cash on Delivery';
+
+      const subtotal = getCartSubtotal();
+      const shipping = getDeliveryCharge();
+      const grandTotal = Math.max(0, subtotal + shipping - appliedDiscount);
+      const orderId = 'PM-' + Math.floor(100000 + Math.random() * 900000);
+
+      const newOrder = {
+        orderId,
+        date: new Date().toLocaleString('bn-BD'),
+        name,
+        phone,
+        fullAddress: `${address}, ${thana}, ${district}`,
+        payment,
+        note,
+        items: [...cart],
+        total: grandTotal
+      };
+
+      savedOrders.unshift(newOrder);
+      saveState();
+
+      const itemsText = cart.map((i, idx) => `${idx + 1}. ${i.title} (${i.qty}x) - ৳${i.price * i.qty}`).join('\n');
+      const waMessage =
+`🛍️ *নতুন অর্ডার - প্রিয় মুহূর্ত (priyomuhurto.store)*
+🆔 অর্ডার আইডি: ${orderId}
+👤 নাম: ${name}
+📞 মোবাইল: +88${phone}
+📍 ঠিকানা: ${address}, ${thana}, ${district}
+💳 পেমেন্ট: ${payment}
+${note ? `📝 কাস্টম নোট: ${note}\n` : ''}
+📦 *অর্ডারকৃত পণ্যসমূহ:*
+${itemsText}
+
+🚚 ডেলিভারি চার্জ: ৳${shipping}
+💰 *সর্বমোট বিল: ৳${grandTotal}*`;
+
+      cart = [];
+      appliedDiscount = 0;
+      saveState();
+      updateAllBadges();
+      renderAllGrids();
+      renderCartDrawer();
+
+      showToast("অর্ডার সফলভাবে গৃহীত হয়েছে! হোয়াটসঅ্যাপে পাঠানো হচ্ছে...");
+      const waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(waMessage)}`;
+      window.open(waUrl, '_blank');
+      showStorefront();
     }
 
-    async function deleteOrder(orderId) {
-        orderHistory = orderHistory.filter(o => o.orderId !== orderId);
-        try { localStorage.setItem('pm_orders_v1', JSON.stringify(orderHistory)); } catch (e) {}
-        if (typeof window.deleteOrderFromFirestoreCloud === 'function') {
-            try { await window.deleteOrderFromFirestoreCloud(orderId); } catch (e) {}
-        }
-        updateAdminBadgesAndList();
+    // ==================== 11. DRAWERS & MODALS ====================
+    function openCartDrawer() {
+      renderCartDrawer();
+      document.getElementById('cartDrawerOverlay').classList.remove('hidden');
+      document.getElementById('cartDrawer').classList.remove('translate-x-full');
     }
 
-    function copyCourierInfo(orderId) {
-        const o = orderHistory.find(item => item.orderId === orderId);
-        if (!o) return;
-        const text = `Name: ${o.customerName}\nPhone: ${o.customerPhone}\nAddress: ${o.customerAddress}\nCOD: ${o.totalPrice} Tk\nItem: ${o.productName} x${o.qty}`;
-        const ta = document.createElement('textarea');
-        ta.value = text;
-        document.body.appendChild(ta);
-        ta.select();
-        try { document.execCommand('copy'); } catch (e) {}
-        document.body.removeChild(ta);
-        const toast = document.getElementById('adminCopyToast');
-        if (toast) {
-            toast.classList.remove('hidden');
-            setTimeout(() => toast.classList.add('hidden'), 2500);
-        }
+    function closeCartDrawer() {
+      document.getElementById('cartDrawerOverlay').classList.add('hidden');
+      document.getElementById('cartDrawer').classList.add('translate-x-full');
     }
 
-    async function createDemoTestOrder() {
-        const prod = products[0];
-        const orderId = 'PM-' + Math.floor(100000 + Math.random() * 900000);
-        const demo = {
-            orderId,
-            productId: prod.id,
-            productName: prod.name,
-            qty: 1,
-            unitPrice: prod.price,
-            totalPrice: prod.price,
-            customerName: 'টেস্ট কাস্টমার',
-            customerAddress: 'মিরপুর ১০, ঢাকা',
-            customerPhone: '01700000000',
-            status: 'Pending',
-            createdAt: new Date().toLocaleString('bn-BD'),
-            createdAtMs: Date.now()
-        };
-        orderHistory.unshift(demo);
-        try { localStorage.setItem('pm_orders_v1', JSON.stringify(orderHistory)); } catch (e) {}
-        if (typeof window.saveOrderToFirestoreCloud === 'function') {
-            try { await window.saveOrderToFirestoreCloud(demo); } catch (e) {}
-        }
-        updateAdminBadgesAndList();
+    function openMenuDrawer() {
+      document.getElementById('menuDrawerOverlay').classList.remove('hidden');
+      document.getElementById('menuDrawer').classList.remove('-translate-x-full');
     }
 
-    function exportOrdersCsv() {
-        if (orderHistory.length === 0) return;
-        const headers = ['OrderID', 'Date', 'CustomerName', 'Phone', 'Address', 'Product', 'Qty', 'Total', 'Status'];
-        const rows = orderHistory.map(o => [
-            o.orderId,
-            `"${(o.createdAt || '').replace(/"/g, '""')}"`,
-            `"${(o.customerName || '').replace(/"/g, '""')}"`,
-            o.customerPhone,
-            `"${(o.customerAddress || '').replace(/"/g, '""')}"`,
-            `"${(o.productName || '').replace(/"/g, '""')}"`,
-            o.qty,
-            o.totalPrice,
-            o.status
-        ].join(','));
-        const csv = '\uFEFF' + [headers.join(','), ...rows].join('\n');
-        const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-        const link = document.createElement('a');
-        link.href = URL.createObjectURL(blob);
-        link.download = `priyo_muhurto_orders.csv`;
-        link.click();
+    function closeMenuDrawer() {
+      document.getElementById('menuDrawerOverlay').classList.add('hidden');
+      document.getElementById('menuDrawer').classList.add('-translate-x-full');
     }
 
-    // Protected Admin Image Setup / Gallery Uploader Functions (Only accessible after ADMIN_PIN verification)
-    function renderAdminImageManager() {
-        if (!isAdminUnlocked) return;
-        const bannerPrev = document.getElementById('previewBannerUpload');
-        if (bannerPrev) bannerPrev.src = siteRoundLogoUrl || mainBannerImageUrl;
+    function openSearchModal() {
+      document.getElementById('searchModal').classList.remove('hidden');
+      setTimeout(() => document.getElementById('mobileSearchInput')?.focus(), 100);
+    }
 
-        const list = document.getElementById('productImageManagerList');
-        if (!list) return;
-        list.innerHTML = products.map((p, idx) => `
-            <div class="border border-gray-200 rounded-xl p-3 bg-gray-50">
-                <div class="flex items-center justify-between mb-2">
-                    <span class="font-bold text-xs text-gray-800">${idx + 2}. ${p.label}</span>
-                    <div class="flex items-center gap-2">
-                        <a href="${p.ibbPageUrl}" target="_blank" class="text-[11px] text-blue-600 underline">মূল লিংক</a>
-                        <button type="button" onclick="resetSingleImage(${p.id})" class="text-[11px] text-red-600 hover:underline font-semibold">রিসেট</button>
-                    </div>
+    function closeSearchModal() {
+      document.getElementById('searchModal').classList.add('hidden');
+    }
+
+    function openWishlistModal() {
+      const container = document.getElementById('wishlistItemsContainer');
+      document.getElementById('modalWishlistCount').textContent = wishlist.length;
+
+      const wishedProducts = PRODUCTS.filter(p => wishlist.includes(p.id));
+      container.innerHTML = wishedProducts.length
+        ? wishedProducts.map(p => `
+            <div class="flex items-center justify-between gap-2 bg-stone-50 p-2.5 rounded-xl border border-stone-200">
+              <div class="flex items-center gap-2.5 min-w-0">
+                <img src="${p.image}" alt="${p.title}" class="w-12 h-12 rounded-lg object-cover" />
+                <div class="min-w-0">
+                  <p class="text-xs font-bold text-slate-800 truncate font-bangla">${p.title}</p>
+                  <p class="text-xs font-extrabold text-primary-600">৳ ${p.price}</p>
                 </div>
-                <div class="flex items-center gap-3">
-                    <img id="previewProdUpload_${p.id}" src="${p.img}" onerror="this.onerror=null;this.src='${p.fallbackImg}';" class="w-16 h-16 rounded-lg object-cover border bg-white shrink-0">
-                    <div class="flex-1 space-y-1.5">
-                        <label class="inline-flex items-center gap-1.5 bg-[#4caf27] text-white text-xs font-bold px-3 py-1.5 rounded-lg cursor-pointer hover:bg-green-700 transition">
-                            <i class="fas fa-upload"></i> গ্যালারি থেকে ছবি দিন
-                            <input type="file" accept="image/*" class="hidden" onchange="handleGalleryUpload(event, ${p.id})">
-                        </label>
-                        <input type="text" placeholder="অথবা Direct/ibb.co.com লিংক পেস্ট করুন"
-                               onchange="handleDirectUrlChange(${p.id}, this.value)"
-                               class="w-full px-2.5 py-1.5 text-xs border border-gray-300 rounded-lg bg-white">
-                    </div>
-                </div>
+              </div>
+              <button onclick="addToCart(${p.id}, 1); closeWishlistModal();" class="px-3 py-1.5 rounded-lg bg-primary-600 text-gold-400 text-[11px] font-bold whitespace-nowrap">
+                Add to Cart
+              </button>
             </div>
-        `).join('');
+          `).join('')
+        : `<p class="text-center py-8 text-xs text-slate-500 font-bangla">আপনার উইশলিস্টে কোনো পণ্য নেই।</p>`;
+
+      document.getElementById('wishlistModal').classList.remove('hidden');
     }
 
-    function showAdminImageSavedToast(msg = 'ছবি আপডেট ও সেভ হয়েছে!') {
-        const toast = document.getElementById('imgSaveToast');
-        if (!toast) return;
-        toast.textContent = msg;
-        toast.classList.remove('hidden');
-        setTimeout(() => toast.classList.add('hidden'), 2800);
+    function closeWishlistModal() {
+      document.getElementById('wishlistModal').classList.add('hidden');
     }
 
-    function handleGalleryUpload(event, target) {
-        if (!isAdminUnlocked) return;
-        const file = event.target.files && event.target.files[0];
-        if (!file) return;
-        const reader = new FileReader();
-        reader.onload = function(ev) {
-            const img = new Image();
-            img.onload = async function() {
-                const canvas = document.createElement('canvas');
-                const maxDim = 700;
-                let w = img.width;
-                let h = img.height;
-                if (w > maxDim || h > maxDim) {
-                    if (w > h) {
-                        h = Math.round((h * maxDim) / w);
-                        w = maxDim;
-                    } else {
-                        w = Math.round((w * maxDim) / h);
-                        h = maxDim;
-                    }
-                }
-                canvas.width = w;
-                canvas.height = h;
-                const ctx = canvas.getContext('2d');
-                ctx.drawImage(img, 0, 0, w, h);
-                const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.82);
-                await applyUpdatedSiteImage(target, compressedDataUrl);
-            };
-            img.src = ev.target.result;
-        };
-        reader.readAsDataURL(file);
+    function openAccountModal() {
+      const listEl = document.getElementById('savedOrdersList');
+      listEl.innerHTML = savedOrders.length
+        ? savedOrders.map(ord => `
+            <div class="bg-stone-50 border border-stone-200 rounded-xl p-3 text-xs space-y-1 font-bangla">
+              <div class="flex items-center justify-between font-bold text-primary-600">
+                <span>${ord.orderId} • ${ord.name}</span>
+                <span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-700 text-[10px]">Confirmed</span>
+              </div>
+              <p class="text-slate-600">📞 ${ord.phone} | 📍 ${ord.fullAddress}</p>
+              <p class="text-slate-500 text-[11px]">🕒 ${ord.date}</p>
+              <p class="font-extrabold text-primary-600 pt-1">সর্বমোট বিল: ৳ ${ord.total} (${ord.items.length} টি আইটেম)</p>
+            </div>
+          `).join('')
+        : `<p class="text-center py-6 text-xs text-slate-500 font-bangla">এই ব্রাউজারে এখনো কোনো অর্ডার সেভ নেই।</p>`;
+
+      document.getElementById('accountModal').classList.remove('hidden');
     }
 
-    async function handleDirectUrlChange(target, urlValue) {
-        if (!isAdminUnlocked) return;
-        const trimmed = (urlValue || '').trim();
-        if (!trimmed) return;
-        if (trimmed.includes('ibb.co')) {
-            showAdminImageSavedToast('লিংক থেকে ছবি লোড হচ্ছে...');
-            const resolved = await resolveAndVerifyIbb(trimmed);
-            await applyUpdatedSiteImage(target, resolved || trimmed);
-        } else {
-            await applyUpdatedSiteImage(target, trimmed);
-        }
+    function closeAccountModal() {
+      document.getElementById('accountModal').classList.add('hidden');
     }
 
-    async function applyUpdatedSiteImage(target, finalImageUrl) {
-        if (!finalImageUrl) return;
-        if (target === 'banner') {
-            mainBannerImageUrl = finalImageUrl;
-            siteRoundLogoUrl = finalImageUrl;
-            try { localStorage.setItem('pm_custom_banner', finalImageUrl); } catch (e) {}
-            syncLogoAndBannerDom(finalImageUrl);
-            const prevEl = document.getElementById('previewBannerUpload');
-            if (prevEl) prevEl.src = finalImageUrl;
-            if (typeof window.saveCustomImageToCloud === 'function') {
-                try { await window.saveCustomImageToCloud('banner', finalImageUrl); } catch (e) {}
-            }
-        } else {
-            const prod = products.find(p => p.id === Number(target));
-            if (prod) {
-                prod.img = finalImageUrl;
-                prod.resolved = true;
-                try { localStorage.setItem('pm_custom_prod_' + prod.id, finalImageUrl); } catch (e) {}
-                renderProducts();
-                const prevEl = document.getElementById('previewProdUpload_' + prod.id);
-                if (prevEl) prevEl.src = finalImageUrl;
-                if (typeof window.saveCustomImageToCloud === 'function') {
-                    try { await window.saveCustomImageToCloud('prod_' + prod.id, finalImageUrl); } catch (e) {}
-                }
-            }
-        }
-        showAdminImageSavedToast('ছবি আপডেট ও সেভ হয়েছে!');
+    function clearSavedOrders() {
+      savedOrders = [];
+      saveState();
+      openAccountModal();
+      showToast("অর্ডার হিস্ট্রি ক্লিয়ার করা হয়েছে");
     }
 
-    async function resetSingleImage(target) {
-        if (!isAdminUnlocked) return;
-        if (target === 'banner') {
-            localStorage.removeItem('pm_custom_banner');
-            localStorage.removeItem(CACHE_PREFIX + bannerRawIbb);
-            mainBannerImageUrl = bannerFallbackSvg;
-            siteRoundLogoUrl = roundLogoFallbackSvg;
-            syncLogoAndBannerDom();
-            loadAllUserIbbImages();
-        } else {
-            const prod = products.find(p => p.id === Number(target));
-            if (prod) {
-                localStorage.removeItem('pm_custom_prod_' + prod.id);
-                localStorage.removeItem(CACHE_PREFIX + prod.ibbPageUrl);
-                prod.img = prod.fallbackImg;
-                renderProducts();
-                loadAllUserIbbImages();
-            }
-        }
-        renderAdminImageManager();
-        showAdminImageSavedToast('রিসেট হয়ে মূল লিংক লোড হচ্ছে...');
-    }
-
-    // Initialize Page on Load
+    // ==================== 12. INITIALIZE ON PAGE LOAD ====================
     window.addEventListener('DOMContentLoaded', () => {
-        applyUserToHeaderAndForm();
-        renderProducts();
-        initScrollRevealAnimations();
-        loadAllUserIbbImages();
-        updateAdminBadgesAndList();
+      renderAllGrids();
+      updateAllBadges();
+      updateThanaOptions();
+      resolveImgbbLinks();
     });
-</script>
-
-<!-- Firebase Realtime Cloud Sync for Orders & Admin Image Settings -->
-<script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-    import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-    import { getFirestore, doc, setDoc, updateDoc, deleteDoc, onSnapshot, collection } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-
-    let db = null;
-    let auth = null;
-    let currentAuthUser = null;
-    const appId = typeof __app_id !== 'undefined' ? __app_id : 'priyo-muhurto-shop';
-
-    async function initCloudOrderSync() {
-        try {
-            if (typeof __firebase_config === 'undefined' || !__firebase_config) return;
-            const firebaseConfig = JSON.parse(__firebase_config);
-            const app = initializeApp(firebaseConfig);
-            db = getFirestore(app);
-            auth = getAuth(app);
-
-            if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                const cred = await signInWithCustomToken(auth, __initial_auth_token);
-                currentAuthUser = cred.user;
-            } else {
-                const cred = await signInAnonymously(auth);
-                currentAuthUser = cred.user;
-            }
-
-            if (!currentAuthUser) return;
-
-            // Listen to Orders in Real-Time
-            const ordersCol = collection(db, 'artifacts', appId, 'public', 'data', 'orders');
-            onSnapshot(ordersCol, (snapshot) => {
-                const cloudOrders = [];
-                snapshot.forEach(docSnap => {
-                    cloudOrders.push(docSnap.data());
-                });
-                cloudOrders.sort((a, b) => (b.createdAtMs || 0) - (a.createdAtMs || 0));
-                if (cloudOrders.length > 0) {
-                    orderHistory = cloudOrders;
-                    renderMyOrders();
-                    updateAdminBadgesAndList();
-                }
-            }, (err) => {
-                console.warn("Orders listener warning:", err);
-            });
-
-            // Listen to Custom Admin Images in Real-Time
-            const imagesDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'site_settings', 'images');
-            onSnapshot(imagesDocRef, (docSnap) => {
-                if (docSnap.exists()) {
-                    const data = docSnap.data();
-                    if (data.banner) {
-                        mainBannerImageUrl = data.banner;
-                        siteRoundLogoUrl = data.banner;
-                        syncLogoAndBannerDom(data.banner);
-                    }
-                    products.forEach(p => {
-                        if (data['prod_' + p.id]) {
-                            p.img = data['prod_' + p.id];
-                            p.resolved = true;
-                        }
-                    });
-                    renderProducts();
-                }
-            }, (err) => {
-                console.warn("Image settings listener warning:", err);
-            });
-        } catch (e) {
-            console.warn("Cloud init skipped or offline:", e);
-        }
-    }
-
-    window.saveOrderToFirestoreCloud = async function(orderObj) {
-        if (!db || !currentAuthUser) return;
-        const orderDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'orders', orderObj.orderId);
-        await setDoc(orderDocRef, orderObj);
-    };
-
-    window.updateOrderInFirestoreCloud = async function(orderId, updates) {
-        if (!db || !currentAuthUser) return;
-        const orderDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'orders', orderId);
-        await updateDoc(orderDocRef, updates);
-    };
-
-    window.deleteOrderFromFirestoreCloud = async function(orderId) {
-        if (!db || !currentAuthUser) return;
-        const orderDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'orders', orderId);
-        await deleteDoc(orderDocRef);
-    };
-
-    window.saveCustomImageToCloud = async function(key, imageUrlValue) {
-        if (!db || !currentAuthUser) return;
-        const settingsDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'site_settings', 'images');
-        await setDoc(settingsDocRef, { [key]: imageUrlValue, updatedAt: Date.now() }, { merge: true });
-    };
-
-    initCloudOrderSync();
-</script>
-
+  </script>
 </body>
 </html>
