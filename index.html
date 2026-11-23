@@ -730,9 +730,13 @@
   </div>
 
   <!-- ==================== JAVASCRIPT APPLICATION LOGIC ==================== -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
     // ==================== 1. STORE DATA & CONFIG ====================
     const WHATSAPP_NUMBER = "8801707483913";
+    const SUPABASE_URL = "https://nsgaejlsjnpjqneksatt.supabase.co";
+    const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_G90x4StKSUW7Vm0Dn05aBw_9ysuXrQH";
+    const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
 
     const PRODUCTS = [
       {
@@ -1305,18 +1309,7 @@
       document.getElementById('checkoutShipping').textContent = shipping;
       document.getElementById('checkoutZoneLabel').textContent = dist === 'Jhenaidah' ? 'ঝিনাইদহ জেলা' : 'ঝিনাইদহের বাইরে';
 
-      const discountRow = document.getElementById('checkoutDiscountRow');
-      if (appliedDiscount > 0) {
-        discountRow.classList.remove('hidden');
-        document.getElementById('checkoutDiscount').textContent = appliedDiscount;
-      } else {
-        discountRow.classList.add('hidden');
-      }
-
-      document.getElementById('checkoutGrandTotal').textContent = grandTotal;
-    }
-
-    function submitOrder(e) {
+      const discountRow = document.getElementById('checkoutD    async function submitOrder(e) {
       e.preventDefault();
       if (!cart.length) return;
 
@@ -1330,41 +1323,69 @@
 
       const subtotal = getCartSubtotal();
       const shipping = getDeliveryCharge();
-      const grandTotal = Math.max(0, subtotal + shipping - appliedDiscount);
+      const discount = appliedDiscount;
+      const grandTotal = Math.max(0, subtotal + shipping - discount);
       const orderId = 'PM-' + Math.floor(100000 + Math.random() * 900000);
+      const fullAddress = address + ', ' + thana + ', ' + district;
 
-      const newOrder = {
-        orderId,
-        date: new Date().toLocaleString('bn-BD'),
-        name,
-        phone,
-        fullAddress: `${address}, ${thana}, ${district}`,
-        payment,
-        note,
-        items: [...cart],
-        total: grandTotal
-      };
-
-      savedOrders.unshift(newOrder);
-      saveState();
-
-      const itemsText = cart.map((i, idx) => `${idx + 1}. ${i.title} (${i.qty}x) - ৳${i.price * i.qty}`).join('\n');
+      const waItemsText = cart.map((i, idx) => (idx + 1) + '. ' + i.title + ' (' + i.qty + 'x) - ৳' + (i.price * i.qty)).join('\n');
       const waMessage =
-`🛍️ *নতুন অর্ডার - প্রিয় মুহূর্ত (priyomuhurto.store)*
-🆔 অর্ডার আইডি: ${orderId}
-👤 নাম: ${name}
-📞 মোবাইল: +88${phone}
-📍 ঠিকানা: ${address}, ${thana}, ${district}
-💳 পেমেন্ট: ${payment}
-${note ? `📝 কাস্টম নোট: ${note}\n` : ''}
-📦 *অর্ডারকৃত পণ্যসমূহ:*
-${itemsText}
+        '🛍️ *নতুন অর্ডার - প্রিয় মুহূর্ত (priyomuhurto.store)*\n' +
+        '🆔 অর্ডার আইডি: ' + orderId + '\n' +
+        '👤 নাম: ' + name + '\n' +
+        '📞 মোবাইল: +88' + phone + '\n' +
+        '📍 ঠিকানা: ' + fullAddress + '\n' +
+        '💳 পেমেন্ট: ' + payment + '\n' +
+        (note ? '📝 কাস্টম নোট: ' + note + '\n' : '') +
+        '\n📦 *অর্ডারকৃত পণ্যসমূহ:*\n' + waItemsText +
+        '\n\n🚚 ডেলিভারি চার্জ: ৳' + shipping +
+        '\n💰 *সর্বমোট বিল: ৳' + grandTotal + '*';
 
-🚚 ডেলিভারি চার্জ: ৳${shipping}
-💰 *সর্বমোট বিল: ৳${grandTotal}*`;
+      try {
+        const { error } = await supabaseClient.from('orders').insert([{
+          order_code: orderId,
+          customer_name: name,
+          phone: phone,
+          delivery_address: fullAddress,
+          payment_method: payment,
+          customer_note: note,
+          items: cart.map(i => ({ id: i.id, title: i.title, price: i.price, quantity: i.qty })),
+          subtotal: subtotal,
+          delivery_charge: shipping,
+          discount: discount,
+          total: grandTotal
+        }]);
+        if (error) throw error;
 
-      cart = [];
-      appliedDiscount = 0;
+        const newOrder = {
+          orderId: orderId,
+          date: new Date().toLocaleString('bn-BD'),
+          name: name,
+          phone: phone,
+          fullAddress: fullAddress,
+          payment: payment,
+          note: note,
+          items: [...cart],
+          total: grandTotal
+        };
+        savedOrders.unshift(newOrder);
+        saveState();
+        cart = [];
+        appliedDiscount = 0;
+        saveState();
+        updateAllBadges();
+        renderAllGrids();
+        renderCartDrawer();
+
+        showToast("অর্ডার সফলভাবে সংরক্ষিত হয়েছে! হোয়াটসঅ্যাপে পাঠানো হচ্ছে...");
+        const waUrl = 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(waMessage);
+        window.open(waUrl, '_blank');
+        showStorefront();
+      } catch (error) {
+        console.error('Order submission failed:', error);
+        showToast("অর্ডার সংরক্ষণ করা যায়নি। ইন্টারনেট সংযোগ পরীক্ষা করে আবার চেষ্টা করুন।");
+      }
+    }
       saveState();
       updateAllBadges();
       renderAllGrids();
