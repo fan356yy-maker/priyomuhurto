@@ -1386,17 +1386,6 @@
         showToast("অর্ডার সংরক্ষণ করা যায়নি। ইন্টারনেট সংযোগ পরীক্ষা করে আবার চেষ্টা করুন।");
       }
     }
-      saveState();
-      updateAllBadges();
-      renderAllGrids();
-      renderCartDrawer();
-
-      showToast("অর্ডার সফলভাবে গৃহীত হয়েছে! হোয়াটসঅ্যাপে পাঠানো হচ্ছে...");
-      const waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(waMessage)}`;
-      window.open(waUrl, '_blank');
-      showStorefront();
-    }
-
     // ==================== 11. DRAWERS & MODALS ====================
     function openCartDrawer() {
       renderCartDrawer();
