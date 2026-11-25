@@ -37,3 +37,14 @@ create policy "pm_admin_update_orders"
   to authenticated
   using ((auth.jwt() -> 'app_metadata' ->> 'role') = 'admin')
   with check ((auth.jwt() -> 'app_metadata' ->> 'role') = 'admin');
+
+-- After creating your admin user in Authentication > Users, run this
+-- separately after replacing the email with your actual admin email:
+--
+-- update auth.users
+-- set raw_app_meta_data = coalesce(raw_app_meta_data, '{}'::jsonb)
+--   || jsonb_build_object('role', 'admin')
+-- where email = 'YOUR_ADMIN_EMAIL';
+--
+-- Then sign in again on the website so the new role is included in the JWT.
+-- Never put a Supabase service_role key or an admin password in website code.
