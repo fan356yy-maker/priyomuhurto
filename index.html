@@ -1287,15 +1287,18 @@
 
     function renderCheckoutSummary() {
       const listEl = document.getElementById('checkoutItemsList');
+      if (!listEl) return;
+
       const subtotal = getCartSubtotal();
       const shipping = getDeliveryCharge();
       const dist = document.getElementById('custDistrict')?.value || 'Jhenaidah';
-      const grandTotal = Math.max(0, subtotal + shipping - appliedDiscount);
+      const discount = Math.min(appliedDiscount, subtotal);
+      const grandTotal = Math.max(0, subtotal + shipping - discount);
 
       listEl.innerHTML = cart.map(item => `
         <div class="flex items-center justify-between gap-2 text-xs font-bangla border-b border-stone-100 pb-2">
           <div class="flex items-center gap-2 min-w-0">
-            <img src="${item.image}" alt="${item.title}" class="w-10 h-10 rounded-lg object-cover flex-shrink-0" />
+            <img src="${item.image}" alt="${item.title}" class="w-10 h-10 rounded-lg object-cover flex-shrink-0" loading="lazy" />
             <div class="truncate">
               <p class="font-bold text-slate-800 truncate">${item.title}</p>
               <p class="text-slate-500">Qty: ${item.qty} × ৳${item.price}</p>
@@ -1309,7 +1312,16 @@
       document.getElementById('checkoutShipping').textContent = shipping;
       document.getElementById('checkoutZoneLabel').textContent = dist === 'Jhenaidah' ? 'ঝিনাইদহ জেলা' : 'ঝিনাইদহের বাইরে';
 
-      const discountRow = document.getElementById('checkoutD    async function submitOrder(e) {
+      const discountRow = document.getElementById('checkoutDiscountRow');
+      const discountValue = document.getElementById('checkoutDiscount');
+      if (discountRow && discountValue) {
+        discountRow.classList.toggle('hidden', discount <= 0);
+        discountValue.textContent = discount;
+      }
+      document.getElementById('checkoutGrandTotal').textContent = grandTotal;
+    }
+
+    async function submitOrder(e) {
       e.preventDefault();
       if (!cart.length) return;
 
