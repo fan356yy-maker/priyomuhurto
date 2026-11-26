@@ -190,6 +190,48 @@
       #trendingGrid, #mirrorsGrid, #chocolateGrid, #filteredGrid { gap: .7rem; }
       #trendingGrid > div, #mirrorsGrid > div, #chocolateGrid > div, #filteredGrid > div { padding: .55rem; }
     }
+    /* Premium readability pass: stronger contrast, clearer Bengali typography */
+    body {
+      color: #24211b;
+      font-size: 15px;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+    .font-bangla, [lang="bn"] {
+      font-family: "Hind Siliguri", sans-serif !important;
+      letter-spacing: 0;
+      line-height: 1.7;
+    }
+    .text-slate-400, .text-stone-400 { color: #625d52 !important; }
+    .text-slate-500, .text-stone-500 { color: #575247 !important; }
+    .text-slate-600, .text-stone-600 { color: #484337 !important; }
+    .text-slate-700, .text-stone-700 { color: #38342b !important; }
+    .text-slate-300 { color: #d6d3cd !important; }
+    .text-\\[9px\\] { font-size: .72rem !important; line-height: 1.45 !important; }
+    .text-\\[10px\\] { font-size: .76rem !important; line-height: 1.5 !important; }
+    .text-\\[11px\\] { font-size: .82rem !important; line-height: 1.5 !important; }
+    #storefrontView h1, #storefrontView h2, #storefrontView h3,
+    #storefrontView h4, #checkoutView h1, #checkoutView h2, #checkoutView h3 {
+      color: #17140f;
+      line-height: 1.4;
+      font-weight: 700;
+    }
+    #storefrontView p, #checkoutView p { line-height: 1.7; }
+    #storefrontView .text-gold-400, #storefrontView .text-gold-600 {
+      color: #8a6818 !important;
+    }
+    header .text-gold-400, header .text-gold-600,
+    #heroSliderTrack .text-gold-400, #heroSliderTrack .text-gold-600 {
+      color: #f0d37d !important;
+    }
+    input, select, textarea {
+      color: #24211b;
+      font-size:  .95rem;
+    }
+    input::placeholder, textarea::placeholder { color: #716b60 !important; opacity: 1; }
+    button, a { line-height: 1.45; }
+    .text-white { text-shadow: none; }
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; }
     }
