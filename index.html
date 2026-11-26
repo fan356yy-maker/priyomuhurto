@@ -780,21 +780,67 @@
     </div>
   </div>
 
-  <!-- ==================== SECURE STORE ADMIN MODAL ==================== -->
+  <!-- ==================== CUSTOMER ACCOUNT & SECURE ADMIN MODAL ==================== -->
   <div id="accountModal" class="fixed inset-0 bg-slate-950/70 backdrop-blur-sm z-50 hidden flex items-center justify-center p-3 sm:p-4">
     <div class="bg-[#fffdf8] w-full max-w-5xl rounded-2xl overflow-hidden shadow-2xl flex flex-col max-h-[92vh] border border-[#c9a64b]/50">
       <div class="p-4 sm:p-5 bg-[#090909] text-white flex items-center justify-between border-b border-[#c9a64b]/50">
         <div class="flex items-center gap-3">
-          <div class="w-10 h-10 rounded-xl border border-[#c9a64b]/60 bg-white/5 flex items-center justify-center text-[#e6cf88]"><i class="fa-solid fa-crown"></i></div>
+          <div class="w-10 h-10 rounded-xl border border-[#c9a64b]/60 bg-white/5 flex items-center justify-center text-[#e6cf88]"><i class="fa-regular fa-user"></i></div>
           <div>
-            <h3 class="font-extrabold text-sm sm:text-base tracking-wide">PRIYO MUHURTO <span class="text-[#e6cf88]">ADMIN</span></h3>
-            <p class="text-[10px] text-stone-400 tracking-widest uppercase">Secure Store Management</p>
+            <h3 class="font-extrabold text-sm sm:text-base tracking-wide">PRIYO MUHURTO <span class="text-[#e6cf88]">MY ACCOUNT</span></h3>
+            <p class="text-[10px] text-stone-400 tracking-widest uppercase">Customer account & order tracking</p>
           </div>
         </div>
-        <button onclick="closeAccountModal()" class="w-9 h-9 rounded-lg bg-white/10 hover:bg-white/20 flex items-center justify-center" aria-label="Close admin"><i class="fa-solid fa-xmark"></i></button>
+        <button onclick="closeAccountModal()" class="w-9 h-9 rounded-lg bg-white/10 hover:bg-white/20 flex items-center justify-center" aria-label="Close account"><i class="fa-solid fa-xmark"></i></button>
       </div>
       <div class="p-4 sm:p-6 overflow-y-auto space-y-4">
-        <div id="adminLoginView" class="max-w-md mx-auto py-5 sm:py-10">
+        <div id="customerAuthView" class="max-w-md mx-auto py-5 sm:py-8">
+          <div class="text-center mb-6">
+            <div class="w-16 h-16 rounded-2xl bg-[#101010] border border-[#c9a64b] text-[#e6cf88] flex items-center justify-center text-2xl mx-auto mb-3"><i class="fa-solid fa-user-shield"></i></div>
+            <h4 id="customerAuthTitle" class="text-xl font-extrabold text-stone-900">Login to Your Account</h4>
+            <p id="customerAuthSubtitle" class="text-xs text-stone-500 mt-1 font-bangla">নিজের অর্ডার দেখতে লগইন করুন অথবা নতুন অ্যাকাউন্ট খুলুন</p>
+          </div>
+          <form id="customerAuthForm" onsubmit="handleCustomerAuth(event)" class="space-y-3">
+            <div id="customerNameField" class="hidden">
+              <label class="block text-xs font-bold text-stone-700 mb-1">Your Name</label>
+              <input id="customerFullName" type="text" autocomplete="name" placeholder="আপনার নাম" class="w-full h-12 rounded-xl border border-stone-300 bg-white px-4 text-sm focus:outline-none focus:border-[#c9a64b]" />
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-stone-700 mb-1">Email</label>
+              <input id="customerEmail" type="email" autocomplete="email" required placeholder="you@example.com" class="w-full h-12 rounded-xl border border-stone-300 bg-white px-4 text-sm focus:outline-none focus:border-[#c9a64b]" />
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-stone-700 mb-1">Password</label>
+              <input id="customerPassword" type="password" autocomplete="current-password" minlength="6" required placeholder="কমপক্ষে ৬ অক্ষর" class="w-full h-12 rounded-xl border border-stone-300 bg-white px-4 text-sm focus:outline-none focus:border-[#c9a64b]" />
+            </div>
+            <p id="customerAuthMessage" class="hidden text-xs rounded-lg p-3" role="alert"></p>
+            <button id="customerAuthButton" type="submit" class="w-full h-12 rounded-xl bg-[#0a0a0a] hover:bg-black text-[#e6cf88] font-extrabold text-sm border border-[#c9a64b] transition">Sign In</button>
+          </form>
+          <div class="mt-4 text-center space-y-3">
+            <button id="customerAuthSwitch" onclick="toggleCustomerAuthMode()" class="text-xs font-bold text-[#8a6b20] underline">নতুন অ্যাকাউন্ট খুলুন</button>
+            <p><button onclick="showAdminLogin()" class="text-[11px] text-stone-500 hover:text-stone-900 underline">Store Admin? Admin Login</button></p>
+          </div>
+        </div>
+
+        <div id="customerDashboardView" class="hidden space-y-5">
+          <div class="flex flex-wrap items-center justify-between gap-3">
+            <div><p class="text-xs text-stone-500">Logged in as</p><p id="customerSignedInEmail" class="text-sm font-extrabold text-stone-900"></p></div>
+            <div class="flex gap-2">
+              <button onclick="loadCustomerOrders()" class="px-3 py-2 rounded-lg border border-stone-300 text-xs font-bold hover:bg-stone-100"><i class="fa-solid fa-rotate mr-1"></i>Refresh</button>
+              <button onclick="handleCustomerSignOut()" class="px-3 py-2 rounded-lg bg-[#111] text-[#e6cf88] text-xs font-bold border border-[#c9a64b]"><i class="fa-solid fa-arrow-right-from-bracket mr-1"></i>Sign Out</button>
+            </div>
+          </div>
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <h4 class="font-extrabold text-stone-900">আমার অর্ডারসমূহ</h4>
+            <span class="text-[10px] text-stone-500">শুধু আপনার অ্যাকাউন্টের অর্ডার</span>
+          </div>
+          <p id="customerOrdersMessage" class="hidden text-xs rounded-lg p-3" role="status"></p>
+          <div id="customerOrdersList" class="space-y-3">
+            <div class="text-center py-10 text-sm text-stone-400"><i class="fa-solid fa-spinner fa-spin mr-2"></i>অর্ডার লোড হচ্ছে…</div>
+          </div>
+        </div>
+
+        <div id="adminLoginView" class="hidden max-w-md mx-auto py-5 sm:py-8">
           <div class="text-center mb-6">
             <div class="w-16 h-16 rounded-2xl bg-[#101010] border border-[#c9a64b] text-[#e6cf88] flex items-center justify-center text-2xl mx-auto mb-3"><i class="fa-solid fa-lock"></i></div>
             <h4 class="text-xl font-extrabold text-stone-900">Admin Sign In</h4>
@@ -808,8 +854,9 @@
             <p id="adminLoginMessage" class="hidden text-xs text-rose-700 bg-rose-50 border border-rose-100 rounded-lg p-3" role="alert"></p>
             <button id="adminLoginButton" type="submit" class="w-full h-12 rounded-xl bg-[#0a0a0a] hover:bg-black text-[#e6cf88] font-extrabold text-sm border border-[#c9a64b] transition"><i class="fa-solid fa-right-to-bracket mr-2"></i>Secure Sign In</button>
           </form>
-          <p class="text-[10px] text-stone-400 text-center mt-4">Customer order submission remains available without admin login.</p>
+          <p class="text-center mt-4"><button onclick="showCustomerAuth()" class="text-[11px] text-stone-500 underline">Back to Customer Login</button></p>
         </div>
+
         <div id="adminDashboardView" class="hidden space-y-5">
           <div class="flex flex-wrap items-center justify-between gap-3">
             <div><p class="text-xs text-stone-500">Signed in as</p><p id="adminSignedInEmail" class="text-sm font-extrabold text-stone-900"></p></div>
@@ -824,14 +871,9 @@
             <div class="rounded-xl bg-white p-4 border border-stone-200"><p class="text-[10px] text-stone-500 uppercase">Processing</p><p id="adminProcessingOrders" class="text-2xl font-extrabold text-blue-700">—</p></div>
             <div class="rounded-xl bg-white p-4 border border-stone-200"><p class="text-[10px] text-stone-500 uppercase">Delivered</p><p id="adminDeliveredOrders" class="text-2xl font-extrabold text-emerald-700">—</p></div>
           </div>
-          <div class="flex flex-wrap items-center justify-between gap-2">
-            <h4 class="font-extrabold text-stone-900">Order Management</h4>
-            <span class="text-[10px] text-stone-500">Live data from Supabase</span>
-          </div>
+          <div class="flex flex-wrap items-center justify-between gap-2"><h4 class="font-extrabold text-stone-900">Order Management</h4><span class="text-[10px] text-stone-500">Live data from Supabase</span></div>
           <p id="adminOrdersMessage" class="hidden text-xs rounded-lg p-3" role="status"></p>
-          <div id="adminOrdersList" class="space-y-3">
-            <div class="text-center py-10 text-sm text-stone-400"><i class="fa-solid fa-spinner fa-spin mr-2"></i>Loading orders…</div>
-          </div>
+          <div id="adminOrdersList" class="space-y-3"><div class="text-center py-10 text-sm text-stone-400"><i class="fa-solid fa-spinner fa-spin mr-2"></i>Loading orders…</div></div>
         </div>
       </div>
     </div>
@@ -1470,7 +1512,15 @@
         '\n💰 *সর্বমোট বিল: ৳' + grandTotal + '*';
 
       try {
+        const { data: { session: orderSession }, error: sessionError } = await supabaseClient.auth.getSession();
+        if (sessionError) throw sessionError;
+        if (!orderSession?.user) {
+          showToast('অর্ডার নিশ্চিত করতে আগে Login বা Sign Up করুন।');
+          openAccountModal();
+          return;
+        }
         const { error } = await supabaseClient.from('orders').insert([{
+          user_id: orderSession.user.id,
           order_code: orderId,
           customer_name: name,
           phone: phone,
@@ -1588,37 +1638,162 @@
       el.classList.remove('hidden');
     }
 
+    let customerAuthMode = 'login';
+
+    function showOnlyAccountView(viewId) {
+      ['customerAuthView', 'customerDashboardView', 'adminLoginView', 'adminDashboardView'].forEach(id => {
+        document.getElementById(id)?.classList.toggle('hidden', id !== viewId);
+      });
+    }
+
+    function showCustomerAuth(message = '', isError = false) {
+      showOnlyAccountView('customerAuthView');
+      const msg = document.getElementById('customerAuthMessage');
+      if (msg) {
+        msg.textContent = message;
+        msg.className = message ? 'text-xs rounded-lg p-3 ' + (isError ? 'bg-rose-50 text-rose-700 border border-rose-200' : 'bg-emerald-50 text-emerald-700 border border-emerald-200') : 'hidden';
+      }
+    }
+
+    function toggleCustomerAuthMode() {
+      customerAuthMode = customerAuthMode === 'login' ? 'signup' : 'login';
+      const signup = customerAuthMode === 'signup';
+      document.getElementById('customerAuthTitle').textContent = signup ? 'Create Your Account' : 'Login to Your Account';
+      document.getElementById('customerAuthSubtitle').textContent = signup ? 'নতুন অ্যাকাউন্ট খুলে আপনার অর্ডার ট্র্যাক করুন' : 'নিজের অর্ডার দেখতে লগইন করুন';
+      document.getElementById('customerNameField').classList.toggle('hidden', !signup);
+      document.getElementById('customerFullName').required = signup;
+      document.getElementById('customerAuthButton').textContent = signup ? 'Create Account' : 'Sign In';
+      document.getElementById('customerAuthSwitch').textContent = signup ? 'আগে থেকেই অ্যাকাউন্ট আছে? Login করুন' : 'নতুন অ্যাকাউন্ট খুলুন';
+      showCustomerAuth();
+    }
+
     function showAdminLogin(message = '') {
-      document.getElementById('adminLoginView').classList.remove('hidden');
-      document.getElementById('adminDashboardView').classList.add('hidden');
+      showOnlyAccountView('adminLoginView');
       const msg = document.getElementById('adminLoginMessage');
-      msg.textContent = message;
-      msg.classList.toggle('hidden', !message);
+      if (msg) {
+        msg.textContent = message;
+        msg.classList.toggle('hidden', !message);
+      }
     }
 
     function showAdminDashboard(user) {
-      document.getElementById('adminLoginView').classList.add('hidden');
-      document.getElementById('adminDashboardView').classList.remove('hidden');
+      showOnlyAccountView('adminDashboardView');
       document.getElementById('adminSignedInEmail').textContent = user.email || 'Authorized administrator';
       loadAdminOrders();
     }
 
+    function showCustomerDashboard(user) {
+      showOnlyAccountView('customerDashboardView');
+      document.getElementById('customerSignedInEmail').textContent = user.email || 'Customer';
+      loadCustomerOrders();
+    }
+
     async function openAccountModal() {
       document.getElementById('accountModal').classList.remove('hidden');
-      showAdminLogin();
+      customerAuthMode = 'login';
+      toggleCustomerAuthMode();
+      toggleCustomerAuthMode();
       try {
         const { data, error } = await supabaseClient.auth.getSession();
         if (error) throw error;
         const user = data.session?.user;
         if (user?.app_metadata?.role === 'admin') showAdminDashboard(user);
-        else if (user) {
-          await supabaseClient.auth.signOut();
-          showAdminLogin('এই অ্যাকাউন্টে Admin permission নেই।');
+        else if (user) showCustomerDashboard(user);
+        else showCustomerAuth();
+      } catch (error) {
+        console.error('Account session check failed:', error);
+        showCustomerAuth('লগইন যাচাই করা যায়নি। আবার চেষ্টা করুন।', true);
+      }
+    }
+
+    async function handleCustomerAuth(event) {
+      event.preventDefault();
+      const button = document.getElementById('customerAuthButton');
+      const email = document.getElementById('customerEmail').value.trim();
+      const password = document.getElementById('customerPassword').value;
+      const fullName = document.getElementById('customerFullName').value.trim();
+      const signup = customerAuthMode === 'signup';
+      button.disabled = true;
+      button.textContent = signup ? 'Creating account…' : 'Signing in…';
+      try {
+        let data, error;
+        if (signup) {
+          ({ data, error } = await supabaseClient.auth.signUp({
+            email,
+            password,
+            options: { data: { full_name: fullName }, emailRedirectTo: window.location.origin }
+          }));
+          if (error) throw error;
+          document.getElementById('customerPassword').value = '';
+          if (data.session?.user) {
+            showCustomerDashboard(data.session.user);
+          } else {
+            showCustomerAuth('অ্যাকাউন্ট তৈরি হয়েছে। আপনার ইমেইলে confirmation link পাঠানো হয়েছে—ইমেইল verify করে Login করুন।');
+          }
+        } else {
+          ({ data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
+          if (error) throw error;
+          document.getElementById('customerPassword').value = '';
+          if (data.user?.app_metadata?.role === 'admin') showAdminDashboard(data.user);
+          else showCustomerDashboard(data.user);
         }
       } catch (error) {
-        console.error('Admin session check failed:', error);
-        showAdminLogin('লগইন যাচাই করা যায়নি। আবার চেষ্টা করুন।');
+        showCustomerAuth(error.message || 'Authentication ব্যর্থ হয়েছে।', true);
+      } finally {
+        button.disabled = false;
+        button.textContent = customerAuthMode === 'signup' ? 'Create Account' : 'Sign In';
       }
+    }
+
+    async function loadCustomerOrders() {
+      const list = document.getElementById('customerOrdersList');
+      list.innerHTML = '<div class="text-center py-10 text-sm text-stone-400"><i class="fa-solid fa-spinner fa-spin mr-2"></i>অর্ডার লোড হচ্ছে…</div>';
+      try {
+        const { data: { session }, error: sessionError } = await supabaseClient.auth.getSession();
+        if (sessionError) throw sessionError;
+        if (!session?.user || session.user.app_metadata?.role === 'admin') {
+          showCustomerAuth('আবার Customer account দিয়ে Login করুন।', true);
+          return;
+        }
+        const { data, error } = await supabaseClient
+          .from('orders')
+          .select('id, order_code, items, total, status, created_at, payment_method')
+          .eq('user_id', session.user.id)
+          .order('created_at', { ascending: false })
+          .limit(100);
+        if (error) throw error;
+        const orders = data || [];
+        if (!orders.length) {
+          list.innerHTML = '<div class="text-center py-10 rounded-xl border border-dashed border-stone-300 text-sm text-stone-500">এখনো আপনার কোনো অর্ডার নেই। অর্ডার করার সময় এই অ্যাকাউন্টে Login থাকতে হবে।</div>';
+          return;
+        }
+        list.innerHTML = orders.map(order => {
+          const code = escapeAdminHtml(order.order_code || order.id);
+          const status = escapeAdminHtml(order.status || 'Pending');
+          const created = order.created_at ? new Date(order.created_at).toLocaleString('bn-BD') : 'তারিখ পাওয়া যায়নি';
+          const items = Array.isArray(order.items) ? order.items : [];
+          const itemHtml = items.map(item => '<li>' + escapeAdminHtml(item.title || 'Product') + ' × ' + escapeAdminHtml(item.quantity || item.qty || 1) + '</li>').join('');
+          return '<article class="rounded-xl border border-stone-200 bg-white p-4 shadow-sm">' +
+            '<div class="flex flex-wrap items-center justify-between gap-2"><div><p class="text-xs font-extrabold text-stone-900">' + code + '</p><p class="text-[11px] text-stone-500 mt-1">' + escapeAdminHtml(created) + '</p></div>' +
+            '<span class="rounded-full px-3 py-1 text-[11px] font-bold bg-amber-50 text-amber-800 border border-amber-200">' + status + '</span></div>' +
+            '<ul class="mt-3 text-xs text-stone-700 space-y-1">' + itemHtml + '</ul>' +
+            '<div class="mt-3 pt-3 border-t border-stone-100 flex items-center justify-between text-xs"><span class="text-stone-500">' + escapeAdminHtml(order.payment_method || '') + '</span><strong class="text-base text-[#9a7625]">৳ ' + escapeAdminHtml(order.total) + '</strong></div></article>';
+        }).join('');
+      } catch (error) {
+        console.error('Could not load customer orders:', error);
+        list.innerHTML = '<div class="rounded-xl bg-rose-50 border border-rose-200 p-4 text-xs text-rose-700">অর্ডার লোড করা যায়নি: ' + escapeAdminHtml(error.message) + '<br><span class="block mt-1">Customer orders-এর জন্য Supabase SQL migration চালানো প্রয়োজন।</span></div>';
+      }
+    }
+
+    async function handleCustomerSignOut() {
+      const { error } = await supabaseClient.auth.signOut();
+      if (error) {
+        const msg = document.getElementById('customerOrdersMessage');
+        msg.textContent = 'Sign out করা যায়নি: ' + error.message;
+        msg.classList.remove('hidden');
+        return;
+      }
+      showCustomerAuth('আপনি নিরাপদে Sign out করেছেন।');
     }
 
     async function handleAdminLogin(event) {
@@ -1654,7 +1829,7 @@
         setAdminMessage('Sign out করা যায়নি: ' + error.message, true);
         return;
       }
-      showAdminLogin('আপনি নিরাপদে Sign out করেছেন।');
+      showCustomerAuth('আপনি নিরাপদে Sign out করেছেন।');
     }
 
     async function loadAdminOrders() {
