@@ -1673,9 +1673,12 @@
       const signup = customerAuthMode === 'signup';
       pendingCustomerPhone = null;
       document.getElementById('customerIdentifierField').classList.remove('hidden');
+      document.getElementById('customerEmail').required = true;
       document.getElementById('customerOtpField').classList.add('hidden');
+      document.getElementById('customerOtp').required = false;
       document.getElementById('customerAuthSwitch').classList.remove('hidden');
       document.getElementById('customerPassword').parentElement.classList.remove('hidden');
+      document.getElementById('customerPassword').required = true;
       document.getElementById('customerAuthTitle').textContent = signup ? 'Create Your Account' : 'Login to Your Account';
       document.getElementById('customerAuthSubtitle').textContent = signup ? 'ইমেইল অথবা ফোন নম্বর দিয়ে অ্যাকাউন্ট খুলুন' : 'ইমেইল অথবা ফোন নম্বর দিয়ে লগইন করুন';
       document.getElementById('customerNameField').classList.toggle('hidden', !signup);
@@ -1713,6 +1716,7 @@
       document.getElementById('customerAuthSubtitle').textContent = 'নিজের অর্ডার দেখতে লগইন করুন অথবা নতুন অ্যাকাউন্ট খুলুন';
       pendingCustomerPhone = null;
       document.getElementById('customerIdentifierField').classList.remove('hidden');
+      document.getElementById('customerEmail').required = true;
       document.getElementById('customerOtpField').classList.add('hidden');
       document.getElementById('customerOtp').required = false;
       document.getElementById('customerAuthSwitch').classList.remove('hidden');
@@ -1777,8 +1781,10 @@
           } else if (!emailMode) {
             pendingCustomerPhone = phone;
             document.getElementById('customerIdentifierField').classList.add('hidden');
+            document.getElementById('customerEmail').required = false;
             document.getElementById('customerNameField').classList.add('hidden');
             document.getElementById('customerPassword').parentElement.classList.add('hidden');
+            document.getElementById('customerPassword').required = false;
             document.getElementById('customerOtpField').classList.remove('hidden');
             document.getElementById('customerOtp').required = true;
             document.getElementById('customerAuthSwitch').classList.add('hidden');
