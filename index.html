@@ -1691,8 +1691,12 @@
     async function openAccountModal() {
       document.getElementById('accountModal').classList.remove('hidden');
       customerAuthMode = 'login';
-      toggleCustomerAuthMode();
-      toggleCustomerAuthMode();
+      document.getElementById('customerAuthTitle').textContent = 'Login to Your Account';
+      document.getElementById('customerAuthSubtitle').textContent = 'নিজের অর্ডার দেখতে লগইন করুন অথবা নতুন অ্যাকাউন্ট খুলুন';
+      document.getElementById('customerNameField').classList.add('hidden');
+      document.getElementById('customerFullName').required = false;
+      document.getElementById('customerAuthButton').textContent = 'Sign In';
+      document.getElementById('customerAuthSwitch').textContent = 'নতুন অ্যাকাউন্ট খুলুন';
       try {
         const { data, error } = await supabaseClient.auth.getSession();
         if (error) throw error;
@@ -1728,6 +1732,7 @@
           if (data.session?.user) {
             showCustomerDashboard(data.session.user);
           } else {
+            toggleCustomerAuthMode();
             showCustomerAuth('অ্যাকাউন্ট তৈরি হয়েছে। আপনার ইমেইলে confirmation link পাঠানো হয়েছে—ইমেইল verify করে Login করুন।');
           }
         } else {
