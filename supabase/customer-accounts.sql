@@ -21,14 +21,31 @@ create policy "pm_authenticated_insert_own_orders"
   );
 
 -- Customers can read only orders linked to their own account.
-drop policy if exists "pm_customers_read_own_orders" on public.orders;
+-- Remove any older SELECT policies first. PostgreSQL combines permissive policies
+-- with OR, so an old broad SELECT policy could otherwise expose customer data.
+do $
+declare policy_row record;
+begin
+  for policy_row in
+    select policyname
+    from pg_policies
+    where schemaname = 'public'
+      and tablename = 'orders'
+      and cmd = 'SELECT'
+  loop
+    execute format('drop policy if exists %I on public.orders', policy_row.policyname);
+  end loop;
+end $;
+
+create policy "pm_admin_read_orders"
+  on public.orders for select
+  to authenticated
+  using ((auth.jwt() -> 'app_metadata' ->> 'role') = 'admin');
+
 create policy "pm_customers_read_own_orders"
   on public.orders for select
   to authenticated
-  using (
-    user_id = auth.uid()
-    or (auth.jwt() -> 'app_metadata' ->> 'role') = 'admin'
-  );
+  using (user_id = auth.uid());
 
 -- Existing admin select/update policies from admin-setup.sql remain in place.
 -- Guest/anonymous inserts remain available only if the previous anon insert policy exists.
