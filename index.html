@@ -1736,7 +1736,7 @@
             showCustomerAuth('অ্যাকাউন্ট তৈরি হয়েছে। আপনার ইমেইলে confirmation link পাঠানো হয়েছে—ইমেইল verify করে Login করুন।');
           }
         } else {
-          ({ data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
+          ({ data, error } = await supabaseClient.auth.signInWithPassword({ email, password }));
           if (error) throw error;
           document.getElementById('customerPassword').value = '';
           if (data.user?.app_metadata?.role === 'admin') showAdminDashboard(data.user);
