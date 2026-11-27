@@ -290,6 +290,29 @@
         max-width: 104px;
       }
     }
+    /* Match footer brand mark to the compact header logo proportions */
+    footer .logo-obsidian-frame {
+      display: inline-flex;
+      width: fit-content;
+      max-width: 110px;
+      padding: 2px 3px;
+      border-radius: 10px;
+      line-height: 0;
+    }
+    footer .logo-obsidian-frame img {
+      display: block;
+      width: auto;
+      height: 42px;
+      max-width: 96px;
+      object-fit: contain;
+      border-radius: 6px;
+    }
+    @media (min-width: 640px) {
+      footer .logo-obsidian-frame img {
+        height: 46px;
+        max-width: 104px;
+      }
+    }
     header input { border-radius: 999px !important; }
     .pm-category-showcase { margin-top: .25rem; }
     .pm-eyebrow {
