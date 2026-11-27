@@ -267,7 +267,22 @@
     .pm-announcement-sep { color: #c9a64b; padding: 0 .55rem; }
     header.sticky { background: rgba(18,16,14,.98) !important; }
     header.sticky > div { min-height: 70px; }
-    header .logo-obsidian-frame { border-radius: 10px; }
+    header .logo-obsidian-frame {
+      border-radius: 10px;
+      padding: 2px 5px;
+      flex: 0 0 auto;
+      line-height: 0;
+    }
+    header .logo-obsidian-frame img {
+      display: block;
+      height: 42px;
+      width: auto;
+      max-width: 112px;
+      object-fit: contain;
+    }
+    @media (min-width: 640px) {
+      header .logo-obsidian-frame img { height: 46px; }
+    }
     header input { border-radius: 999px !important; }
     .pm-category-showcase { margin-top: .25rem; }
     .pm-eyebrow {
