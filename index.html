@@ -269,7 +269,7 @@
     header.sticky > div { min-height: 70px; }
     header .logo-obsidian-frame {
       border-radius: 10px;
-      padding: 2px 5px;
+      padding: 2px 3px;
       flex: 0 0 auto;
       line-height: 0;
     }
@@ -277,11 +277,14 @@
       display: block;
       height: 42px;
       width: auto;
-      max-width: 112px;
+      max-width: 96px;
       object-fit: contain;
     }
     @media (min-width: 640px) {
-      header .logo-obsidian-frame img { height: 46px; }
+      header .logo-obsidian-frame img {
+        height: 46px;
+        max-width: 104px;
+      }
     }
     header input { border-radius: 999px !important; }
     .pm-category-showcase { margin-top: .25rem; }
