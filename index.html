@@ -232,6 +232,120 @@
     input::placeholder, textarea::placeholder { color: #716b60 !important; opacity: 1; }
     button, a { line-height: 1.45; }
     .text-white { text-shadow: none; }
+    /* Priyo Muhurto marketplace refresh — Evaly-inspired shopping structure */
+    :root {
+      --pm-red: #b51236;
+      --pm-red-dark: #8f0e2b;
+      --pm-surface: #ffffff;
+      --pm-line: #e9e4d9;
+      --pm-text: #201d18;
+    }
+    .pm-announcement {
+      background: #17130f;
+      color: #f7e7b2;
+      letter-spacing: .01em;
+    }
+    .pm-announcement a { color: #fff; font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
+    .pm-announcement-sep { color: #c9a64b; padding: 0 .55rem; }
+    header.sticky { background: rgba(18,16,14,.98) !important; }
+    header.sticky > div { min-height: 70px; }
+    header .logo-obsidian-frame { border-radius: 10px; }
+    header input { border-radius: 999px !important; }
+    .pm-category-showcase { margin-top: .25rem; }
+    .pm-eyebrow {
+      display: block;
+      color: #98742b;
+      font-size: .66rem;
+      font-weight: 800;
+      letter-spacing: .13em;
+      margin-bottom: .2rem;
+    }
+    .pm-category-tile {
+      min-height: 112px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      gap: .25rem;
+      text-align: left;
+      padding: .8rem .9rem;
+      background: #fff;
+      border: 1px solid var(--pm-line);
+      border-radius: 14px;
+      color: #211d17;
+      font-size: .88rem;
+      font-weight: 800;
+      box-shadow: 0 3px 12px rgba(40,30,10,.035);
+      transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+    }
+    .pm-category-tile:hover {
+      transform: translateY(-3px);
+      border-color: #c9a64b;
+      box-shadow: 0 10px 24px rgba(40,30,10,.09);
+    }
+    .pm-category-icon {
+      width: 36px; height: 36px; border-radius: 11px;
+      display: grid; place-items: center;
+      color: #a00f32; background: #fff0f3;
+      font-size: 1rem; margin-bottom: .15rem;
+    }
+    .pm-category-tile small {
+      color: #71695d; font-size: .72rem; font-weight: 500;
+    }
+    .pm-flash-section {
+      background: linear-gradient(115deg,#fff 0%,#fffaf0 100%);
+      border: 1px solid #eadfc5;
+      border-radius: 18px;
+      padding-top: 1rem; padding-bottom: 1rem;
+      margin-top: .65rem; margin-bottom: .65rem;
+      box-shadow: 0 6px 22px rgba(50,36,10,.045);
+    }
+    .pm-flash-heading {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: .75rem; margin: 0 .15rem 1rem;
+    }
+    .pm-flash-tag {
+      white-space: nowrap; display: inline-flex; align-items: center; gap: .4rem;
+      background: #a80e31; color: #fff; border-radius: 999px;
+      padding: .45rem .75rem; font-size: .68rem; font-weight: 800;
+    }
+    .pm-flash-section #flashSaleGrid > div {
+      border-color: #eadfc5 !important;
+      box-shadow: 0 4px 15px rgba(50,36,10,.06);
+    }
+    #storefrontView > section:not(.pm-flash-section) { scroll-margin-top: 90px; }
+    #storefrontView .cat-pill { background: #fff !important; color: #383126 !important; border: 1px solid #e6dfd2 !important; }
+    #storefrontView .cat-pill.active { background: #17130f !important; color: #f4d982 !important; border-color: #c9a64b !important; }
+    #trendingGrid > div, #mirrorsGrid > div, #chocolateGrid > div,
+    #filteredGrid > div, #flashSaleGrid > div {
+      border-radius: 14px !important;
+      overflow: hidden;
+      background: #fff;
+    }
+    #trendingGrid img, #mirrorsGrid img, #chocolateGrid img,
+    #filteredGrid img, #flashSaleGrid img { border-radius: 10px; }
+    #storefrontView section[id$="-section"] h2 { font-size: 1.18rem; }
+    #storefrontView section[id$="-section"] > div:first-child { margin-bottom: .85rem; }
+    #storefrontView .cat-pill { box-shadow: none; }
+    footer { background: #17130f !important; }
+    footer h3 { color: #f4dfaa !important; }
+    footer a, footer button { transition: color .2s ease; }
+    #checkoutView { padding-top: 1.5rem; padding-bottom: 2rem; }
+    #checkoutView form, #checkoutView .bg-white { border-radius: 16px; }
+    @media (min-width: 768px) {
+      #heroSliderTrack > div { min-height: 0; }
+      .pm-category-tile { min-height: 124px; padding: 1rem 1.1rem; }
+    }
+    @media (max-width: 640px) {
+      .pm-announcement { font-size: .68rem; }
+      .pm-announcement-sep { padding: 0 .25rem; }
+      .pm-category-showcase { padding-top: .8rem; }
+      .pm-category-tile { min-height: 105px; padding: .7rem; font-size: .78rem; }
+      .pm-category-tile small { font-size: .66rem; }
+      .pm-flash-section { padding-left: .7rem; padding-right: .7rem; }
+      .pm-flash-heading { align-items: flex-start; }
+      .pm-flash-tag { font-size: .58rem; padding: .35rem .55rem; }
+    }
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; }
     }
@@ -245,6 +359,13 @@
 <body class="antialiased selection:bg-roseaccent-600 selection:text-white">
 
   <!-- ==================== 1. STICKY HEADER ==================== -->
+  <!-- Marketplace-style announcement strip -->
+  <div class="pm-announcement text-center px-3 py-2 text-xs sm:text-sm font-bangla">
+    <span>প্রিয় মুহূর্তে স্বাগতম</span><span class="pm-announcement-sep">•</span>
+    <span>কাস্টম গিফট ও সারপ্রাইজ</span><span class="pm-announcement-sep">•</span>
+    <a href="https://wa.me/8801707483913" target="_blank" rel="noopener noreferrer">অর্ডার সহায়তায় WhatsApp</a>
+  </div>
+
   <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-stone-200/80 shadow-2xs">
     <div class="max-w-7xl mx-auto px-3 sm:px-6 h-16 flex items-center justify-between gap-2">
       <!-- Left: Hamburger Menu + Brand Logo -->
@@ -382,6 +503,52 @@
             <button onclick="goToSlide(2)" class="w-2 h-2 rounded-full bg-white/35 transition-all" aria-label="Slide 3"></button>
           </div>
         </div>
+      </section>
+
+      <!-- QUICK CATEGORY DISCOVERY -->
+      <section class="pm-category-showcase max-w-7xl mx-auto px-3 sm:px-6 pt-4 pb-2">
+        <div class="flex items-end justify-between gap-3 mb-3">
+          <div>
+            <span class="pm-eyebrow">EXPLORE COLLECTIONS</span>
+            <h2 class="text-lg sm:text-xl font-extrabold font-bangla">ক্যাটাগরি অনুযায়ী কেনাকাটা</h2>
+          </div>
+          <span class="text-xs text-stone-500 font-bangla">আপনার পছন্দের উপহার বেছে নিন</span>
+        </div>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-4">
+          <button onclick="filterByCategory('Photo Frames')" class="pm-category-tile">
+            <span class="pm-category-icon"><i class="fa-regular fa-images"></i></span>
+            <span class="font-bangla">কাস্টম ফটো ফ্রেম</span>
+            <small>স্মৃতি থাকুক ছবিতে</small>
+          </button>
+          <button onclick="filterByCategory('Magic Mirrors')" class="pm-category-tile">
+            <span class="pm-category-icon"><i class="fa-regular fa-heart"></i></span>
+            <span class="font-bangla">LED ম্যাজিক মিরর</span>
+            <small>আলোর মাঝে ভালোবাসা</small>
+          </button>
+          <button onclick="filterByCategory('Chocolate Boxes')" class="pm-category-tile">
+            <span class="pm-category-icon"><i class="fa-solid fa-gift"></i></span>
+            <span class="font-bangla">চকলেট গিফট বক্স</span>
+            <small>মিষ্টি সারপ্রাইজ</small>
+          </button>
+          <button onclick="filterByCategory('Table Decor')" class="pm-category-tile">
+            <span class="pm-category-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></span>
+            <span class="font-bangla">হোম ও টেবিল ডেকোর</span>
+            <small>ঘর সাজুক নিজের মতো</small>
+          </button>
+        </div>
+      </section>
+
+      <!-- SPECIAL OFFERS / FLASH SALE STYLE COLLECTION -->
+      <section class="pm-flash-section max-w-7xl mx-auto px-3 sm:px-6 py-4">
+        <div class="pm-flash-heading">
+          <div>
+            <span class="pm-eyebrow">SPECIAL PICKS</span>
+            <h2 class="text-lg sm:text-xl font-extrabold font-bangla">আজকের বিশেষ অফার</h2>
+            <p class="text-xs sm:text-sm font-bangla">নির্বাচিত গিফট কালেকশনে আকর্ষণীয় সাশ্রয়</p>
+          </div>
+          <span class="pm-flash-tag"><i class="fa-solid fa-bolt"></i> SPECIAL PRICE</span>
+        </div>
+        <div id="flashSaleGrid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4"></div>
       </section>
 
       <!-- CATEGORY QUICK PILLS -->
@@ -1182,6 +1349,13 @@
       }
       if (chocolateEl) {
         chocolateEl.innerHTML = PRODUCTS.filter(p => p.category === 'Chocolate Boxes' || p.category === 'Table Decor').map(createProductCardHTML).join('');
+      }
+      const flashEl = document.getElementById('flashSaleGrid');
+      if (flashEl) {
+        flashEl.innerHTML = [...PRODUCTS]
+          .sort((a, b) => getDiscountPercent(b.price, b.oldPrice) - getDiscountPercent(a.price, a.oldPrice))
+          .slice(0, 4)
+          .map(createProductCardHTML).join('');
       }
     }
 
