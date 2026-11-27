@@ -3,6 +3,24 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Keep the public site URL clean by removing campaign-tracking parameters. -->
+  <script>
+    (() => {
+      const url = new URL(window.location.href);
+      let changed = false;
+      for (const key of [...url.searchParams.keys()]) {
+        if (key.toLowerCase().startsWith('utm_')) {
+          url.searchParams.delete(key);
+          changed = true;
+        }
+      }
+      if (changed) {
+        const cleanUrl = url.pathname + (url.search ? url.search : '') + url.hash;
+        window.history.replaceState(window.history.state, '', cleanUrl);
+      }
+    })();
+  </script>
   <title>প্রিয় মুহূর্ত (Priyo Muhurto) | Custom Gift & Home Decor Store</title>
 
   <!-- Google Fonts: Hind Siliguri & Plus Jakarta Sans -->
